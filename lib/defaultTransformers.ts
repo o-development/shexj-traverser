@@ -1,5 +1,5 @@
 import { shapeExprObject } from "./shexTypes";
-import { Transformers } from "./Transformers";
+import Transformers from "./Transformers";
 
 const defaultTransformers: Transformers = {
   Schema: async (schema, transformmedChildren) => {

@@ -1,3 +1,5 @@
+shexj-traverser / [Exports](modules.md)
+
 # ShexJ Traverser
 
 Traverse a ShexJ schema with custom functionality.
@@ -224,7 +226,6 @@ async function shexJtoUselessString() {
 }
 shexJtoUselessString();
 ```
-
 
 ## Liscense
 MIT
