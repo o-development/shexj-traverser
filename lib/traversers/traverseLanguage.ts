@@ -1,5 +1,5 @@
 import { Language } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 
 export default async function traverseLanguage<
   SchemaReturn,
@@ -55,7 +55,8 @@ export default async function traverseLanguage<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<LanguageReturn> {
-  return transformers.Language(language);
+  return transformers.Language(language, parentStack);
 }

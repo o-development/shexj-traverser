@@ -1,5 +1,5 @@
 import { IriStemRange } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 import traverseIriStem from "./traverseIriStem";
 
 export default async function traverseIriStemRange<
@@ -56,15 +56,21 @@ export default async function traverseIriStemRange<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<IriStemRangeReturn> {
   const exclusions: (string | IriStemReturn)[] = await Promise.all(
-    iriStemRange.exclusions.map(async (curExclusion) => {
+    iriStemRange.exclusions.map(async (curExclusion, index) => {
       if (typeof curExclusion === "string") {
         return curExclusion;
       }
-      return await traverseIriStem(curExclusion, transformers);
+      return await traverseIriStem(curExclusion, transformers, parentStack.concat([{
+        parent: iriStemRange,
+        type: "IriStemRange",
+        via: "exclusions",
+        viaIndex: index,
+      }]));
     })
   );
-  return await transformers.IriStemRange(iriStemRange, { exclusions });
+  return await transformers.IriStemRange(iriStemRange, { exclusions }, parentStack);
 }

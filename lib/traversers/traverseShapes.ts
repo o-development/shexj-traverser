@@ -1,5 +1,5 @@
 import { shapeExprObject, shapes } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 import traverseShapeExpr from "./traverseShapeExpr";
 export default async function traverseShapes<
   SchemaReturn,
@@ -55,17 +55,25 @@ export default async function traverseShapes<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<shapesReturn> {
   const transformmedChildren: Record<string, shapeExprReturn> = {};
   await Promise.all(
     Object.keys(shapes).map(async (key) => {
       transformmedChildren[key] = await traverseShapeExpr(
         shapes[key],
-        transformers
+        transformers,
+        parentStack.concat([
+          {
+            parent: shapes,
+            type: "shapes",
+            via: key,
+          },
+        ])
       );
     })
   );
 
-  return await transformers.shapes(shapes, transformmedChildren);
+  return await transformers.shapes(shapes, transformmedChildren, parentStack);
 }

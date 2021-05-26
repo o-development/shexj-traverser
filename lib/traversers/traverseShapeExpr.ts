@@ -1,5 +1,5 @@
 import { shapeExpr } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 import traverseNodeConstraint from "./traverseNodeConstraint";
 import traverseShape from "./traverseShape";
 import traverseShapeAnd from "./traverseShapeAnd";
@@ -61,7 +61,8 @@ export default async function traverseShapeExpr<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<shapeExprReturn> {
   let transformmedChild:
     | string
@@ -76,24 +77,48 @@ export default async function traverseShapeExpr<
   } else {
     switch (expr.type) {
       case "ShapeOr":
-        transformmedChild = await traverseShapeOr(expr, transformers);
+        transformmedChild = await traverseShapeOr(
+          expr,
+          transformers,
+          parentStack
+        );
         break;
       case "ShapeAnd":
-        transformmedChild = await traverseShapeAnd(expr, transformers);
+        transformmedChild = await traverseShapeAnd(
+          expr,
+          transformers,
+          parentStack
+        );
         break;
       case "ShapeNot":
-        transformmedChild = await traverseShapeNot(expr, transformers);
+        transformmedChild = await traverseShapeNot(
+          expr,
+          transformers,
+          parentStack
+        );
         break;
       case "NodeConstraint":
-        transformmedChild = await traverseNodeConstraint(expr, transformers);
+        transformmedChild = await traverseNodeConstraint(
+          expr,
+          transformers,
+          parentStack
+        );
         break;
       case "Shape":
-        transformmedChild = await traverseShape(expr, transformers);
+        transformmedChild = await traverseShape(
+          expr,
+          transformers,
+          parentStack
+        );
         break;
       case "ShapeRef":
-        transformmedChild = await traverseShapeRef(expr, transformers);
+        transformmedChild = await traverseShapeRef(
+          expr,
+          transformers,
+          parentStack
+        );
         break;
     }
   }
-  return await transformers.shapeExpr(expr, transformmedChild);
+  return await transformers.shapeExpr(expr, transformmedChild, parentStack);
 }

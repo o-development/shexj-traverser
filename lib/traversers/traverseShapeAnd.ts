@@ -1,5 +1,5 @@
 import { ShapeAnd } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 import traverseShapeExpr from "./traverseShapeExpr";
 
 export default async function traverseShapeAnd<
@@ -56,12 +56,24 @@ export default async function traverseShapeAnd<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<ShapeAndReturn> {
   const shapeExprs: shapeExprReturn[] = await Promise.all(
-    shapeAnd.shapeExprs.map(async (shapeExpr) => {
-      return await traverseShapeExpr(shapeExpr, transformers);
+    shapeAnd.shapeExprs.map(async (shapeExpr, index) => {
+      return await traverseShapeExpr(
+        shapeExpr,
+        transformers,
+        parentStack.concat([
+          {
+            parent: shapeAnd,
+            type: "ShapeAnd",
+            via: "shapeExprs",
+            viaIndex: index,
+          },
+        ])
+      );
     })
   );
-  return await transformers.ShapeAnd(shapeAnd, { shapeExprs });
+  return await transformers.ShapeAnd(shapeAnd, { shapeExprs }, parentStack);
 }

@@ -1,5 +1,5 @@
 import { ShapeRef } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 
 export default async function traverseShapeRef<
   SchemaReturn,
@@ -55,7 +55,8 @@ export default async function traverseShapeRef<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<ShapeRefReturn> {
-  return await transformers.ShapeRef(shapeRef);
+  return await transformers.ShapeRef(shapeRef, parentStack);
 }

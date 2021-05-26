@@ -1,5 +1,5 @@
 import { LanguageStemRange } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 import traverseLanguageStem from "./traverseLanguageStem";
 
 export default async function traverseLanguageStemRange<
@@ -56,17 +56,33 @@ export default async function traverseLanguageStemRange<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<LanguageStemRangeReturn> {
   const exclusions: (string | LanguageStemReturn)[] = await Promise.all(
-    languageStemRange.exclusions.map(async (curExclusion) => {
+    languageStemRange.exclusions.map(async (curExclusion, index) => {
       if (typeof curExclusion === "string") {
         return curExclusion;
       }
-      return await traverseLanguageStem(curExclusion, transformers);
+      return await traverseLanguageStem(
+        curExclusion,
+        transformers,
+        parentStack.concat([
+          {
+            parent: languageStemRange,
+            type: "LanguageStemRange",
+            via: "exclusions",
+            viaIndex: index,
+          },
+        ])
+      );
     })
   );
-  return await transformers.LanguageStemRange(languageStemRange, {
-    exclusions,
-  });
+  return await transformers.LanguageStemRange(
+    languageStemRange,
+    {
+      exclusions,
+    },
+    parentStack
+  );
 }

@@ -69,32 +69,58 @@ export default async function traverseSchema<
   await Promise.all([
     (async () => {
       if (schema.prefixes) {
-        prefixes = await traversePrefixes(schema.prefixes, transformers);
+        prefixes = await traversePrefixes(schema.prefixes, transformers, [
+          {
+            parent: schema,
+            type: "Schema",
+            via: "prefixes",
+          },
+        ]);
       }
     })(),
     (async () => {
       if (schema.startActs) {
-        startActs = await Promise.all(schema.startActs.map(async (curSemAct) => {
-          return await traverseSemAct(curSemAct, transformers);
-        }));
+        startActs = await Promise.all(
+          schema.startActs.map(async (curSemAct) => {
+            return await traverseSemAct(curSemAct, transformers, [
+              {
+                parent: schema,
+                type: "Schema",
+                via: "startActs",
+              },
+            ]);
+          })
+        );
       }
     })(),
     (async () => {
       if (schema.start) {
-        start = await traverseShapeExpr(schema.start, transformers);
+        start = await traverseShapeExpr(schema.start, transformers, [
+          {
+            parent: schema,
+            type: "Schema",
+            via: "start",
+          },
+        ]);
       }
     })(),
     (async () => {
       if (schema.shapes) {
-        shapes = await traverseShapes(schema.shapes, transformers);
+        shapes = await traverseShapes(schema.shapes, transformers, [
+          {
+            parent: schema,
+            type: "Schema",
+            via: "shapes",
+          },
+        ]);
       }
-    })()
+    })(),
   ]);
 
   return await transformers.Schema(schema, {
     prefixes,
     startActs,
     start,
-    shapes
+    shapes,
   });
 }

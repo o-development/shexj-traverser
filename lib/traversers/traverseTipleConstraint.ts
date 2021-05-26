@@ -1,5 +1,5 @@
 import { TripleConstraint } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 import traverseAnnotation from "./traverseAnnotation";
 import traverseSemAct from "./traverseSemAct";
 import traverseShapeExpr from "./traverseShapeExpr";
@@ -58,7 +58,8 @@ export default async function traverseTripleConstraint<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<TripleConstraintReturn> {
   let valueExpr: shapeExprReturn | undefined;
   let semActs: SemActReturn[] | undefined;
@@ -67,14 +68,35 @@ export default async function traverseTripleConstraint<
   await Promise.all([
     (async () => {
       if (tripleConstraint.valueExpr) {
-        valueExpr = await traverseShapeExpr(tripleConstraint.valueExpr, transformers);
+        valueExpr = await traverseShapeExpr(
+          tripleConstraint.valueExpr,
+          transformers,
+          parentStack.concat([
+            {
+              parent: tripleConstraint,
+              type: "TripleConstraint",
+              via: "valueExpr",
+            },
+          ])
+        );
       }
     })(),
     (async () => {
       if (tripleConstraint.semActs) {
         semActs = await Promise.all(
-          tripleConstraint.semActs.map(async (curSemAct) => {
-            return await traverseSemAct(curSemAct, transformers);
+          tripleConstraint.semActs.map(async (curSemAct, index) => {
+            return await traverseSemAct(
+              curSemAct,
+              transformers,
+              parentStack.concat([
+                {
+                  parent: tripleConstraint,
+                  type: "TripleConstraint",
+                  via: "semActs",
+                  viaIndex: index,
+                },
+              ])
+            );
           })
         );
       }
@@ -82,17 +104,32 @@ export default async function traverseTripleConstraint<
     (async () => {
       if (tripleConstraint.annotations) {
         annotations = await Promise.all(
-          tripleConstraint.annotations.map(async (curAnnotation) => {
-            return await traverseAnnotation(curAnnotation, transformers);
+          tripleConstraint.annotations.map(async (curAnnotation, index) => {
+            return await traverseAnnotation(
+              curAnnotation,
+              transformers,
+              parentStack.concat([
+                {
+                  parent: tripleConstraint,
+                  type: "TripleConstraint",
+                  via: "annotations",
+                  viaIndex: index,
+                },
+              ])
+            );
           })
         );
       }
     })(),
   ]);
 
-  return await transformers.TripleConstraint(tripleConstraint, {
-    valueExpr,
-    semActs,
-    annotations,
-  });
+  return await transformers.TripleConstraint(
+    tripleConstraint,
+    {
+      valueExpr,
+      semActs,
+      annotations,
+    },
+    parentStack
+  );
 }

@@ -1,5 +1,5 @@
 import { ShapeNot } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 import traverseShapeExpr from "./traverseShapeExpr";
 
 export default async function traverseShapeNot<
@@ -56,8 +56,13 @@ export default async function traverseShapeNot<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<ShapeNotReturn> {
-  const shapeExpr = await traverseShapeExpr(shapeNot.shapeExpr, transformers);
-  return await transformers.ShapeNot(shapeNot, { shapeExpr });
+  const shapeExpr = await traverseShapeExpr(shapeNot.shapeExpr, transformers, parentStack.concat([{
+    parent: shapeNot,
+    type: "ShapeNot",
+    via: "shapeExpr"
+  }]));
+  return await transformers.ShapeNot(shapeNot, { shapeExpr }, parentStack);
 }

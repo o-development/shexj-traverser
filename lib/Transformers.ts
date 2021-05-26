@@ -27,6 +27,13 @@ import {
   shapeExprObject,
 } from "./shexTypes";
 
+export interface ParentTrace {
+  parent: unknown;
+  type: string;
+  via?: string;
+  viaIndex?: number;
+}
+
 export default interface Transformers<
   SchemaReturn = Schema,
   prefixesReturn = prefixes,
@@ -63,8 +70,11 @@ export default interface Transformers<
       shapes?: shapesReturn;
     }
   ) => Promise<SchemaReturn>;
-  prefixes: (prefixes: prefixes) => Promise<prefixesReturn>;
-  SemAct: (semAct: SemAct) => Promise<SemActReturn>;
+  prefixes: (
+    prefixes: prefixes,
+    parentStack: ParentTrace[]
+  ) => Promise<prefixesReturn>;
+  SemAct: (semAct: SemAct, parentStack: ParentTrace[]) => Promise<SemActReturn>;
   shapeExpr: (
     shapeExpr: shapeExpr,
     transformmedChild:
@@ -74,28 +84,34 @@ export default interface Transformers<
       | ShapeNotReturn
       | NodeConstraintReturn
       | ShapeReturn
-      | ShapeRefReturn
+      | ShapeRefReturn,
+    parentStack: ParentTrace[]
   ) => Promise<shapeExprReturn>;
   shapes: (
     shapes: shapes,
-    transformmedChildren: Record<string, shapeExprReturn>
+    transformmedChildren: Record<string, shapeExprReturn>,
+    parentStack: ParentTrace[]
   ) => Promise<shapesReturn>;
   ShapeOr: (
     shapeOr: ShapeOr,
-    transformmedChildren: { shapeExprs: shapeExprReturn[] }
+    transformmedChildren: { shapeExprs: shapeExprReturn[] },
+    parentStack: ParentTrace[]
   ) => Promise<ShapeOrReturn>;
   ShapeAnd: (
     shapeAnd: ShapeAnd,
-    transformmedChildren: { shapeExprs: shapeExprReturn[] }
+    transformmedChildren: { shapeExprs: shapeExprReturn[] },
+    parentStack: ParentTrace[]
   ) => Promise<ShapeAndReturn>;
   ShapeNot: (
     shapeNot: ShapeNot,
-    transformmedChild: { shapeExpr: shapeExprReturn }
+    transformmedChild: { shapeExpr: shapeExprReturn },
+    parentStack: ParentTrace[]
   ) => Promise<ShapeNotReturn>;
-  ShapeRef: (shapeRef: ShapeRef) => Promise<ShapeRefReturn>;
+  ShapeRef: (shapeRef: ShapeRef, parents: unknown[]) => Promise<ShapeRefReturn>;
   NodeConstraint: (
     nodeConstraint: NodeConstraint,
-    transformmedChildren: { values?: valueSetValueReturn[] }
+    transformmedChildren: { values?: valueSetValueReturn[] },
+    parentStack: ParentTrace[]
   ) => Promise<NodeConstraintReturn>;
   Shape: (
     shape: Shape,
@@ -103,7 +119,8 @@ export default interface Transformers<
       expression?: tripleExprReturn;
       semActs?: SemActReturn[];
       annotations?: AnnotationReturn[];
-    }
+    },
+    parentStack: ParentTrace[]
   ) => Promise<ShapeReturn>;
   valueSetValue: (
     valueSetValue: valueSetValue,
@@ -116,7 +133,8 @@ export default interface Transformers<
       | LiteralStemRangeReturn
       | LanguageReturn
       | LanguageStemReturn
-      | LanguageStemRangeReturn
+      | LanguageStemRangeReturn,
+    parentStack: ParentTrace[]
   ) => Promise<valueSetValueReturn>;
   tripleExpr: (
     tripleExpr: tripleExpr,
@@ -124,16 +142,21 @@ export default interface Transformers<
       | string
       | EachOfReturn
       | OneOfReturn
-      | TripleConstraintReturn
+      | TripleConstraintReturn,
+    parentStack: ParentTrace[]
   ) => Promise<tripleExprReturn>;
-  Annotation: (annotation: Annotation) => Promise<AnnotationReturn>;
+  Annotation: (
+    annotation: Annotation,
+    parentStack: ParentTrace[]
+  ) => Promise<AnnotationReturn>;
   EachOf: (
     eachOf: EachOf,
     transformmedChildren: {
       expressions?: tripleExprReturn[];
       semActs?: SemActReturn[];
       annotations?: AnnotationReturn[];
-    }
+    },
+    parentStack: ParentTrace[]
   ) => Promise<EachOfReturn>;
   OneOf: (
     oneOf: OneOf,
@@ -141,7 +164,8 @@ export default interface Transformers<
       expressions?: tripleExprReturn[];
       semActs?: SemActReturn[];
       annotations?: AnnotationReturn[];
-    }
+    },
+    parentStack: ParentTrace[]
   ) => Promise<OneOfReturn>;
   TripleConstraint: (
     TripleConstraint: TripleConstraint,
@@ -149,23 +173,42 @@ export default interface Transformers<
       valueExpr?: shapeExprReturn;
       semActs?: SemActReturn[];
       annotations?: AnnotationReturn[];
-    }
+    },
+    parentStack: ParentTrace[]
   ) => Promise<TripleConstraintReturn>;
-  ObjectLiteral: (objectLiteral: ObjectLiteral) => Promise<ObjectLiteralReturn>;
-  IriStem: (iriStem: IriStem) => Promise<IriStemReturn>;
+  ObjectLiteral: (
+    objectLiteral: ObjectLiteral,
+    parentStack: ParentTrace[]
+  ) => Promise<ObjectLiteralReturn>;
+  IriStem: (
+    iriStem: IriStem,
+    parentStack: ParentTrace[]
+  ) => Promise<IriStemReturn>;
   IriStemRange: (
     iriStemRange: IriStemRange,
-    transformmedChildren: { exclusions: (string | IriStemReturn)[] }
+    transformmedChildren: { exclusions: (string | IriStemReturn)[] },
+    parentStack: ParentTrace[]
   ) => Promise<IriStemRangeReturn>;
-  LiteralStem: (literalStem: LiteralStem) => Promise<LiteralStemReturn>;
+  LiteralStem: (
+    literalStem: LiteralStem,
+    parentStack: ParentTrace[]
+  ) => Promise<LiteralStemReturn>;
   LiteralStemRange: (
     literalStemRange: LiteralStemRange,
-    transformmedChildren: { exclusions: (string | LiteralStemReturn)[] }
+    transformmedChildren: { exclusions: (string | LiteralStemReturn)[] },
+    parentStack: ParentTrace[]
   ) => Promise<LiteralStemRangeReturn>;
-  Language: (language: Language) => Promise<LanguageReturn>;
-  LanguageStem: (languageStem: LanguageStem) => Promise<LanguageStemReturn>;
+  Language: (
+    language: Language,
+    parentStack: ParentTrace[]
+  ) => Promise<LanguageReturn>;
+  LanguageStem: (
+    languageStem: LanguageStem,
+    parentStack: ParentTrace[]
+  ) => Promise<LanguageStemReturn>;
   LanguageStemRange: (
     languageStemRange: LanguageStemRange,
-    transformmedChildren: { exclusions: (string | LanguageStemReturn)[] }
+    transformmedChildren: { exclusions: (string | LanguageStemReturn)[] },
+    parentStack: ParentTrace[]
   ) => Promise<LanguageStemRangeReturn>;
 }

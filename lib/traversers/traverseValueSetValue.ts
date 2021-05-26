@@ -8,7 +8,7 @@ import {
   LiteralStemRange,
   valueSetValue,
 } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 import traverseIriStem from "./traverseIriStem";
 import traverseIriStemRange from "./traverseIriStemRange";
 import traverseLanguage from "./traverseLanguage";
@@ -72,7 +72,8 @@ export default async function traverseValueSetValue<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<valueSetValueReturn> {
   let transformmedChild:
     | string
@@ -89,53 +90,64 @@ export default async function traverseValueSetValue<
   } else {
     switch (valSet.type) {
       case "ObjectLiteral":
-        transformmedChild = await traverseObjectLiteral(valSet, transformers);
+        transformmedChild = await traverseObjectLiteral(
+          valSet,
+          transformers,
+          parentStack
+        );
         break;
       case "IriStem":
         transformmedChild = await traverseIriStem(
           valSet as IriStem,
-          transformers
+          transformers,
+          parentStack
         );
         break;
       case "IriStemRange":
         transformmedChild = await traverseIriStemRange(
           valSet as IriStemRange,
-          transformers
+          transformers,
+          parentStack
         );
         break;
       case "LiteralStem":
         transformmedChild = await traverseLiteralStem(
           valSet as LiteralStem,
-          transformers
+          transformers,
+          parentStack
         );
         break;
       case "LiteralStemRange":
         transformmedChild = await traverseLiteralStemRange(
           valSet as LiteralStemRange,
-          transformers
+          transformers,
+          parentStack
         );
         break;
       case "Language":
         transformmedChild = await traverseLanguage(
           valSet as Language,
-          transformers
+          transformers,
+          parentStack
         );
         break;
       case "LanguageStem":
         transformmedChild = await traverseLanguageStem(
           valSet as LanguageStem,
-          transformers
+          transformers,
+          parentStack
         );
         break;
       case "LanguageStemRange":
         transformmedChild = await traverseLanguageStemRange(
           valSet as LanguageStemRange,
-          transformers
+          transformers,
+          parentStack
         );
         break;
       default:
         throw new Error("Invalid valueSetValue");
     }
   }
-  return transformers.valueSetValue(valSet, transformmedChild);
+  return transformers.valueSetValue(valSet, transformmedChild, parentStack);
 }

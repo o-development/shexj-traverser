@@ -1,5 +1,5 @@
 import { prefixes } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 
 export default async function traversePrefixes<
   SchemaReturn,
@@ -55,7 +55,8 @@ export default async function traversePrefixes<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<prefixesReturn> {
-  return await transformers.prefixes(prefixes);
+  return await transformers.prefixes(prefixes, parentStack);
 }

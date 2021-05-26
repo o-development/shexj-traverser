@@ -1,5 +1,5 @@
 import { tripleExpr } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 import traverseEachOf from "./traverseEachOf";
 import traverseOneOf from "./traverseOneOf";
 import traverseTripleConstraint from "./traverseTipleConstraint";
@@ -58,7 +58,8 @@ export default async function traverseTripleExpr<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<tripleExprReturn> {
   let transformmedChild:
     | string
@@ -70,15 +71,15 @@ export default async function traverseTripleExpr<
   } else {
     switch (expr.type) {
       case "EachOf":
-        transformmedChild = await traverseEachOf(expr, transformers);
+        transformmedChild = await traverseEachOf(expr, transformers, parentStack);
         break;
       case "OneOf":
-        transformmedChild = await traverseOneOf(expr, transformers);
+        transformmedChild = await traverseOneOf(expr, transformers, parentStack);
         break;
       case "TripleConstraint":
-        transformmedChild = await traverseTripleConstraint(expr, transformers);
+        transformmedChild = await traverseTripleConstraint(expr, transformers, parentStack);
         break;
     }
   }
-  return await transformers.tripleExpr(expr, transformmedChild);
+  return await transformers.tripleExpr(expr, transformmedChild, parentStack);
 }

@@ -1,5 +1,5 @@
 import { SemAct } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 
 export default async function traverseSemAct<
   SchemaReturn,
@@ -55,7 +55,8 @@ export default async function traverseSemAct<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<SemActReturn> {
-  return transformers.SemAct(semAct);
+  return transformers.SemAct(semAct, parentStack);
 }

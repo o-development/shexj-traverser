@@ -1,5 +1,5 @@
 import { ObjectLiteral } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 
 export default async function traverseObjectLiteral<
   SchemaReturn,
@@ -55,7 +55,8 @@ export default async function traverseObjectLiteral<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<ObjectLiteralReturn> {
-  return transformers.ObjectLiteral(objectLiteral);
+  return transformers.ObjectLiteral(objectLiteral, parentStack);
 }

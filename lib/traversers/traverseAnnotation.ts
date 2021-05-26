@@ -1,5 +1,5 @@
 import { Annotation } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 
 export default async function traverseAnnotation<
   SchemaReturn,
@@ -55,7 +55,8 @@ export default async function traverseAnnotation<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<AnnotationReturn> {
-  return await transformers.Annotation(annotation);
+  return await transformers.Annotation(annotation, parentStack);
 }

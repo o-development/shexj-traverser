@@ -1,5 +1,5 @@
 import { IriStem } from "../shexTypes";
-import Transformers from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers";
 
 export default async function traverseIriStem<
   SchemaReturn,
@@ -55,7 +55,8 @@ export default async function traverseIriStem<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn
-  >
+  >,
+  parentStack: ParentTrace[]
 ): Promise<IriStemReturn> {
-  return transformers.IriStem(iriStem);
+  return transformers.IriStem(iriStem, parentStack);
 }
