@@ -20,7 +20,7 @@
 
 • `Optional` **annotations**: [*Annotation*](annotation.md)<[*objectValue*](../modules.md#objectvalue)\>[]
 
-Defined in: [shexTypes.ts:102](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L102)
+Defined in: [shexTypes.ts:102](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L102)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 • **expressions**: [*tripleExpr*](../modules.md#tripleexpr)[]
 
-Defined in: [shexTypes.ts:98](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L98)
+Defined in: [shexTypes.ts:98](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L98)
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 • `Optional` **id**: *string*
 
-Defined in: [shexTypes.ts:97](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L97)
+Defined in: [shexTypes.ts:97](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L97)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 • `Optional` **max**: *number*
 
-Defined in: [shexTypes.ts:100](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L100)
+Defined in: [shexTypes.ts:100](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L100)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 • `Optional` **min**: *number*
 
-Defined in: [shexTypes.ts:99](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L99)
+Defined in: [shexTypes.ts:99](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L99)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 • `Optional` **semActs**: [*SemAct*](semact.md)[]
 
-Defined in: [shexTypes.ts:101](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L101)
+Defined in: [shexTypes.ts:101](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L101)
 
 ___
 
@@ -68,4 +68,4 @@ ___
 
 • **type**: ``"EachOf"``
 
-Defined in: [shexTypes.ts:96](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L96)
+Defined in: [shexTypes.ts:96](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L96)

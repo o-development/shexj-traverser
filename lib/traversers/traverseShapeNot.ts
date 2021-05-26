@@ -27,7 +27,9 @@ export default async function traverseShapeNot<
   LiteralStemRangeReturn,
   LanguageReturn,
   LanguageStemReturn,
-  LanguageStemRangeReturn
+  LanguageStemRangeReturn,
+  AnnotationsReturn,
+  SemActsReturn
 >(
   shapeNot: ShapeNot,
   transformers: Transformers<
@@ -55,7 +57,9 @@ export default async function traverseShapeNot<
     LiteralStemRangeReturn,
     LanguageReturn,
     LanguageStemReturn,
-    LanguageStemRangeReturn
+    LanguageStemRangeReturn,
+    AnnotationsReturn,
+    SemActsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<ShapeNotReturn> {

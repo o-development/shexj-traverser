@@ -26,7 +26,9 @@ export default async function traverseObjectLiteral<
   LiteralStemRangeReturn,
   LanguageReturn,
   LanguageStemReturn,
-  LanguageStemRangeReturn
+  LanguageStemRangeReturn,
+  AnnotationsReturn,
+  SemActsReturn
 >(
   objectLiteral: ObjectLiteral,
   transformers: Transformers<
@@ -54,7 +56,9 @@ export default async function traverseObjectLiteral<
     LiteralStemRangeReturn,
     LanguageReturn,
     LanguageStemReturn,
-    LanguageStemRangeReturn
+    LanguageStemRangeReturn,
+    AnnotationsReturn,
+    SemActsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<ObjectLiteralReturn> {

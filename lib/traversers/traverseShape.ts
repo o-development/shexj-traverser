@@ -1,8 +1,8 @@
 import { Shape } from "../shexTypes";
 import Transformers, { ParentTrace } from "../Transformers";
-import traverseSemAct from "./traverseSemAct";
 import traverseTripleExpr from "./traverseTripleExpr";
-import traverseAnnotation from "./traverseAnnotation";
+import traverseSemActs from "./traverseSemActs";
+import traverseAnnotations from "./traverseAnnotations";
 
 export default async function traverseShape<
   SchemaReturn,
@@ -29,7 +29,9 @@ export default async function traverseShape<
   LiteralStemRangeReturn,
   LanguageReturn,
   LanguageStemReturn,
-  LanguageStemRangeReturn
+  LanguageStemRangeReturn,
+  AnnotationsReturn,
+  SemActsReturn
 >(
   shape: Shape,
   transformers: Transformers<
@@ -57,13 +59,15 @@ export default async function traverseShape<
     LiteralStemRangeReturn,
     LanguageReturn,
     LanguageStemReturn,
-    LanguageStemRangeReturn
+    LanguageStemRangeReturn,
+    AnnotationsReturn,
+    SemActsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<ShapeReturn> {
   let expression: tripleExprReturn | undefined;
-  let semActs: SemActReturn[] | undefined;
-  let annotations: AnnotationReturn[] | undefined;
+  let semActs: SemActsReturn | undefined;
+  let annotations: AnnotationsReturn | undefined;
 
   await Promise.all([
     (async () => {
@@ -83,40 +87,26 @@ export default async function traverseShape<
     })(),
     (async () => {
       if (shape.semActs) {
-        semActs = await Promise.all(
-          shape.semActs.map(async (curSemAct, index) => {
-            return await traverseSemAct(
-              curSemAct,
-              transformers,
-              parentStack.concat([
-                {
-                  parent: shape,
-                  type: "Shape",
-                  via: "semActs",
-                  viaIndex: index,
-                },
-              ])
-            );
+        semActs = await traverseSemActs(
+          shape.semActs,
+          transformers,
+          parentStack.concat({
+            parent: shape,
+            type: "Shape",
+            via: "semActs",
           })
         );
       }
     })(),
     (async () => {
       if (shape.annotations) {
-        annotations = await Promise.all(
-          shape.annotations.map(async (curAnnotation, index) => {
-            return await traverseAnnotation(
-              curAnnotation,
-              transformers,
-              parentStack.concat([
-                {
-                  parent: shape,
-                  type: "Shape",
-                  via: "semActs",
-                  viaIndex: index,
-                },
-              ])
-            );
+        annotations = await traverseAnnotations(
+          shape.annotations,
+          transformers,
+          parentStack.concat({
+            parent: shape,
+            type: "Shape",
+            via: "annotations",
           })
         );
       }

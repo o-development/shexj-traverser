@@ -121,7 +121,9 @@ async function shexJtoUselessString() {
     string, // LiteralStemRange return type
     string, // Language return type
     string, // LanguageStem return type
-    string // LanguageStemRange return type
+    string, // LanguageStemRange return type
+    string, // Annotations return type
+    string // SemActs return type
   >(schema, {
     Schema: async (schema, transformmedChildren) => {
       return `Schema(${transformmedChildren.prefixes},${
@@ -160,9 +162,7 @@ async function shexJtoUselessString() {
       return `NodeContraint(${transformedChildren.values?.join(",")})`;
     },
     Shape: async (shape, transformmedChildren) => {
-      return `Shape(${transformmedChildren.annotations?.join(",")},${
-        transformmedChildren.expression
-      },${transformmedChildren.semActs?.join()})`;
+      return `Shape(${transformmedChildren.annotations},${transformmedChildren.expression},${transformmedChildren.semActs})`;
     },
     valueSetValue: async (valueSetValue, transformmedChild) => {
       return `valueSetValue(${transformmedChild})`;
@@ -174,25 +174,21 @@ async function shexJtoUselessString() {
       return `Annotation`;
     },
     EachOf: async (eachOf, transformedChildren) => {
-      return `EachOf(${transformedChildren.annotations?.join(
-        ","
-      )},${transformedChildren.expressions?.join(
-        ","
-      )},${transformedChildren.semActs?.join(",")})`;
+      return `EachOf(${
+        transformedChildren.annotations
+      },${transformedChildren.expressions?.join(",")},${
+        transformedChildren.semActs
+      })`;
     },
     OneOf: async (oneOf, transformedChildren) => {
-      return `OneOf(${transformedChildren.annotations?.join(
-        ","
-      )},${transformedChildren.expressions?.join(
-        ","
-      )},${transformedChildren.semActs?.join(",")})`;
+      return `OneOf(${
+        transformedChildren.annotations
+      },${transformedChildren.expressions?.join(",")},${
+        transformedChildren.semActs
+      })`;
     },
     TripleConstraint: async (tripleConstraint, transformmedChildren) => {
-      return `TripleConstraint(${transformmedChildren.annotations?.join(
-        ","
-      )},${transformmedChildren.semActs?.join(",")},${
-        transformmedChildren.valueExpr
-      })`;
+      return `TripleConstraint(${transformmedChildren.annotations},${transformmedChildren.semActs},${transformmedChildren.valueExpr})`;
     },
     ObjectLiteral: async (objectLiteral) => {
       return `ObjectLiteral`;
@@ -217,6 +213,12 @@ async function shexJtoUselessString() {
     },
     LanguageStemRange: async (languageStemRange, transformedChildren) => {
       return `LanguageStemRange(${transformedChildren})`;
+    },
+    Annotations: async (annotations, transformedChildren) => {
+      return `Annotations(${transformedChildren})`;
+    },
+    SemActs: async (semActs, transformedChildren) => {
+      return `SemActs(${transformedChildren})`;
     },
   });
   // Prints: Schema(prefixes,shapes((https://shaperepo.com/schemas/chat#ChatMessageShape, shapeExpr(Shape(undefined,tripleExpr(EachOf(undefined,tripleExpr(TripleConstraint(undefined,undefined,shapeExpr(NodeContraint(undefined)))),tripleExpr(TripleConstraint(undefined,undefined,shapeExpr(NodeContraint(undefined)))),tripleExpr(TripleConstraint(undefined,undefined,shapeExpr(NodeContraint(undefined)))),undefined)),undefined)))),undefined,undefined)

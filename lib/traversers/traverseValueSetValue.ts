@@ -43,7 +43,9 @@ export default async function traverseValueSetValue<
   LiteralStemRangeReturn,
   LanguageReturn,
   LanguageStemReturn,
-  LanguageStemRangeReturn
+  LanguageStemRangeReturn,
+  AnnotationsReturn,
+  SemActsReturn
 >(
   valSet: valueSetValue,
   transformers: Transformers<
@@ -71,7 +73,9 @@ export default async function traverseValueSetValue<
     LiteralStemRangeReturn,
     LanguageReturn,
     LanguageStemReturn,
-    LanguageStemRangeReturn
+    LanguageStemRangeReturn,
+    AnnotationsReturn,
+    SemActsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<valueSetValueReturn> {

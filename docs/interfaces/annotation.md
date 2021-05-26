@@ -22,7 +22,7 @@
 
 • **object**: O
 
-Defined in: [shexTypes.ts:131](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L131)
+Defined in: [shexTypes.ts:131](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L131)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 • **predicate**: *string*
 
-Defined in: [shexTypes.ts:130](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L130)
+Defined in: [shexTypes.ts:130](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L130)
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 • **type**: ``"Annotation"``
 
-Defined in: [shexTypes.ts:129](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L129)
+Defined in: [shexTypes.ts:129](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L129)

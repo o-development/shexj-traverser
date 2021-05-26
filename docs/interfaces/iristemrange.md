@@ -16,7 +16,7 @@
 
 • **exclusions**: (*string* \| [*IriStem*](iristem.md))[]
 
-Defined in: [shexTypes.ts:62](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L62)
+Defined in: [shexTypes.ts:62](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L62)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 • **stem**: *string* \| [*Wildcard*](wildcard.md)
 
-Defined in: [shexTypes.ts:61](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L61)
+Defined in: [shexTypes.ts:61](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L61)
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 • **type**: ``"IriStemRange"``
 
-Defined in: [shexTypes.ts:60](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L60)
+Defined in: [shexTypes.ts:60](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L60)

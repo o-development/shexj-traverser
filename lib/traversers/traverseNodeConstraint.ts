@@ -27,7 +27,9 @@ export default async function traverseNodeConstraint<
   LiteralStemRangeReturn,
   LanguageReturn,
   LanguageStemReturn,
-  LanguageStemRangeReturn
+  LanguageStemRangeReturn,
+  AnnotationsReturn,
+  SemActsReturn
 >(
   nodeConstraint: NodeConstraint,
   transformers: Transformers<
@@ -55,7 +57,9 @@ export default async function traverseNodeConstraint<
     LiteralStemRangeReturn,
     LanguageReturn,
     LanguageStemReturn,
-    LanguageStemRangeReturn
+    LanguageStemRangeReturn,
+    AnnotationsReturn,
+    SemActsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<NodeConstraintReturn> {

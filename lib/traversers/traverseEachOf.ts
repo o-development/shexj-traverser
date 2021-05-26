@@ -1,8 +1,8 @@
 import { EachOf } from "../shexTypes";
 import Transformers, { ParentTrace } from "../Transformers";
-import traverseAnnotation from "./traverseAnnotation";
-import traverseSemAct from "./traverseSemAct";
 import traverseTripleExpr from "./traverseTripleExpr";
+import traverseSemActs from "./traverseSemActs";
+import traverseAnnotations from "./traverseAnnotations";
 
 export default async function traverseEachOf<
   SchemaReturn,
@@ -29,7 +29,9 @@ export default async function traverseEachOf<
   LiteralStemRangeReturn,
   LanguageReturn,
   LanguageStemReturn,
-  LanguageStemRangeReturn
+  LanguageStemRangeReturn,
+  AnnotationsReturn,
+  SemActsReturn
 >(
   eachOf: EachOf,
   transformers: Transformers<
@@ -57,13 +59,15 @@ export default async function traverseEachOf<
     LiteralStemRangeReturn,
     LanguageReturn,
     LanguageStemReturn,
-    LanguageStemRangeReturn
+    LanguageStemRangeReturn,
+    AnnotationsReturn,
+    SemActsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<EachOfReturn> {
   let expressions: tripleExprReturn[] = [];
-  let semActs: SemActReturn[] | undefined;
-  let annotations: AnnotationReturn[] | undefined;
+  let semActs: SemActsReturn | undefined;
+  let annotations: AnnotationsReturn | undefined;
 
   await Promise.all([
     (async () => {
@@ -86,40 +90,26 @@ export default async function traverseEachOf<
     })(),
     (async () => {
       if (eachOf.semActs) {
-        semActs = await Promise.all(
-          eachOf.semActs.map(async (curSemAct, index) => {
-            return await traverseSemAct(
-              curSemAct,
-              transformers,
-              parentStack.concat([
-                {
-                  parent: eachOf,
-                  type: "EachOf",
-                  via: "semActs",
-                  viaIndex: index,
-                },
-              ])
-            );
+        semActs = await traverseSemActs(
+          eachOf.semActs,
+          transformers,
+          parentStack.concat({
+            parent: eachOf,
+            type: "EachOf",
+            via: "semActs",
           })
         );
       }
     })(),
     (async () => {
       if (eachOf.annotations) {
-        annotations = await Promise.all(
-          eachOf.annotations.map(async (curAnnotation, index) => {
-            return await traverseAnnotation(
-              curAnnotation,
-              transformers,
-              parentStack.concat([
-                {
-                  parent: eachOf,
-                  type: "EachOf",
-                  via: "annotations",
-                  viaIndex: index,
-                },
-              ])
-            );
+        annotations = await traverseAnnotations(
+          eachOf.annotations,
+          transformers,
+          parentStack.concat({
+            parent: eachOf,
+            type: "EachOf",
+            via: "annotations",
           })
         );
       }

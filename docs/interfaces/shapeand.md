@@ -15,7 +15,7 @@
 
 • **shapeExprs**: [*shapeExpr*](../modules.md#shapeexpr)[]
 
-Defined in: [shexTypes.ts:23](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L23)
+Defined in: [shexTypes.ts:23](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L23)
 
 ___
 
@@ -23,4 +23,4 @@ ___
 
 • **type**: ``"ShapeAnd"``
 
-Defined in: [shexTypes.ts:23](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L23)
+Defined in: [shexTypes.ts:23](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L23)

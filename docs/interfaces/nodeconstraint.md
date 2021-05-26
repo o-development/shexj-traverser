@@ -28,7 +28,7 @@
 
 • `Optional` **datatype**: *string*
 
-Defined in: [shexTypes.ts:31](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L31)
+Defined in: [shexTypes.ts:31](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L31)
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 • `Optional` **flags**: *string*
 
-Defined in: [shexTypes.ts:36](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L36)
+Defined in: [shexTypes.ts:36](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L36)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 • `Optional` **fractiondigits**: *number*
 
-Defined in: [shexTypes.ts:42](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L42)
+Defined in: [shexTypes.ts:42](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L42)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 • `Optional` **length**: *number*
 
-Defined in: [shexTypes.ts:32](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L32)
+Defined in: [shexTypes.ts:32](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L32)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 • `Optional` **maxexclusive**: *number*
 
-Defined in: [shexTypes.ts:40](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L40)
+Defined in: [shexTypes.ts:40](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L40)
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 • `Optional` **maxinclusive**: *number*
 
-Defined in: [shexTypes.ts:39](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L39)
+Defined in: [shexTypes.ts:39](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L39)
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 • `Optional` **maxlength**: *number*
 
-Defined in: [shexTypes.ts:34](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L34)
+Defined in: [shexTypes.ts:34](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L34)
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 • `Optional` **minexclusive**: *number*
 
-Defined in: [shexTypes.ts:38](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L38)
+Defined in: [shexTypes.ts:38](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L38)
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 • `Optional` **mininclusive**: *number*
 
-Defined in: [shexTypes.ts:37](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L37)
+Defined in: [shexTypes.ts:37](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L37)
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 • `Optional` **minlength**: *number*
 
-Defined in: [shexTypes.ts:33](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L33)
+Defined in: [shexTypes.ts:33](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L33)
 
 ___
 
@@ -108,7 +108,7 @@ ___
 
 • `Optional` **nodeKind**: ``"iri"`` \| ``"bnode"`` \| ``"nonliteral"`` \| ``"literal"``
 
-Defined in: [shexTypes.ts:29](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L29)
+Defined in: [shexTypes.ts:29](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L29)
 
 ___
 
@@ -116,7 +116,7 @@ ___
 
 • `Optional` **pattern**: *string*
 
-Defined in: [shexTypes.ts:35](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L35)
+Defined in: [shexTypes.ts:35](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L35)
 
 ___
 
@@ -124,7 +124,7 @@ ___
 
 • `Optional` **totaldigits**: *number*
 
-Defined in: [shexTypes.ts:41](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L41)
+Defined in: [shexTypes.ts:41](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L41)
 
 ___
 
@@ -132,7 +132,7 @@ ___
 
 • **type**: ``"NodeConstraint"``
 
-Defined in: [shexTypes.ts:28](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L28)
+Defined in: [shexTypes.ts:28](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L28)
 
 ___
 
@@ -140,4 +140,4 @@ ___
 
 • `Optional` **values**: [*valueSetValue*](../modules.md#valuesetvalue)[]
 
-Defined in: [shexTypes.ts:30](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L30)
+Defined in: [shexTypes.ts:30](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L30)

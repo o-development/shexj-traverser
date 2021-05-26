@@ -26,7 +26,9 @@ export default async function traverseShapeRef<
   LiteralStemRangeReturn,
   LanguageReturn,
   LanguageStemReturn,
-  LanguageStemRangeReturn
+  LanguageStemRangeReturn,
+  AnnotationsReturn,
+  SemActsReturn
 >(
   shapeRef: ShapeRef,
   transformers: Transformers<
@@ -54,7 +56,9 @@ export default async function traverseShapeRef<
     LiteralStemRangeReturn,
     LanguageReturn,
     LanguageStemReturn,
-    LanguageStemRangeReturn
+    LanguageStemRangeReturn,
+    AnnotationsReturn,
+    SemActsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<ShapeRefReturn> {

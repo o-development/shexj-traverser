@@ -30,7 +30,9 @@ export default async function traverseSchema<
   LiteralStemRangeReturn,
   LanguageReturn,
   LanguageStemReturn,
-  LanguageStemRangeReturn
+  LanguageStemRangeReturn,
+  AnnotationsReturn,
+  SemActsReturn
 >(
   schema: Schema,
   transformers: Transformers<
@@ -58,7 +60,9 @@ export default async function traverseSchema<
     LiteralStemRangeReturn,
     LanguageReturn,
     LanguageStemReturn,
-    LanguageStemRangeReturn
+    LanguageStemRangeReturn,
+    AnnotationsReturn,
+    SemActsReturn
   >
 ): Promise<SchemaReturn> {
   let prefixes: prefixesReturn | undefined;

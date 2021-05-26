@@ -15,7 +15,7 @@
 
 • **stem**: *string*
 
-Defined in: [shexTypes.ts:58](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L58)
+Defined in: [shexTypes.ts:58](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L58)
 
 ___
 
@@ -23,4 +23,4 @@ ___
 
 • **type**: ``"IriStem"``
 
-Defined in: [shexTypes.ts:58](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L58)
+Defined in: [shexTypes.ts:58](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L58)

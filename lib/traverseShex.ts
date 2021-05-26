@@ -54,7 +54,9 @@ export default function traverseShex<
   LiteralStemRangeReturn = LiteralStemRange,
   LanguageReturn = Language,
   LanguageStemReturn = LanguageStem,
-  LanguageStemRangeReturn = LanguageStemRange
+  LanguageStemRangeReturn = LanguageStemRange,
+  AnnotationsReturn = AnnotationReturn[],
+  SemActsReturn = SemActReturn[]
 >(
   shexSchema: Schema,
   transformers: Partial<
@@ -83,7 +85,9 @@ export default function traverseShex<
       LiteralStemRangeReturn,
       LanguageReturn,
       LanguageStemReturn,
-      LanguageStemRangeReturn
+      LanguageStemRangeReturn,
+      AnnotationsReturn,
+      SemActsReturn
     >
   >
 ) {
@@ -112,7 +116,9 @@ export default function traverseShex<
     LiteralStemRangeReturn,
     LanguageReturn,
     LanguageStemReturn,
-    LanguageStemRangeReturn
+    LanguageStemRangeReturn,
+    AnnotationsReturn,
+    SemActsReturn
   > = Object.assign(defaultTransformers, transformers);
   return traverseSchema(shexSchema, combinedTransformers);
 }

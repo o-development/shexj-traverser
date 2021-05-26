@@ -16,7 +16,7 @@
 
 • **exclusions**: (*string* \| [*LiteralStem*](literalstem.md))[]
 
-Defined in: [shexTypes.ts:69](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L69)
+Defined in: [shexTypes.ts:69](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L69)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 • **stem**: *string* \| [*Wildcard*](wildcard.md)
 
-Defined in: [shexTypes.ts:68](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L68)
+Defined in: [shexTypes.ts:68](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L68)
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 • **type**: ``"LiteralStemRange"``
 
-Defined in: [shexTypes.ts:67](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L67)
+Defined in: [shexTypes.ts:67](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L67)

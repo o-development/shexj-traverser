@@ -1,7 +1,8 @@
-import { LiteralStem } from "../shexTypes";
+import { Annotation, SemAct } from "../shexTypes";
 import Transformers, { ParentTrace } from "../Transformers";
+import traverseSemAct from "./traverseSemAct";
 
-export default async function traverseLiteralStem<
+export default async function traverseSemActs<
   SchemaReturn,
   prefixesReturn,
   SemActReturn,
@@ -30,7 +31,7 @@ export default async function traverseLiteralStem<
   AnnotationsReturn,
   SemActsReturn
 >(
-  literalStem: LiteralStem,
+  semActs: SemAct[],
   transformers: Transformers<
     SchemaReturn,
     prefixesReturn,
@@ -61,6 +62,13 @@ export default async function traverseLiteralStem<
     SemActsReturn
   >,
   parentStack: ParentTrace[]
-): Promise<LiteralStemReturn> {
-  return transformers.LiteralStem(literalStem, parentStack);
+): Promise<SemActsReturn> {
+  const transformmedChildren = await Promise.all(semActs.map(async (semAct, index) => {
+    return await traverseSemAct(semAct, transformers, parentStack.concat([{
+      parent: semAct,
+      type: "SemActs",
+      viaIndex: index
+    }]));
+  }));
+  return await transformers.SemActs(semActs, transformmedChildren, parentStack);
 }

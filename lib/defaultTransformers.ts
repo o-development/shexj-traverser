@@ -80,6 +80,12 @@ const defaultTransformers: Transformers = {
   LanguageStemRange: async (languageStemRange, transformedChildren) => {
     return { ...languageStemRange, ...transformedChildren };
   },
+  Annotations: async (annotations, transformedChildren) => {
+    return transformedChildren;
+  },
+  SemActs: async (semActs, transformedChildren) => {
+    return transformedChildren;
+  },
 };
 
 export default defaultTransformers;

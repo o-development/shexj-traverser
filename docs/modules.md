@@ -50,7 +50,7 @@
 
 Ƭ **objectValue**: *string* \| [*ObjectLiteral*](interfaces/objectliteral.md)
 
-Defined in: [shexTypes.ts:55](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L55)
+Defined in: [shexTypes.ts:55](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L55)
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 Ƭ **prefixes**: *Record*<string, string\>
 
-Defined in: [shexTypes.ts:12](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L12)
+Defined in: [shexTypes.ts:12](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L12)
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 Ƭ **shapeExpr**: [*shapeExprObject*](modules.md#shapeexprobject) \| *string*
 
-Defined in: [shexTypes.ts:13](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L13)
+Defined in: [shexTypes.ts:13](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L13)
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 Ƭ **shapeExprObject**: [*ShapeOr*](interfaces/shapeor.md) \| [*ShapeAnd*](interfaces/shapeand.md) \| [*ShapeNot*](interfaces/shapenot.md) \| [*NodeConstraint*](interfaces/nodeconstraint.md) \| [*Shape*](interfaces/shape.md) \| [*ShapeRef*](interfaces/shaperef.md)
 
-Defined in: [shexTypes.ts:14](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L14)
+Defined in: [shexTypes.ts:14](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L14)
 
 ___
 
@@ -82,7 +82,7 @@ ___
 
 Ƭ **shapes**: *Record*<string, [*shapeExprObject*](modules.md#shapeexprobject)\>
 
-Defined in: [shexTypes.ts:82](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L82)
+Defined in: [shexTypes.ts:82](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L82)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 Ƭ **tripleExpr**: [*tripleExprObject*](modules.md#tripleexprobject) \| *string*
 
-Defined in: [shexTypes.ts:92](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L92)
+Defined in: [shexTypes.ts:92](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L92)
 
 ___
 
@@ -98,7 +98,7 @@ ___
 
 Ƭ **tripleExprObject**: [*EachOf*](interfaces/eachof.md) \| [*OneOf*](interfaces/oneof.md) \| [*TripleConstraint*](interfaces/tripleconstraint.md)
 
-Defined in: [shexTypes.ts:93](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L93)
+Defined in: [shexTypes.ts:93](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L93)
 
 ___
 
@@ -106,13 +106,13 @@ ___
 
 Ƭ **valueSetValue**: [*objectValue*](modules.md#objectvalue) \| [*IriStem*](interfaces/iristem.md) \| [*IriStemRange*](interfaces/iristemrange.md) \| [*LiteralStem*](interfaces/literalstem.md) \| [*LiteralStemRange*](interfaces/literalstemrange.md) \| [*Language*](interfaces/language.md) \| [*LanguageStem*](interfaces/languagestem.md) \| [*LanguageStemRange*](interfaces/languagestemrange.md)
 
-Defined in: [shexTypes.ts:45](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L45)
+Defined in: [shexTypes.ts:45](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L45)
 
 ## Functions
 
 ### traverseShex
 
-▸ **traverseShex**<SchemaReturn, prefixesReturn, SemActReturn, shapeExprReturn, shapesReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeRefReturn, NodeConstraintReturn, ShapeReturn, valueSetValueReturn, tripleExprReturn, AnnotationReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn\>(`shexSchema`: [*Schema*](interfaces/schema.md), `transformers`: *Partial*<[*Transformers*](interfaces/transformers.md)<SchemaReturn, prefixesReturn, SemActReturn, shapeExprReturn, shapesReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeRefReturn, NodeConstraintReturn, ShapeReturn, valueSetValueReturn, tripleExprReturn, AnnotationReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn\>\>): *Promise*<SchemaReturn\>
+▸ **traverseShex**<SchemaReturn, prefixesReturn, SemActReturn, shapeExprReturn, shapesReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeRefReturn, NodeConstraintReturn, ShapeReturn, valueSetValueReturn, tripleExprReturn, AnnotationReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn, AnnotationsReturn, SemActsReturn\>(`shexSchema`: [*Schema*](interfaces/schema.md), `transformers`: *Partial*<[*Transformers*](interfaces/transformers.md)<SchemaReturn, prefixesReturn, SemActReturn, shapeExprReturn, shapesReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeRefReturn, NodeConstraintReturn, ShapeReturn, valueSetValueReturn, tripleExprReturn, AnnotationReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn, AnnotationsReturn, SemActsReturn\>\>): *Promise*<SchemaReturn\>
 
 #### Type parameters
 
@@ -143,14 +143,16 @@ Defined in: [shexTypes.ts:45](https://github.com/o-development/shexj-traverser/b
 | `LanguageReturn` | [*Language*](interfaces/language.md) |
 | `LanguageStemReturn` | [*LanguageStem*](interfaces/languagestem.md) |
 | `LanguageStemRangeReturn` | [*LanguageStemRange*](interfaces/languagestemrange.md) |
+| `AnnotationsReturn` | AnnotationReturn[] |
+| `SemActsReturn` | SemActReturn[] |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `shexSchema` | [*Schema*](interfaces/schema.md) |
-| `transformers` | *Partial*<[*Transformers*](interfaces/transformers.md)<SchemaReturn, prefixesReturn, SemActReturn, shapeExprReturn, shapesReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeRefReturn, NodeConstraintReturn, ShapeReturn, valueSetValueReturn, tripleExprReturn, AnnotationReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn\>\> |
+| `transformers` | *Partial*<[*Transformers*](interfaces/transformers.md)<SchemaReturn, prefixesReturn, SemActReturn, shapeExprReturn, shapesReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeRefReturn, NodeConstraintReturn, ShapeReturn, valueSetValueReturn, tripleExprReturn, AnnotationReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn, AnnotationsReturn, SemActsReturn\>\> |
 
 **Returns:** *Promise*<SchemaReturn\>
 
-Defined in: [traverseShex.ts:32](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/traverseShex.ts#L32)
+Defined in: [traverseShex.ts:32](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/traverseShex.ts#L32)

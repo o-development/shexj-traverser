@@ -27,7 +27,9 @@ export default async function traverseIriStemRange<
   LiteralStemRangeReturn,
   LanguageReturn,
   LanguageStemReturn,
-  LanguageStemRangeReturn
+  LanguageStemRangeReturn,
+  AnnotationsReturn,
+  SemActsReturn
 >(
   iriStemRange: IriStemRange,
   transformers: Transformers<
@@ -55,7 +57,9 @@ export default async function traverseIriStemRange<
     LiteralStemRangeReturn,
     LanguageReturn,
     LanguageStemReturn,
-    LanguageStemRangeReturn
+    LanguageStemRangeReturn,
+    AnnotationsReturn,
+    SemActsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<IriStemRangeReturn> {

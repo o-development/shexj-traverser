@@ -27,7 +27,9 @@ export default async function traverseShapeOr<
   LiteralStemRangeReturn,
   LanguageReturn,
   LanguageStemReturn,
-  LanguageStemRangeReturn
+  LanguageStemRangeReturn,
+  AnnotationsReturn,
+  SemActsReturn
 >(
   shapeOr: ShapeOr,
   transformers: Transformers<
@@ -55,7 +57,9 @@ export default async function traverseShapeOr<
     LiteralStemRangeReturn,
     LanguageReturn,
     LanguageStemReturn,
-    LanguageStemRangeReturn
+    LanguageStemRangeReturn,
+    AnnotationsReturn,
+    SemActsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<ShapeOrReturn> {

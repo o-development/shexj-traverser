@@ -27,7 +27,9 @@ export default async function traverseShapeAnd<
   LiteralStemRangeReturn,
   LanguageReturn,
   LanguageStemReturn,
-  LanguageStemRangeReturn
+  LanguageStemRangeReturn,
+  AnnotationsReturn,
+  SemActsReturn
 >(
   shapeAnd: ShapeAnd,
   transformers: Transformers<
@@ -55,7 +57,9 @@ export default async function traverseShapeAnd<
     LiteralStemRangeReturn,
     LanguageReturn,
     LanguageStemReturn,
-    LanguageStemRangeReturn
+    LanguageStemRangeReturn,
+    AnnotationsReturn,
+    SemActsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<ShapeAndReturn> {

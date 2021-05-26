@@ -19,7 +19,7 @@
 
 • `Optional` **annotations**: [*Annotation*](annotation.md)<[*objectValue*](../modules.md#objectvalue)\>[]
 
-Defined in: [shexTypes.ts:89](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L89)
+Defined in: [shexTypes.ts:89](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L89)
 
 ___
 
@@ -27,7 +27,7 @@ ___
 
 • `Optional` **closed**: *boolean*
 
-Defined in: [shexTypes.ts:85](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L85)
+Defined in: [shexTypes.ts:85](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L85)
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 • `Optional` **expression**: [*tripleExpr*](../modules.md#tripleexpr)
 
-Defined in: [shexTypes.ts:87](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L87)
+Defined in: [shexTypes.ts:87](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L87)
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 • `Optional` **extra**: *string*[]
 
-Defined in: [shexTypes.ts:86](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L86)
+Defined in: [shexTypes.ts:86](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L86)
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 • `Optional` **semActs**: [*SemAct*](semact.md)[]
 
-Defined in: [shexTypes.ts:88](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L88)
+Defined in: [shexTypes.ts:88](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L88)
 
 ___
 
@@ -59,4 +59,4 @@ ___
 
 • **type**: ``"Shape"``
 
-Defined in: [shexTypes.ts:84](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L84)
+Defined in: [shexTypes.ts:84](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L84)

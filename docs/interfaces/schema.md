@@ -21,7 +21,7 @@
 
 • `Optional` **@context**: ``"http://www.w3.org/ns/shex.jsonld"``
 
-Defined in: [shexTypes.ts:1](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L1)
+Defined in: [shexTypes.ts:1](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L1)
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 • `Optional` **base**: *string*
 
-Defined in: [shexTypes.ts:9](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L9)
+Defined in: [shexTypes.ts:9](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L9)
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 • `Optional` **imports**: *string*[]
 
-Defined in: [shexTypes.ts:8](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L8)
+Defined in: [shexTypes.ts:8](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L8)
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 • `Optional` **prefixes**: [*prefixes*](../modules.md#prefixes)
 
-Defined in: [shexTypes.ts:4](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L4)
+Defined in: [shexTypes.ts:4](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L4)
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 • `Optional` **shapes**: [*shapes*](../modules.md#shapes)
 
-Defined in: [shexTypes.ts:7](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L7)
+Defined in: [shexTypes.ts:7](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L7)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 • `Optional` **start**: [*shapeExpr*](../modules.md#shapeexpr)
 
-Defined in: [shexTypes.ts:6](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L6)
+Defined in: [shexTypes.ts:6](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L6)
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 • `Optional` **startActs**: [*SemAct*](semact.md)[]
 
-Defined in: [shexTypes.ts:5](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L5)
+Defined in: [shexTypes.ts:5](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L5)
 
 ___
 
@@ -77,4 +77,4 @@ ___
 
 • **type**: ``"Schema"``
 
-Defined in: [shexTypes.ts:3](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L3)
+Defined in: [shexTypes.ts:3](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L3)

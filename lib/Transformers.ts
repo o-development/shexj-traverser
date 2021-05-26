@@ -24,7 +24,6 @@ import {
   Language,
   LanguageStem,
   LanguageStemRange,
-  shapeExprObject,
 } from "./shexTypes";
 
 export interface ParentTrace {
@@ -59,7 +58,9 @@ export default interface Transformers<
   LiteralStemRangeReturn = LiteralStemRange,
   LanguageReturn = Language,
   LanguageStemReturn = LanguageStem,
-  LanguageStemRangeReturn = LanguageStemRange
+  LanguageStemRangeReturn = LanguageStemRange,
+  AnnotationsReturn = AnnotationReturn[],
+  SemActsReturn = SemActReturn[]
 > {
   Schema: (
     schema: Schema,
@@ -117,8 +118,8 @@ export default interface Transformers<
     shape: Shape,
     transformmedChildren: {
       expression?: tripleExprReturn;
-      semActs?: SemActReturn[];
-      annotations?: AnnotationReturn[];
+      semActs?: SemActsReturn;
+      annotations?: AnnotationsReturn;
     },
     parentStack: ParentTrace[]
   ) => Promise<ShapeReturn>;
@@ -153,8 +154,8 @@ export default interface Transformers<
     eachOf: EachOf,
     transformmedChildren: {
       expressions?: tripleExprReturn[];
-      semActs?: SemActReturn[];
-      annotations?: AnnotationReturn[];
+      semActs?: SemActsReturn;
+      annotations?: AnnotationsReturn;
     },
     parentStack: ParentTrace[]
   ) => Promise<EachOfReturn>;
@@ -162,8 +163,8 @@ export default interface Transformers<
     oneOf: OneOf,
     transformmedChildren: {
       expressions?: tripleExprReturn[];
-      semActs?: SemActReturn[];
-      annotations?: AnnotationReturn[];
+      semActs?: SemActsReturn;
+      annotations?: AnnotationsReturn;
     },
     parentStack: ParentTrace[]
   ) => Promise<OneOfReturn>;
@@ -171,8 +172,8 @@ export default interface Transformers<
     TripleConstraint: TripleConstraint,
     transformmedChildren: {
       valueExpr?: shapeExprReturn;
-      semActs?: SemActReturn[];
-      annotations?: AnnotationReturn[];
+      semActs?: SemActsReturn;
+      annotations?: AnnotationsReturn;
     },
     parentStack: ParentTrace[]
   ) => Promise<TripleConstraintReturn>;
@@ -211,4 +212,14 @@ export default interface Transformers<
     transformmedChildren: { exclusions: (string | LanguageStemReturn)[] },
     parentStack: ParentTrace[]
   ) => Promise<LanguageStemRangeReturn>;
+  Annotations: (
+    annotations: Annotation[],
+    transformmed: AnnotationReturn[],
+    parentStack: ParentTrace[]
+  ) => Promise<AnnotationsReturn>;
+  SemActs: (
+    semActs: SemAct[],
+    transformmed: SemActReturn[],
+    parentStack: ParentTrace[]
+  ) => Promise<SemActsReturn>;
 }

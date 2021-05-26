@@ -16,7 +16,7 @@
 
 • `Optional` **code**: *string*
 
-Defined in: [shexTypes.ts:127](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L127)
+Defined in: [shexTypes.ts:127](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L127)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 • **name**: *string*
 
-Defined in: [shexTypes.ts:127](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L127)
+Defined in: [shexTypes.ts:127](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L127)
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 • **type**: ``"SemAct"``
 
-Defined in: [shexTypes.ts:127](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L127)
+Defined in: [shexTypes.ts:127](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L127)

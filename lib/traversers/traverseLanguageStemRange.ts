@@ -27,7 +27,9 @@ export default async function traverseLanguageStemRange<
   LiteralStemRangeReturn,
   LanguageReturn,
   LanguageStemReturn,
-  LanguageStemRangeReturn
+  LanguageStemRangeReturn,
+  AnnotationsReturn,
+  SemActsReturn
 >(
   languageStemRange: LanguageStemRange,
   transformers: Transformers<
@@ -55,7 +57,9 @@ export default async function traverseLanguageStemRange<
     LiteralStemRangeReturn,
     LanguageReturn,
     LanguageStemReturn,
-    LanguageStemRangeReturn
+    LanguageStemRangeReturn,
+    AnnotationsReturn,
+    SemActsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<LanguageStemRangeReturn> {

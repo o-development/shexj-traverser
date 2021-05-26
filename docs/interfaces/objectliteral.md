@@ -16,7 +16,7 @@
 
 • `Optional` **language**: *string*
 
-Defined in: [shexTypes.ts:56](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L56)
+Defined in: [shexTypes.ts:56](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L56)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 • `Optional` **type**: *string*
 
-Defined in: [shexTypes.ts:56](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L56)
+Defined in: [shexTypes.ts:56](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L56)
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 • **value**: *string*
 
-Defined in: [shexTypes.ts:56](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L56)
+Defined in: [shexTypes.ts:56](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L56)

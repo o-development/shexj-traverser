@@ -14,4 +14,4 @@
 
 • **type**: ``"Wildcard"``
 
-Defined in: [shexTypes.ts:80](https://github.com/o-development/shexj-traverser/blob/6850f6c/lib/shexTypes.ts#L80)
+Defined in: [shexTypes.ts:80](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L80)
