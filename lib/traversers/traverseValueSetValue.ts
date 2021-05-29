@@ -7,7 +7,8 @@ import {
   LiteralStem,
   LiteralStemRange,
   valueSetValue,
-} from "../shexTypes";
+  ObjectLiteral,
+} from "shexj";
 import Transformers, { ParentTrace } from "../Transformers";
 import traverseIriStem from "./traverseIriStem";
 import traverseIriStemRange from "./traverseIriStemRange";
@@ -20,22 +21,11 @@ import traverseObjectLiteral from "./traverseObjectLiteral";
 
 export default async function traverseValueSetValue<
   SchemaReturn,
-  prefixesReturn,
-  SemActReturn,
-  shapeExprReturn,
-  shapesReturn,
   ShapeOrReturn,
   ShapeAndReturn,
   ShapeNotReturn,
-  ShapeRefReturn,
+  ShapeExternalReturn,
   NodeConstraintReturn,
-  ShapeReturn,
-  valueSetValueReturn,
-  tripleExprReturn,
-  AnnotationReturn,
-  EachOfReturn,
-  OneOfReturn,
-  TripleConstraintReturn,
   ObjectLiteralReturn,
   IriStemReturn,
   IriStemRangeReturn,
@@ -44,28 +34,47 @@ export default async function traverseValueSetValue<
   LanguageReturn,
   LanguageStemReturn,
   LanguageStemRangeReturn,
-  AnnotationsReturn,
-  SemActsReturn
+  WildcardReturn,
+  ShapeReturn,
+  EachOfReturn,
+  OneOfReturn,
+  TripleConstraintReturn,
+  SemActReturn,
+  AnnotationReturn,
+  shapeExprReturn,
+  valueSetValueReturn,
+  tripleExprReturn,
+  Schema_startActsReturn,
+  Schema_startReturn,
+  Schema_shapesReturn,
+  ShapeOr_shapeExprsReturn,
+  ShapeAnd_shapeExprsReturn,
+  ShapeNot_shapeExprReturn,
+  NodeConstraint_valuesReturn,
+  IriStemRange_exclusionsReturn,
+  LiteralStemRange_exclusionsReturn,
+  LanguageStemRange_exclusionsReturn,
+  Shape_expressionReturn,
+  Shape_semActsReturn,
+  Shape_AnnotationsReturn,
+  EachOf_expressionsReturn,
+  EachOf_semActsReturn,
+  EachOf_AnnotationsReturn,
+  OneOf_expressionsReturn,
+  OneOf_semActsReturn,
+  OneOf_AnnotationsReturn,
+  TripleConstraint_valueExprReturn,
+  TripleConstraint_semActsReturn,
+  TripleConstraint_AnnotationsReturn
 >(
   valSet: valueSetValue,
   transformers: Transformers<
     SchemaReturn,
-    prefixesReturn,
-    SemActReturn,
-    shapeExprReturn,
-    shapesReturn,
     ShapeOrReturn,
     ShapeAndReturn,
     ShapeNotReturn,
-    ShapeRefReturn,
+    ShapeExternalReturn,
     NodeConstraintReturn,
-    ShapeReturn,
-    valueSetValueReturn,
-    tripleExprReturn,
-    AnnotationReturn,
-    EachOfReturn,
-    OneOfReturn,
-    TripleConstraintReturn,
     ObjectLiteralReturn,
     IriStemReturn,
     IriStemRangeReturn,
@@ -74,8 +83,38 @@ export default async function traverseValueSetValue<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn,
-    AnnotationsReturn,
-    SemActsReturn
+    WildcardReturn,
+    ShapeReturn,
+    EachOfReturn,
+    OneOfReturn,
+    TripleConstraintReturn,
+    SemActReturn,
+    AnnotationReturn,
+    shapeExprReturn,
+    valueSetValueReturn,
+    tripleExprReturn,
+    Schema_startActsReturn,
+    Schema_startReturn,
+    Schema_shapesReturn,
+    ShapeOr_shapeExprsReturn,
+    ShapeAnd_shapeExprsReturn,
+    ShapeNot_shapeExprReturn,
+    NodeConstraint_valuesReturn,
+    IriStemRange_exclusionsReturn,
+    LiteralStemRange_exclusionsReturn,
+    LanguageStemRange_exclusionsReturn,
+    Shape_expressionReturn,
+    Shape_semActsReturn,
+    Shape_AnnotationsReturn,
+    EachOf_expressionsReturn,
+    EachOf_semActsReturn,
+    EachOf_AnnotationsReturn,
+    OneOf_expressionsReturn,
+    OneOf_semActsReturn,
+    OneOf_AnnotationsReturn,
+    TripleConstraint_valueExprReturn,
+    TripleConstraint_semActsReturn,
+    TripleConstraint_AnnotationsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<valueSetValueReturn> {
@@ -93,13 +132,6 @@ export default async function traverseValueSetValue<
     transformmedChild = valSet;
   } else {
     switch (valSet.type) {
-      case "ObjectLiteral":
-        transformmedChild = await traverseObjectLiteral(
-          valSet,
-          transformers,
-          parentStack
-        );
-        break;
       case "IriStem":
         transformmedChild = await traverseIriStem(
           valSet as IriStem,
@@ -150,7 +182,15 @@ export default async function traverseValueSetValue<
         );
         break;
       default:
-        throw new Error("Invalid valueSetValue");
+        if ((valSet as ObjectLiteral).value) {
+          transformmedChild = await traverseObjectLiteral(
+            valSet as ObjectLiteral,
+            transformers,
+            parentStack
+          );
+        } else {
+          throw new Error(`Invalid ValSetValue: ${valSet}`);
+        }
     }
   }
   return transformers.valueSetValue(valSet, transformmedChild, parentStack);

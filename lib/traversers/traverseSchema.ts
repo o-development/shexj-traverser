@@ -1,28 +1,15 @@
-import { Schema } from "../shexTypes";
+import { Schema } from "shexj";
 import Transformers from "../Transformers";
-import traversePrefixes from "./traversePrefixes";
 import traverseSemAct from "./traverseSemAct";
 import traverseShapeExpr from "./traverseShapeExpr";
-import traverseShapes from "./traverseShapes";
 
 export default async function traverseSchema<
   SchemaReturn,
-  prefixesReturn,
-  SemActReturn,
-  shapeExprReturn,
-  shapesReturn,
   ShapeOrReturn,
   ShapeAndReturn,
   ShapeNotReturn,
-  ShapeRefReturn,
+  ShapeExternalReturn,
   NodeConstraintReturn,
-  ShapeReturn,
-  valueSetValueReturn,
-  tripleExprReturn,
-  AnnotationReturn,
-  EachOfReturn,
-  OneOfReturn,
-  TripleConstraintReturn,
   ObjectLiteralReturn,
   IriStemReturn,
   IriStemRangeReturn,
@@ -31,28 +18,47 @@ export default async function traverseSchema<
   LanguageReturn,
   LanguageStemReturn,
   LanguageStemRangeReturn,
-  AnnotationsReturn,
-  SemActsReturn
+  WildcardReturn,
+  ShapeReturn,
+  EachOfReturn,
+  OneOfReturn,
+  TripleConstraintReturn,
+  SemActReturn,
+  AnnotationReturn,
+  shapeExprReturn,
+  valueSetValueReturn,
+  tripleExprReturn,
+  Schema_startActsReturn,
+  Schema_startReturn,
+  Schema_shapesReturn,
+  ShapeOr_shapeExprsReturn,
+  ShapeAnd_shapeExprsReturn,
+  ShapeNot_shapeExprReturn,
+  NodeConstraint_valuesReturn,
+  IriStemRange_exclusionsReturn,
+  LiteralStemRange_exclusionsReturn,
+  LanguageStemRange_exclusionsReturn,
+  Shape_expressionReturn,
+  Shape_semActsReturn,
+  Shape_AnnotationsReturn,
+  EachOf_expressionsReturn,
+  EachOf_semActsReturn,
+  EachOf_AnnotationsReturn,
+  OneOf_expressionsReturn,
+  OneOf_semActsReturn,
+  OneOf_AnnotationsReturn,
+  TripleConstraint_valueExprReturn,
+  TripleConstraint_semActsReturn,
+  TripleConstraint_AnnotationsReturn
 >(
   schema: Schema,
   transformers: Transformers<
     SchemaReturn,
-    prefixesReturn,
-    SemActReturn,
-    shapeExprReturn,
-    shapesReturn,
     ShapeOrReturn,
     ShapeAndReturn,
     ShapeNotReturn,
-    ShapeRefReturn,
+    ShapeExternalReturn,
     NodeConstraintReturn,
-    ShapeReturn,
-    valueSetValueReturn,
-    tripleExprReturn,
-    AnnotationReturn,
-    EachOfReturn,
-    OneOfReturn,
-    TripleConstraintReturn,
     ObjectLiteralReturn,
     IriStemReturn,
     IriStemRangeReturn,
@@ -61,45 +67,86 @@ export default async function traverseSchema<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn,
-    AnnotationsReturn,
-    SemActsReturn
+    WildcardReturn,
+    ShapeReturn,
+    EachOfReturn,
+    OneOfReturn,
+    TripleConstraintReturn,
+    SemActReturn,
+    AnnotationReturn,
+    shapeExprReturn,
+    valueSetValueReturn,
+    tripleExprReturn,
+    Schema_startActsReturn,
+    Schema_startReturn,
+    Schema_shapesReturn,
+    ShapeOr_shapeExprsReturn,
+    ShapeAnd_shapeExprsReturn,
+    ShapeNot_shapeExprReturn,
+    NodeConstraint_valuesReturn,
+    IriStemRange_exclusionsReturn,
+    LiteralStemRange_exclusionsReturn,
+    LanguageStemRange_exclusionsReturn,
+    Shape_expressionReturn,
+    Shape_semActsReturn,
+    Shape_AnnotationsReturn,
+    EachOf_expressionsReturn,
+    EachOf_semActsReturn,
+    EachOf_AnnotationsReturn,
+    OneOf_expressionsReturn,
+    OneOf_semActsReturn,
+    OneOf_AnnotationsReturn,
+    TripleConstraint_valueExprReturn,
+    TripleConstraint_semActsReturn,
+    TripleConstraint_AnnotationsReturn
   >
 ): Promise<SchemaReturn> {
-  let prefixes: prefixesReturn | undefined;
-  let startActs: SemActReturn[] | undefined;
-  let start: shapeExprReturn | undefined;
-  let shapes: shapesReturn | undefined;
+  let startActs: Schema_startActsReturn | undefined;
+  let start: Schema_startReturn | undefined;
+  let shapes: Schema_shapesReturn | undefined;
 
   await Promise.all([
     (async () => {
-      if (schema.prefixes) {
-        prefixes = await traversePrefixes(schema.prefixes, transformers, [
-          {
-            parent: schema,
-            type: "Schema",
-            via: "prefixes",
-          },
-        ]);
-      }
-    })(),
-    (async () => {
       if (schema.startActs) {
-        startActs = await Promise.all(
-          schema.startActs.map(async (curSemAct) => {
+        const transfromedStartActs = await Promise.all(
+          schema.startActs.map(async (curSemAct, index) => {
             return await traverseSemAct(curSemAct, transformers, [
               {
                 parent: schema,
                 type: "Schema",
                 via: "startActs",
+                viaIndex: index,
               },
             ]);
           })
+        );
+        startActs = await transformers.Schema_startActs(
+          schema.startActs,
+          transfromedStartActs,
+          [
+            {
+              parent: schema,
+              type: "Schema",
+              via: "startActs",
+            },
+          ]
         );
       }
     })(),
     (async () => {
       if (schema.start) {
-        start = await traverseShapeExpr(schema.start, transformers, [
+        const transformed = await traverseShapeExpr(
+          schema.start,
+          transformers,
+          [
+            {
+              parent: schema,
+              type: "Schema",
+              via: "start",
+            },
+          ]
+        );
+        start = await transformers.Schema_start(schema.start, transformed, [
           {
             parent: schema,
             type: "Schema",
@@ -110,7 +157,19 @@ export default async function traverseSchema<
     })(),
     (async () => {
       if (schema.shapes) {
-        shapes = await traverseShapes(schema.shapes, transformers, [
+        const transformed = await Promise.all(
+          schema.shapes.map(async (shape, index) => {
+            return await traverseShapeExpr(shape, transformers, [
+              {
+                parent: schema,
+                type: "Schema",
+                via: "shapes",
+                viaIndex: index,
+              },
+            ]);
+          })
+        );
+        shapes = await transformers.Schema_shapes(schema.shapes, transformed, [
           {
             parent: schema,
             type: "Schema",
@@ -122,7 +181,6 @@ export default async function traverseSchema<
   ]);
 
   return await transformers.Schema(schema, {
-    prefixes,
     startActs,
     start,
     shapes,

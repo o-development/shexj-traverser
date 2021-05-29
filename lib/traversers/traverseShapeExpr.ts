@@ -1,30 +1,19 @@
-import { shapeExpr } from "../shexTypes";
+import { shapeExpr, shapeExprRef } from "shexj";
 import Transformers, { ParentTrace } from "../Transformers";
 import traverseNodeConstraint from "./traverseNodeConstraint";
 import traverseShape from "./traverseShape";
 import traverseShapeAnd from "./traverseShapeAnd";
 import traverseShapeNot from "./traverseShapeNot";
 import traverseShapeOr from "./traverseShapeOr";
-import traverseShapeRef from "./traverseShapeRef";
+import traverseShapeExternal from "./traverseShapeExternal";
 
 export default async function traverseShapeExpr<
   SchemaReturn,
-  prefixesReturn,
-  SemActReturn,
-  shapeExprReturn,
-  shapesReturn,
   ShapeOrReturn,
   ShapeAndReturn,
   ShapeNotReturn,
-  ShapeRefReturn,
+  ShapeExternalReturn,
   NodeConstraintReturn,
-  ShapeReturn,
-  valueSetValueReturn,
-  tripleExprReturn,
-  AnnotationReturn,
-  EachOfReturn,
-  OneOfReturn,
-  TripleConstraintReturn,
   ObjectLiteralReturn,
   IriStemReturn,
   IriStemRangeReturn,
@@ -33,28 +22,47 @@ export default async function traverseShapeExpr<
   LanguageReturn,
   LanguageStemReturn,
   LanguageStemRangeReturn,
-  AnnotationsReturn,
-  SemActsReturn
+  WildcardReturn,
+  ShapeReturn,
+  EachOfReturn,
+  OneOfReturn,
+  TripleConstraintReturn,
+  SemActReturn,
+  AnnotationReturn,
+  shapeExprReturn,
+  valueSetValueReturn,
+  tripleExprReturn,
+  Schema_startActsReturn,
+  Schema_startReturn,
+  Schema_shapesReturn,
+  ShapeOr_shapeExprsReturn,
+  ShapeAnd_shapeExprsReturn,
+  ShapeNot_shapeExprReturn,
+  NodeConstraint_valuesReturn,
+  IriStemRange_exclusionsReturn,
+  LiteralStemRange_exclusionsReturn,
+  LanguageStemRange_exclusionsReturn,
+  Shape_expressionReturn,
+  Shape_semActsReturn,
+  Shape_AnnotationsReturn,
+  EachOf_expressionsReturn,
+  EachOf_semActsReturn,
+  EachOf_AnnotationsReturn,
+  OneOf_expressionsReturn,
+  OneOf_semActsReturn,
+  OneOf_AnnotationsReturn,
+  TripleConstraint_valueExprReturn,
+  TripleConstraint_semActsReturn,
+  TripleConstraint_AnnotationsReturn
 >(
   expr: shapeExpr,
   transformers: Transformers<
     SchemaReturn,
-    prefixesReturn,
-    SemActReturn,
-    shapeExprReturn,
-    shapesReturn,
     ShapeOrReturn,
     ShapeAndReturn,
     ShapeNotReturn,
-    ShapeRefReturn,
+    ShapeExternalReturn,
     NodeConstraintReturn,
-    ShapeReturn,
-    valueSetValueReturn,
-    tripleExprReturn,
-    AnnotationReturn,
-    EachOfReturn,
-    OneOfReturn,
-    TripleConstraintReturn,
     ObjectLiteralReturn,
     IriStemReturn,
     IriStemRangeReturn,
@@ -63,19 +71,49 @@ export default async function traverseShapeExpr<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn,
-    AnnotationsReturn,
-    SemActsReturn
+    WildcardReturn,
+    ShapeReturn,
+    EachOfReturn,
+    OneOfReturn,
+    TripleConstraintReturn,
+    SemActReturn,
+    AnnotationReturn,
+    shapeExprReturn,
+    valueSetValueReturn,
+    tripleExprReturn,
+    Schema_startActsReturn,
+    Schema_startReturn,
+    Schema_shapesReturn,
+    ShapeOr_shapeExprsReturn,
+    ShapeAnd_shapeExprsReturn,
+    ShapeNot_shapeExprReturn,
+    NodeConstraint_valuesReturn,
+    IriStemRange_exclusionsReturn,
+    LiteralStemRange_exclusionsReturn,
+    LanguageStemRange_exclusionsReturn,
+    Shape_expressionReturn,
+    Shape_semActsReturn,
+    Shape_AnnotationsReturn,
+    EachOf_expressionsReturn,
+    EachOf_semActsReturn,
+    EachOf_AnnotationsReturn,
+    OneOf_expressionsReturn,
+    OneOf_semActsReturn,
+    OneOf_AnnotationsReturn,
+    TripleConstraint_valueExprReturn,
+    TripleConstraint_semActsReturn,
+    TripleConstraint_AnnotationsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<shapeExprReturn> {
   let transformmedChild:
-    | string
+    | shapeExprRef
     | ShapeOrReturn
     | ShapeAndReturn
     | ShapeNotReturn
     | NodeConstraintReturn
     | ShapeReturn
-    | ShapeRefReturn;
+    | ShapeExternalReturn;
   if (typeof expr === "string") {
     transformmedChild = expr;
   } else {
@@ -115,8 +153,8 @@ export default async function traverseShapeExpr<
           parentStack
         );
         break;
-      case "ShapeRef":
-        transformmedChild = await traverseShapeRef(
+      case "ShapeExternal":
+        transformmedChild = await traverseShapeExternal(
           expr,
           transformers,
           parentStack

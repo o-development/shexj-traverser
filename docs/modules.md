@@ -6,153 +6,76 @@
 
 ### Interfaces
 
-- [Annotation](interfaces/annotation.md)
-- [EachOf](interfaces/eachof.md)
-- [IriStem](interfaces/iristem.md)
-- [IriStemRange](interfaces/iristemrange.md)
-- [Language](interfaces/language.md)
-- [LanguageStem](interfaces/languagestem.md)
-- [LanguageStemRange](interfaces/languagestemrange.md)
-- [LiteralStem](interfaces/literalstem.md)
-- [LiteralStemRange](interfaces/literalstemrange.md)
-- [NodeConstraint](interfaces/nodeconstraint.md)
-- [ObjectLiteral](interfaces/objectliteral.md)
-- [OneOf](interfaces/oneof.md)
-- [Schema](interfaces/schema.md)
-- [SemAct](interfaces/semact.md)
-- [Shape](interfaces/shape.md)
-- [ShapeAnd](interfaces/shapeand.md)
-- [ShapeNot](interfaces/shapenot.md)
-- [ShapeOr](interfaces/shapeor.md)
-- [ShapeRef](interfaces/shaperef.md)
 - [Transformers](interfaces/transformers.md)
-- [TripleConstraint](interfaces/tripleconstraint.md)
-- [Wildcard](interfaces/wildcard.md)
-
-### Type aliases
-
-- [objectValue](modules.md#objectvalue)
-- [prefixes](modules.md#prefixes)
-- [shapeExpr](modules.md#shapeexpr)
-- [shapeExprObject](modules.md#shapeexprobject)
-- [shapes](modules.md#shapes)
-- [tripleExpr](modules.md#tripleexpr)
-- [tripleExprObject](modules.md#tripleexprobject)
-- [valueSetValue](modules.md#valuesetvalue)
 
 ### Functions
 
 - [traverseShex](modules.md#traverseshex)
 
-## Type aliases
-
-### objectValue
-
-Ƭ **objectValue**: *string* \| [*ObjectLiteral*](interfaces/objectliteral.md)
-
-Defined in: [shexTypes.ts:55](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L55)
-
-___
-
-### prefixes
-
-Ƭ **prefixes**: *Record*<string, string\>
-
-Defined in: [shexTypes.ts:12](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L12)
-
-___
-
-### shapeExpr
-
-Ƭ **shapeExpr**: [*shapeExprObject*](modules.md#shapeexprobject) \| *string*
-
-Defined in: [shexTypes.ts:13](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L13)
-
-___
-
-### shapeExprObject
-
-Ƭ **shapeExprObject**: [*ShapeOr*](interfaces/shapeor.md) \| [*ShapeAnd*](interfaces/shapeand.md) \| [*ShapeNot*](interfaces/shapenot.md) \| [*NodeConstraint*](interfaces/nodeconstraint.md) \| [*Shape*](interfaces/shape.md) \| [*ShapeRef*](interfaces/shaperef.md)
-
-Defined in: [shexTypes.ts:14](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L14)
-
-___
-
-### shapes
-
-Ƭ **shapes**: *Record*<string, [*shapeExprObject*](modules.md#shapeexprobject)\>
-
-Defined in: [shexTypes.ts:82](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L82)
-
-___
-
-### tripleExpr
-
-Ƭ **tripleExpr**: [*tripleExprObject*](modules.md#tripleexprobject) \| *string*
-
-Defined in: [shexTypes.ts:92](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L92)
-
-___
-
-### tripleExprObject
-
-Ƭ **tripleExprObject**: [*EachOf*](interfaces/eachof.md) \| [*OneOf*](interfaces/oneof.md) \| [*TripleConstraint*](interfaces/tripleconstraint.md)
-
-Defined in: [shexTypes.ts:93](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L93)
-
-___
-
-### valueSetValue
-
-Ƭ **valueSetValue**: [*objectValue*](modules.md#objectvalue) \| [*IriStem*](interfaces/iristem.md) \| [*IriStemRange*](interfaces/iristemrange.md) \| [*LiteralStem*](interfaces/literalstem.md) \| [*LiteralStemRange*](interfaces/literalstemrange.md) \| [*Language*](interfaces/language.md) \| [*LanguageStem*](interfaces/languagestem.md) \| [*LanguageStemRange*](interfaces/languagestemrange.md)
-
-Defined in: [shexTypes.ts:45](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/shexTypes.ts#L45)
-
 ## Functions
 
 ### traverseShex
 
-▸ **traverseShex**<SchemaReturn, prefixesReturn, SemActReturn, shapeExprReturn, shapesReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeRefReturn, NodeConstraintReturn, ShapeReturn, valueSetValueReturn, tripleExprReturn, AnnotationReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn, AnnotationsReturn, SemActsReturn\>(`shexSchema`: [*Schema*](interfaces/schema.md), `transformers`: *Partial*<[*Transformers*](interfaces/transformers.md)<SchemaReturn, prefixesReturn, SemActReturn, shapeExprReturn, shapesReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeRefReturn, NodeConstraintReturn, ShapeReturn, valueSetValueReturn, tripleExprReturn, AnnotationReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn, AnnotationsReturn, SemActsReturn\>\>): *Promise*<SchemaReturn\>
+▸ **traverseShex**<SchemaReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeExternalReturn, NodeConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn, WildcardReturn, ShapeReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, SemActReturn, AnnotationReturn, shapeExprReturn, valueSetValueReturn, tripleExprReturn, Schema_startActsReturn, Schema_startReturn, Schema_shapesReturn, ShapeOr_shapeExprsReturn, ShapeAnd_shapeExprsReturn, ShapeNot_shapeExprReturn, NodeConstraint_valuesReturn, IriStemRange_exclusionsReturn, LiteralStemRange_exclusionsReturn, LanguageStemRange_exclusionsReturn, Shape_expressionReturn, Shape_semActsReturn, Shape_AnnotationsReturn, EachOf_expressionsReturn, EachOf_semActsReturn, EachOf_AnnotationsReturn, OneOf_expressionsReturn, OneOf_semActsReturn, OneOf_AnnotationsReturn, TripleConstraint_valueExprReturn, TripleConstraint_semActsReturn, TripleConstraint_AnnotationsReturn\>(`shexSchema`: Schema, `transformers`: *Partial*<[*Transformers*](interfaces/transformers.md)<SchemaReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeExternalReturn, NodeConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn, WildcardReturn, ShapeReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, SemActReturn, AnnotationReturn, shapeExprReturn, valueSetValueReturn, tripleExprReturn, Schema\_startActsReturn, Schema\_startReturn, Schema\_shapesReturn, ShapeOr\_shapeExprsReturn, ShapeAnd\_shapeExprsReturn, ShapeNot\_shapeExprReturn, NodeConstraint\_valuesReturn, IriStemRange\_exclusionsReturn, LiteralStemRange\_exclusionsReturn, LanguageStemRange\_exclusionsReturn, Shape\_expressionReturn, Shape\_semActsReturn, Shape\_AnnotationsReturn, EachOf\_expressionsReturn, EachOf\_semActsReturn, EachOf\_AnnotationsReturn, OneOf\_expressionsReturn, OneOf\_semActsReturn, OneOf\_AnnotationsReturn, TripleConstraint\_valueExprReturn, TripleConstraint\_semActsReturn, TripleConstraint\_AnnotationsReturn\>\>): *Promise*<SchemaReturn\>
 
 #### Type parameters
 
 | Name | Default |
 | :------ | :------ |
-| `SchemaReturn` | [*Schema*](interfaces/schema.md) |
-| `prefixesReturn` | [*prefixes*](modules.md#prefixes) |
-| `SemActReturn` | [*SemAct*](interfaces/semact.md) |
-| `shapeExprReturn` | [*shapeExpr*](modules.md#shapeexpr) |
-| `shapesReturn` | [*shapes*](modules.md#shapes) |
-| `ShapeOrReturn` | [*ShapeOr*](interfaces/shapeor.md) |
-| `ShapeAndReturn` | [*ShapeAnd*](interfaces/shapeand.md) |
-| `ShapeNotReturn` | [*ShapeNot*](interfaces/shapenot.md) |
-| `ShapeRefReturn` | [*ShapeRef*](interfaces/shaperef.md) |
-| `NodeConstraintReturn` | [*NodeConstraint*](interfaces/nodeconstraint.md) |
-| `ShapeReturn` | [*Shape*](interfaces/shape.md) |
-| `valueSetValueReturn` | [*valueSetValue*](modules.md#valuesetvalue) |
-| `tripleExprReturn` | [*tripleExpr*](modules.md#tripleexpr) |
-| `AnnotationReturn` | [*Annotation*](interfaces/annotation.md)<[*objectValue*](modules.md#objectvalue)\> |
-| `EachOfReturn` | [*EachOf*](interfaces/eachof.md) |
-| `OneOfReturn` | [*OneOf*](interfaces/oneof.md) |
-| `TripleConstraintReturn` | [*TripleConstraint*](interfaces/tripleconstraint.md) |
-| `ObjectLiteralReturn` | [*ObjectLiteral*](interfaces/objectliteral.md) |
-| `IriStemReturn` | [*IriStem*](interfaces/iristem.md) |
-| `IriStemRangeReturn` | [*IriStemRange*](interfaces/iristemrange.md) |
-| `LiteralStemReturn` | [*LiteralStem*](interfaces/literalstem.md) |
-| `LiteralStemRangeReturn` | [*LiteralStemRange*](interfaces/literalstemrange.md) |
-| `LanguageReturn` | [*Language*](interfaces/language.md) |
-| `LanguageStemReturn` | [*LanguageStem*](interfaces/languagestem.md) |
-| `LanguageStemRangeReturn` | [*LanguageStemRange*](interfaces/languagestemrange.md) |
-| `AnnotationsReturn` | AnnotationReturn[] |
-| `SemActsReturn` | SemActReturn[] |
+| `SchemaReturn` | Schema |
+| `ShapeOrReturn` | ShapeOr |
+| `ShapeAndReturn` | ShapeAnd |
+| `ShapeNotReturn` | ShapeNot |
+| `ShapeExternalReturn` | ShapeExternal |
+| `NodeConstraintReturn` | NodeConstraint |
+| `ObjectLiteralReturn` | ObjectLiteral |
+| `IriStemReturn` | IriStem |
+| `IriStemRangeReturn` | IriStemRange |
+| `LiteralStemReturn` | LiteralStem |
+| `LiteralStemRangeReturn` | LiteralStemRange |
+| `LanguageReturn` | Language |
+| `LanguageStemReturn` | LanguageStem |
+| `LanguageStemRangeReturn` | LanguageStemRange |
+| `WildcardReturn` | Wildcard |
+| `ShapeReturn` | Shape |
+| `EachOfReturn` | EachOf |
+| `OneOfReturn` | OneOf |
+| `TripleConstraintReturn` | TripleConstraint |
+| `SemActReturn` | SemAct |
+| `AnnotationReturn` | Annotation |
+| `shapeExprReturn` | *string* \| ShapeOrReturn \| ShapeAndReturn \| ShapeNotReturn \| ShapeExternalReturn \| NodeConstraintReturn \| ShapeReturn |
+| `valueSetValueReturn` | *string* \| ObjectLiteralReturn \| IriStemReturn \| IriStemRangeReturn \| LiteralStemReturn \| LiteralStemRangeReturn \| LanguageReturn \| LanguageStemReturn \| LanguageStemRangeReturn |
+| `tripleExprReturn` | *string* \| EachOfReturn \| OneOfReturn \| TripleConstraintReturn |
+| `Schema_startActsReturn` | SemActReturn[] |
+| `Schema_startReturn` | shapeExprReturn |
+| `Schema_shapesReturn` | shapeExprReturn[] |
+| `ShapeOr_shapeExprsReturn` | shapeExprReturn[] |
+| `ShapeAnd_shapeExprsReturn` | shapeExprReturn[] |
+| `ShapeNot_shapeExprReturn` | shapeExprReturn |
+| `NodeConstraint_valuesReturn` | valueSetValueReturn[] |
+| `IriStemRange_exclusionsReturn` | (*string* \| IriStemReturn)[] |
+| `LiteralStemRange_exclusionsReturn` | (*string* \| LiteralStemReturn)[] |
+| `LanguageStemRange_exclusionsReturn` | (*string* \| LanguageStemReturn)[] |
+| `Shape_expressionReturn` | tripleExprReturn |
+| `Shape_semActsReturn` | SemActReturn[] |
+| `Shape_AnnotationsReturn` | AnnotationReturn[] |
+| `EachOf_expressionsReturn` | tripleExprReturn[] |
+| `EachOf_semActsReturn` | SemActReturn[] |
+| `EachOf_AnnotationsReturn` | AnnotationReturn[] |
+| `OneOf_expressionsReturn` | tripleExprReturn[] |
+| `OneOf_semActsReturn` | SemActReturn[] |
+| `OneOf_AnnotationsReturn` | AnnotationReturn[] |
+| `TripleConstraint_valueExprReturn` | shapeExprReturn |
+| `TripleConstraint_semActsReturn` | SemActReturn[] |
+| `TripleConstraint_AnnotationsReturn` | AnnotationReturn[] |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `shexSchema` | [*Schema*](interfaces/schema.md) |
-| `transformers` | *Partial*<[*Transformers*](interfaces/transformers.md)<SchemaReturn, prefixesReturn, SemActReturn, shapeExprReturn, shapesReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeRefReturn, NodeConstraintReturn, ShapeReturn, valueSetValueReturn, tripleExprReturn, AnnotationReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn, AnnotationsReturn, SemActsReturn\>\> |
+| `shexSchema` | Schema |
+| `transformers` | *Partial*<[*Transformers*](interfaces/transformers.md)<SchemaReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeExternalReturn, NodeConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn, WildcardReturn, ShapeReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, SemActReturn, AnnotationReturn, shapeExprReturn, valueSetValueReturn, tripleExprReturn, Schema\_startActsReturn, Schema\_startReturn, Schema\_shapesReturn, ShapeOr\_shapeExprsReturn, ShapeAnd\_shapeExprsReturn, ShapeNot\_shapeExprReturn, NodeConstraint\_valuesReturn, IriStemRange\_exclusionsReturn, LiteralStemRange\_exclusionsReturn, LanguageStemRange\_exclusionsReturn, Shape\_expressionReturn, Shape\_semActsReturn, Shape\_AnnotationsReturn, EachOf\_expressionsReturn, EachOf\_semActsReturn, EachOf\_AnnotationsReturn, OneOf\_expressionsReturn, OneOf\_semActsReturn, OneOf\_AnnotationsReturn, TripleConstraint\_valueExprReturn, TripleConstraint\_semActsReturn, TripleConstraint\_AnnotationsReturn\>\> |
 
 **Returns:** *Promise*<SchemaReturn\>
 
-Defined in: [traverseShex.ts:32](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/traverseShex.ts#L32)
+Defined in: [traverseShex.ts:33](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/traverseShex.ts#L33)

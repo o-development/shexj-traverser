@@ -1,60 +1,42 @@
-import { shapeExprObject } from "./shexTypes";
 import Transformers from "./Transformers";
 
+function transformedReturn(_: unknown, transformed: any) {
+  return transformed
+}
+
 const defaultTransformers: Transformers = {
-  Schema: async (schema, transformmedChildren) => {
+  Schema: async (schema, transformedChildren) => {
     return {
       ...schema,
-      ...transformmedChildren,
+      ...transformedChildren,
     };
   },
-  prefixes: async (prefixes) => {
-    return prefixes;
+  ShapeOr: async (shapeOr, transformedChildren) => {
+    return {
+      ...shapeOr,
+      ...transformedChildren,
+    };
   },
-  SemAct: async (semAct) => {
-    return semAct;
+  ShapeAnd: async (shapeAnd, transformedChildren) => {
+    return {
+      ...shapeAnd,
+      ...transformedChildren,
+    };
   },
-  shapeExpr: async (shapeExpr, transformmedChild) => {
-    return transformmedChild;
+  ShapeNot: async (shapeNot, transformedChildren) => {
+    return {
+      ...shapeNot,
+      ...transformedChildren,
+    };
   },
-  shapes: async (shapes, transformedChildren) => {
-    return transformedChildren as Record<string, shapeExprObject>;
-  },
-  ShapeOr: async (shapeOr, transformmedChildren) => {
-    return { ...shapeOr, ...transformmedChildren };
-  },
-  ShapeAnd: async (shapeAnd, transformmedChildren) => {
-    return { ...shapeAnd, ...transformmedChildren };
-  },
-  ShapeNot: async (shapeNot, transformmedChild) => {
-    return { ...shapeNot, ...transformmedChild };
-  },
-  ShapeRef: async (shapeRef) => {
-    return shapeRef;
+  ShapeExternal: async (shapeExternal) => {
+    return shapeExternal;
   },
   NodeConstraint: async (nodeConstraint, transformedChildren) => {
-    return { ...nodeConstraint, ...transformedChildren };
-  },
-  Shape: async (shape, transformmedChildren) => {
-    return { ...shape, ...transformmedChildren };
-  },
-  valueSetValue: async (valueSetValue, transformmedChild) => {
-    return transformmedChild;
-  },
-  tripleExpr: async (tripleExpr, transformmedChild) => {
-    return transformmedChild;
-  },
-  Annotation: async (annotation) => {
-    return annotation;
-  },
-  EachOf: async (eachOf, transformedChildren) => {
-    return { ...eachOf, ...transformedChildren };
-  },
-  OneOf: async (oneOf, transformedChildren) => {
-    return { ...oneOf, ...transformedChildren };
-  },
-  TripleConstraint: async (tripleConstraint, transformmedChildren) => {
-    return { ...tripleConstraint, ...transformmedChildren };
+    return {
+      ...nodeConstraint,
+      ...transformedChildren,
+    };
   },
   ObjectLiteral: async (objectLiteral) => {
     return objectLiteral;
@@ -63,13 +45,19 @@ const defaultTransformers: Transformers = {
     return iriStem;
   },
   IriStemRange: async (iriStemRange, transformedChildren) => {
-    return { ...iriStemRange, ...transformedChildren };
+    return {
+      ...iriStemRange,
+      ...transformedChildren,
+    };
   },
   LiteralStem: async (literalStem) => {
     return literalStem;
   },
   LiteralStemRange: async (literalStemRange, transformedChildren) => {
-    return { ...literalStemRange, ...transformedChildren };
+    return {
+      ...literalStemRange,
+      ...transformedChildren,
+    };
   },
   Language: async (language) => {
     return language;
@@ -78,14 +66,69 @@ const defaultTransformers: Transformers = {
     return languageStem;
   },
   LanguageStemRange: async (languageStemRange, transformedChildren) => {
-    return { ...languageStemRange, ...transformedChildren };
+    return {
+      ...languageStemRange,
+      ...transformedChildren,
+    };
   },
-  Annotations: async (annotations, transformedChildren) => {
-    return transformedChildren;
+  Wildcard: async (wildcard) => {
+    return wildcard;
   },
-  SemActs: async (semActs, transformedChildren) => {
-    return transformedChildren;
+  Shape: async (shape, transformedChildren) => {
+    return {
+      ...shape,
+      ...transformedChildren,
+    };
   },
+  EachOf: async (eachOf, transformedChildren) => {
+    return {
+      ...eachOf,
+      ...transformedChildren,
+    };
+  },
+  OneOf: async (oneOf, transformedChildren) => {
+    return {
+      ...oneOf,
+      ...transformedChildren,
+    };
+  },
+  TripleConstraint: async (tripleConstraint, transformedChildren) => {
+    return {
+      ...tripleConstraint,
+      ...transformedChildren,
+    };
+  },
+  SemAct: async (semAct) => {
+    return semAct;
+  },
+  Annotation: async (annotation) => {
+    return annotation;
+  },
+  shapeExpr: transformedReturn,
+  valueSetValue: transformedReturn,
+  tripleExpr: transformedReturn,
+  Schema_startActs: transformedReturn,
+  Schema_start: transformedReturn,
+  Schema_shapes: transformedReturn,
+  ShapeOr_shapeExprs: transformedReturn,
+  ShapeAnd_shapeExprs: transformedReturn,
+  ShapeNot_shapeExpr: transformedReturn,
+  NodeConstraint_values: transformedReturn,
+  IriStemRange_exclusions: transformedReturn,
+  LiteralStemRange_exclusions: transformedReturn,
+  LanguageStemRange_exclusions: transformedReturn,
+  Shape_expression: transformedReturn,
+  Shape_semActs: transformedReturn,
+  Shape_Annotations: transformedReturn,
+  EachOf_expressions: transformedReturn,
+  EachOf_semActs: transformedReturn,
+  EachOf_Annotations: transformedReturn,
+  OneOf_expressions: transformedReturn,
+  OneOf_semActs: transformedReturn,
+  OneOf_Annotations: transformedReturn,
+  TripleConstraint_valueExpr: transformedReturn,
+  TripleConstraint_semActs: transformedReturn,
+  TripleConstraint_Annotations: transformedReturn,
 };
 
 export default defaultTransformers;

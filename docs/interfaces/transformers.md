@@ -1,68 +1,106 @@
 [shexj-traverser](../README.md) / [Exports](../modules.md) / Transformers
 
-# Interface: Transformers<SchemaReturn, prefixesReturn, SemActReturn, shapeExprReturn, shapesReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeRefReturn, NodeConstraintReturn, ShapeReturn, valueSetValueReturn, tripleExprReturn, AnnotationReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn, AnnotationsReturn, SemActsReturn\>
+# Interface: Transformers<SchemaReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeExternalReturn, NodeConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn, WildcardReturn, ShapeReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, SemActReturn, AnnotationReturn, shapeExprReturn, valueSetValueReturn, tripleExprReturn, Schema_startActsReturn, Schema_startReturn, Schema_shapesReturn, ShapeOr_shapeExprsReturn, ShapeAnd_shapeExprsReturn, ShapeNot_shapeExprReturn, NodeConstraint_valuesReturn, IriStemRange_exclusionsReturn, LiteralStemRange_exclusionsReturn, LanguageStemRange_exclusionsReturn, Shape_expressionReturn, Shape_semActsReturn, Shape_AnnotationsReturn, EachOf_expressionsReturn, EachOf_semActsReturn, EachOf_AnnotationsReturn, OneOf_expressionsReturn, OneOf_semActsReturn, OneOf_AnnotationsReturn, TripleConstraint_valueExprReturn, TripleConstraint_semActsReturn, TripleConstraint_AnnotationsReturn\>
 
 ## Type parameters
 
 | Name | Default |
 | :------ | :------ |
-| `SchemaReturn` | [*Schema*](schema.md) |
-| `prefixesReturn` | [*prefixes*](../modules.md#prefixes) |
-| `SemActReturn` | [*SemAct*](semact.md) |
-| `shapeExprReturn` | [*shapeExpr*](../modules.md#shapeexpr) |
-| `shapesReturn` | [*shapes*](../modules.md#shapes) |
-| `ShapeOrReturn` | [*ShapeOr*](shapeor.md) |
-| `ShapeAndReturn` | [*ShapeAnd*](shapeand.md) |
-| `ShapeNotReturn` | [*ShapeNot*](shapenot.md) |
-| `ShapeRefReturn` | [*ShapeRef*](shaperef.md) |
-| `NodeConstraintReturn` | [*NodeConstraint*](nodeconstraint.md) |
-| `ShapeReturn` | [*Shape*](shape.md) |
-| `valueSetValueReturn` | [*valueSetValue*](../modules.md#valuesetvalue) |
-| `tripleExprReturn` | [*tripleExpr*](../modules.md#tripleexpr) |
-| `AnnotationReturn` | [*Annotation*](annotation.md) |
-| `EachOfReturn` | [*EachOf*](eachof.md) |
-| `OneOfReturn` | [*OneOf*](oneof.md) |
-| `TripleConstraintReturn` | [*TripleConstraint*](tripleconstraint.md) |
-| `ObjectLiteralReturn` | [*ObjectLiteral*](objectliteral.md) |
-| `IriStemReturn` | [*IriStem*](iristem.md) |
-| `IriStemRangeReturn` | [*IriStemRange*](iristemrange.md) |
-| `LiteralStemReturn` | [*LiteralStem*](literalstem.md) |
-| `LiteralStemRangeReturn` | [*LiteralStemRange*](literalstemrange.md) |
-| `LanguageReturn` | [*Language*](language.md) |
-| `LanguageStemReturn` | [*LanguageStem*](languagestem.md) |
-| `LanguageStemRangeReturn` | [*LanguageStemRange*](languagestemrange.md) |
-| `AnnotationsReturn` | AnnotationReturn[] |
-| `SemActsReturn` | SemActReturn[] |
+| `SchemaReturn` | Schema |
+| `ShapeOrReturn` | ShapeOr |
+| `ShapeAndReturn` | ShapeAnd |
+| `ShapeNotReturn` | ShapeNot |
+| `ShapeExternalReturn` | ShapeExternal |
+| `NodeConstraintReturn` | NodeConstraint |
+| `ObjectLiteralReturn` | ObjectLiteral |
+| `IriStemReturn` | IriStem |
+| `IriStemRangeReturn` | IriStemRange |
+| `LiteralStemReturn` | LiteralStem |
+| `LiteralStemRangeReturn` | LiteralStemRange |
+| `LanguageReturn` | Language |
+| `LanguageStemReturn` | LanguageStem |
+| `LanguageStemRangeReturn` | LanguageStemRange |
+| `WildcardReturn` | Wildcard |
+| `ShapeReturn` | Shape |
+| `EachOfReturn` | EachOf |
+| `OneOfReturn` | OneOf |
+| `TripleConstraintReturn` | TripleConstraint |
+| `SemActReturn` | SemAct |
+| `AnnotationReturn` | Annotation |
+| `shapeExprReturn` | ShapeOrReturn \| ShapeAndReturn \| ShapeNotReturn \| NodeConstraintReturn \| ShapeReturn \| ShapeExternalReturn \| shapeExprRef |
+| `valueSetValueReturn` | IRIREF \| ObjectLiteralReturn \| IriStemReturn \| IriStemRangeReturn \| LiteralStemReturn \| LiteralStemRangeReturn \| LanguageReturn \| LanguageStemReturn \| LanguageStemRangeReturn |
+| `tripleExprReturn` | EachOfReturn \| OneOfReturn \| TripleConstraintReturn \| tripleExprRef |
+| `Schema_startActsReturn` | SemActReturn[] |
+| `Schema_startReturn` | shapeExprReturn |
+| `Schema_shapesReturn` | shapeExprReturn[] |
+| `ShapeOr_shapeExprsReturn` | shapeExprReturn[] |
+| `ShapeAnd_shapeExprsReturn` | shapeExprReturn[] |
+| `ShapeNot_shapeExprReturn` | shapeExprReturn |
+| `NodeConstraint_valuesReturn` | valueSetValueReturn[] |
+| `IriStemRange_exclusionsReturn` | (IRIREF \| IriStemReturn)[] |
+| `LiteralStemRange_exclusionsReturn` | (STRING \| LiteralStemReturn)[] |
+| `LanguageStemRange_exclusionsReturn` | (LANGTAG \| LanguageStemReturn)[] |
+| `Shape_expressionReturn` | tripleExprReturn |
+| `Shape_semActsReturn` | SemActReturn[] |
+| `Shape_AnnotationsReturn` | AnnotationReturn[] |
+| `EachOf_expressionsReturn` | tripleExprReturn[] |
+| `EachOf_semActsReturn` | SemActReturn[] |
+| `EachOf_AnnotationsReturn` | AnnotationReturn[] |
+| `OneOf_expressionsReturn` | tripleExprReturn[] |
+| `OneOf_semActsReturn` | SemActReturn[] |
+| `OneOf_AnnotationsReturn` | AnnotationReturn[] |
+| `TripleConstraint_valueExprReturn` | shapeExprReturn |
+| `TripleConstraint_semActsReturn` | SemActReturn[] |
+| `TripleConstraint_AnnotationsReturn` | AnnotationReturn[] |
 
 ## Table of contents
 
 ### Properties
 
 - [Annotation](transformers.md#annotation)
-- [Annotations](transformers.md#annotations)
 - [EachOf](transformers.md#eachof)
+- [EachOf\_Annotations](transformers.md#eachof_annotations)
+- [EachOf\_expressions](transformers.md#eachof_expressions)
+- [EachOf\_semActs](transformers.md#eachof_semacts)
 - [IriStem](transformers.md#iristem)
 - [IriStemRange](transformers.md#iristemrange)
+- [IriStemRange\_exclusions](transformers.md#iristemrange_exclusions)
 - [Language](transformers.md#language)
 - [LanguageStem](transformers.md#languagestem)
 - [LanguageStemRange](transformers.md#languagestemrange)
+- [LanguageStemRange\_exclusions](transformers.md#languagestemrange_exclusions)
 - [LiteralStem](transformers.md#literalstem)
 - [LiteralStemRange](transformers.md#literalstemrange)
+- [LiteralStemRange\_exclusions](transformers.md#literalstemrange_exclusions)
 - [NodeConstraint](transformers.md#nodeconstraint)
+- [NodeConstraint\_values](transformers.md#nodeconstraint_values)
 - [ObjectLiteral](transformers.md#objectliteral)
 - [OneOf](transformers.md#oneof)
+- [OneOf\_Annotations](transformers.md#oneof_annotations)
+- [OneOf\_expressions](transformers.md#oneof_expressions)
+- [OneOf\_semActs](transformers.md#oneof_semacts)
 - [Schema](transformers.md#schema)
+- [Schema\_shapes](transformers.md#schema_shapes)
+- [Schema\_start](transformers.md#schema_start)
+- [Schema\_startActs](transformers.md#schema_startacts)
 - [SemAct](transformers.md#semact)
-- [SemActs](transformers.md#semacts)
 - [Shape](transformers.md#shape)
 - [ShapeAnd](transformers.md#shapeand)
+- [ShapeAnd\_shapeExprs](transformers.md#shapeand_shapeexprs)
+- [ShapeExternal](transformers.md#shapeexternal)
 - [ShapeNot](transformers.md#shapenot)
+- [ShapeNot\_shapeExpr](transformers.md#shapenot_shapeexpr)
 - [ShapeOr](transformers.md#shapeor)
-- [ShapeRef](transformers.md#shaperef)
+- [ShapeOr\_shapeExprs](transformers.md#shapeor_shapeexprs)
+- [Shape\_Annotations](transformers.md#shape_annotations)
+- [Shape\_expression](transformers.md#shape_expression)
+- [Shape\_semActs](transformers.md#shape_semacts)
 - [TripleConstraint](transformers.md#tripleconstraint)
-- [prefixes](transformers.md#prefixes)
+- [TripleConstraint\_Annotations](transformers.md#tripleconstraint_annotations)
+- [TripleConstraint\_semActs](transformers.md#tripleconstraint_semacts)
+- [TripleConstraint\_valueExpr](transformers.md#tripleconstraint_valueexpr)
+- [Wildcard](transformers.md#wildcard)
 - [shapeExpr](transformers.md#shapeexpr)
-- [shapes](transformers.md#shapes)
 - [tripleExpr](transformers.md#tripleexpr)
 - [valueSetValue](transformers.md#valuesetvalue)
 
@@ -70,605 +108,1022 @@
 
 ### Annotation
 
-• **Annotation**: (`annotation`: [*Annotation*](annotation.md)<[*objectValue*](../modules.md#objectvalue)\>, `parentStack`: ParentTrace[]) => *Promise*<AnnotationReturn\>
+• **Annotation**: (`wildcard`: Annotation, `parentStack`: ParentTrace[]) => *Promise*<AnnotationReturn\>
 
 #### Type declaration
 
-▸ (`annotation`: [*Annotation*](annotation.md)<[*objectValue*](../modules.md#objectvalue)\>, `parentStack`: ParentTrace[]): *Promise*<AnnotationReturn\>
+▸ (`wildcard`: Annotation, `parentStack`: ParentTrace[]): *Promise*<AnnotationReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `annotation` | [*Annotation*](annotation.md)<[*objectValue*](../modules.md#objectvalue)\> |
+| `wildcard` | Annotation |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<AnnotationReturn\>
 
-Defined in: [Transformers.ts:149](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L149)
-
-___
-
-### Annotations
-
-• **Annotations**: (`annotations`: [*Annotation*](annotation.md)<[*objectValue*](../modules.md#objectvalue)\>[], `transformmed`: AnnotationReturn[], `parentStack`: ParentTrace[]) => *Promise*<AnnotationsReturn\>
-
-#### Type declaration
-
-▸ (`annotations`: [*Annotation*](annotation.md)<[*objectValue*](../modules.md#objectvalue)\>[], `transformmed`: AnnotationReturn[], `parentStack`: ParentTrace[]): *Promise*<AnnotationsReturn\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `annotations` | [*Annotation*](annotation.md)<[*objectValue*](../modules.md#objectvalue)\>[] |
-| `transformmed` | AnnotationReturn[] |
-| `parentStack` | ParentTrace[] |
-
-**Returns:** *Promise*<AnnotationsReturn\>
-
-Defined in: [Transformers.ts:215](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L215)
+Defined in: [Transformers.ts:223](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L223)
 
 ___
 
 ### EachOf
 
-• **EachOf**: (`eachOf`: [*EachOf*](eachof.md), `transformmedChildren`: { `annotations?`: AnnotationsReturn ; `expressions?`: tripleExprReturn[] ; `semActs?`: SemActsReturn  }, `parentStack`: ParentTrace[]) => *Promise*<EachOfReturn\>
+• **EachOf**: (`eachOf`: EachOf, `transformedChildren`: { `annotations?`: EachOf\_AnnotationsReturn ; `expressions`: EachOf\_expressionsReturn ; `semActs?`: EachOf\_semActsReturn  }, `parentStack`: ParentTrace[]) => *Promise*<EachOfReturn\>
 
 #### Type declaration
 
-▸ (`eachOf`: [*EachOf*](eachof.md), `transformmedChildren`: { `annotations?`: AnnotationsReturn ; `expressions?`: tripleExprReturn[] ; `semActs?`: SemActsReturn  }, `parentStack`: ParentTrace[]): *Promise*<EachOfReturn\>
+▸ (`eachOf`: EachOf, `transformedChildren`: { `annotations?`: EachOf\_AnnotationsReturn ; `expressions`: EachOf\_expressionsReturn ; `semActs?`: EachOf\_semActsReturn  }, `parentStack`: ParentTrace[]): *Promise*<EachOfReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `eachOf` | [*EachOf*](eachof.md) |
-| `transformmedChildren` | *object* |
-| `transformmedChildren.annotations?` | AnnotationsReturn |
-| `transformmedChildren.expressions?` | tripleExprReturn[] |
-| `transformmedChildren.semActs?` | SemActsReturn |
+| `eachOf` | EachOf |
+| `transformedChildren` | *object* |
+| `transformedChildren.annotations?` | EachOf\_AnnotationsReturn |
+| `transformedChildren.expressions` | EachOf\_expressionsReturn |
+| `transformedChildren.semActs?` | EachOf\_semActsReturn |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<EachOfReturn\>
 
-Defined in: [Transformers.ts:153](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L153)
+Defined in: [Transformers.ts:192](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L192)
+
+___
+
+### EachOf\_Annotations
+
+• **EachOf\_Annotations**: (`annotations`: Annotation[], `transformed`: AnnotationReturn[], `parentStack`: ParentTrace[]) => *Promise*<EachOf\_AnnotationsReturn\>
+
+#### Type declaration
+
+▸ (`annotations`: Annotation[], `transformed`: AnnotationReturn[], `parentStack`: ParentTrace[]): *Promise*<EachOf\_AnnotationsReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `annotations` | Annotation[] |
+| `transformed` | AnnotationReturn[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<EachOf\_AnnotationsReturn\>
+
+Defined in: [Transformers.ts:339](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L339)
+
+___
+
+### EachOf\_expressions
+
+• **EachOf\_expressions**: (`expressions`: tripleExpr[], `transformed`: tripleExprReturn[], `parentStack`: ParentTrace[]) => *Promise*<EachOf\_expressionsReturn\>
+
+#### Type declaration
+
+▸ (`expressions`: tripleExpr[], `transformed`: tripleExprReturn[], `parentStack`: ParentTrace[]): *Promise*<EachOf\_expressionsReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `expressions` | tripleExpr[] |
+| `transformed` | tripleExprReturn[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<EachOf\_expressionsReturn\>
+
+Defined in: [Transformers.ts:329](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L329)
+
+___
+
+### EachOf\_semActs
+
+• **EachOf\_semActs**: (`semActs`: SemAct[], `transformed`: SemActReturn[], `parentStack`: ParentTrace[]) => *Promise*<EachOf\_semActsReturn\>
+
+#### Type declaration
+
+▸ (`semActs`: SemAct[], `transformed`: SemActReturn[], `parentStack`: ParentTrace[]): *Promise*<EachOf\_semActsReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `semActs` | SemAct[] |
+| `transformed` | SemActReturn[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<EachOf\_semActsReturn\>
+
+Defined in: [Transformers.ts:334](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L334)
 
 ___
 
 ### IriStem
 
-• **IriStem**: (`iriStem`: [*IriStem*](iristem.md), `parentStack`: ParentTrace[]) => *Promise*<IriStemReturn\>
+• **IriStem**: (`iriStem`: IriStem, `parentStack`: ParentTrace[]) => *Promise*<IriStemReturn\>
 
 #### Type declaration
 
-▸ (`iriStem`: [*IriStem*](iristem.md), `parentStack`: ParentTrace[]): *Promise*<IriStemReturn\>
+▸ (`iriStem`: IriStem, `parentStack`: ParentTrace[]): *Promise*<IriStemReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `iriStem` | [*IriStem*](iristem.md) |
+| `iriStem` | IriStem |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<IriStemReturn\>
 
-Defined in: [Transformers.ts:184](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L184)
+Defined in: [Transformers.ts:148](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L148)
 
 ___
 
 ### IriStemRange
 
-• **IriStemRange**: (`iriStemRange`: [*IriStemRange*](iristemrange.md), `transformmedChildren`: { `exclusions`: (*string* \| IriStemReturn)[]  }, `parentStack`: ParentTrace[]) => *Promise*<IriStemRangeReturn\>
+• **IriStemRange**: (`iriStemRange`: IriStemRange, `transformedChildren`: { `exclusions`: IriStemRange\_exclusionsReturn  }, `parentStack`: ParentTrace[]) => *Promise*<IriStemRangeReturn\>
 
 #### Type declaration
 
-▸ (`iriStemRange`: [*IriStemRange*](iristemrange.md), `transformmedChildren`: { `exclusions`: (*string* \| IriStemReturn)[]  }, `parentStack`: ParentTrace[]): *Promise*<IriStemRangeReturn\>
+▸ (`iriStemRange`: IriStemRange, `transformedChildren`: { `exclusions`: IriStemRange\_exclusionsReturn  }, `parentStack`: ParentTrace[]): *Promise*<IriStemRangeReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `iriStemRange` | [*IriStemRange*](iristemrange.md) |
-| `transformmedChildren` | *object* |
-| `transformmedChildren.exclusions` | (*string* \| IriStemReturn)[] |
+| `iriStemRange` | IriStemRange |
+| `transformedChildren` | *object* |
+| `transformedChildren.exclusions` | IriStemRange\_exclusionsReturn |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<IriStemRangeReturn\>
 
-Defined in: [Transformers.ts:188](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L188)
+Defined in: [Transformers.ts:152](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L152)
+
+___
+
+### IriStemRange\_exclusions
+
+• **IriStemRange\_exclusions**: (`exclusions`: (*string* \| IriStem)[], `transformed`: (*string* \| IriStemReturn)[], `parentStack`: ParentTrace[]) => *Promise*<IriStemRange\_exclusionsReturn\>
+
+#### Type declaration
+
+▸ (`exclusions`: (*string* \| IriStem)[], `transformed`: (*string* \| IriStemReturn)[], `parentStack`: ParentTrace[]): *Promise*<IriStemRange\_exclusionsReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `exclusions` | (*string* \| IriStem)[] |
+| `transformed` | (*string* \| IriStemReturn)[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<IriStemRange\_exclusionsReturn\>
+
+Defined in: [Transformers.ts:299](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L299)
 
 ___
 
 ### Language
 
-• **Language**: (`language`: [*Language*](language.md), `parentStack`: ParentTrace[]) => *Promise*<LanguageReturn\>
+• **Language**: (`language`: Language, `parentStack`: ParentTrace[]) => *Promise*<LanguageReturn\>
 
 #### Type declaration
 
-▸ (`language`: [*Language*](language.md), `parentStack`: ParentTrace[]): *Promise*<LanguageReturn\>
+▸ (`language`: Language, `parentStack`: ParentTrace[]): *Promise*<LanguageReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `language` | [*Language*](language.md) |
+| `language` | Language |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<LanguageReturn\>
 
-Defined in: [Transformers.ts:202](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L202)
+Defined in: [Transformers.ts:166](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L166)
 
 ___
 
 ### LanguageStem
 
-• **LanguageStem**: (`languageStem`: [*LanguageStem*](languagestem.md), `parentStack`: ParentTrace[]) => *Promise*<LanguageStemReturn\>
+• **LanguageStem**: (`languageStem`: LanguageStem, `parentStack`: ParentTrace[]) => *Promise*<LanguageStemReturn\>
 
 #### Type declaration
 
-▸ (`languageStem`: [*LanguageStem*](languagestem.md), `parentStack`: ParentTrace[]): *Promise*<LanguageStemReturn\>
+▸ (`languageStem`: LanguageStem, `parentStack`: ParentTrace[]): *Promise*<LanguageStemReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `languageStem` | [*LanguageStem*](languagestem.md) |
+| `languageStem` | LanguageStem |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<LanguageStemReturn\>
 
-Defined in: [Transformers.ts:206](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L206)
+Defined in: [Transformers.ts:170](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L170)
 
 ___
 
 ### LanguageStemRange
 
-• **LanguageStemRange**: (`languageStemRange`: [*LanguageStemRange*](languagestemrange.md), `transformmedChildren`: { `exclusions`: (*string* \| LanguageStemReturn)[]  }, `parentStack`: ParentTrace[]) => *Promise*<LanguageStemRangeReturn\>
+• **LanguageStemRange**: (`languageStemRange`: LanguageStemRange, `transformedChildren`: { `exclusions`: LanguageStemRange\_exclusionsReturn  }, `parentStack`: ParentTrace[]) => *Promise*<LanguageStemRangeReturn\>
 
 #### Type declaration
 
-▸ (`languageStemRange`: [*LanguageStemRange*](languagestemrange.md), `transformmedChildren`: { `exclusions`: (*string* \| LanguageStemReturn)[]  }, `parentStack`: ParentTrace[]): *Promise*<LanguageStemRangeReturn\>
+▸ (`languageStemRange`: LanguageStemRange, `transformedChildren`: { `exclusions`: LanguageStemRange\_exclusionsReturn  }, `parentStack`: ParentTrace[]): *Promise*<LanguageStemRangeReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `languageStemRange` | [*LanguageStemRange*](languagestemrange.md) |
-| `transformmedChildren` | *object* |
-| `transformmedChildren.exclusions` | (*string* \| LanguageStemReturn)[] |
+| `languageStemRange` | LanguageStemRange |
+| `transformedChildren` | *object* |
+| `transformedChildren.exclusions` | LanguageStemRange\_exclusionsReturn |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<LanguageStemRangeReturn\>
 
-Defined in: [Transformers.ts:210](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L210)
+Defined in: [Transformers.ts:174](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L174)
+
+___
+
+### LanguageStemRange\_exclusions
+
+• **LanguageStemRange\_exclusions**: (`exclusions`: (*string* \| LanguageStem)[], `transformed`: (*string* \| LanguageStemReturn)[], `parentStack`: ParentTrace[]) => *Promise*<LanguageStemRange\_exclusionsReturn\>
+
+#### Type declaration
+
+▸ (`exclusions`: (*string* \| LanguageStem)[], `transformed`: (*string* \| LanguageStemReturn)[], `parentStack`: ParentTrace[]): *Promise*<LanguageStemRange\_exclusionsReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `exclusions` | (*string* \| LanguageStem)[] |
+| `transformed` | (*string* \| LanguageStemReturn)[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<LanguageStemRange\_exclusionsReturn\>
+
+Defined in: [Transformers.ts:309](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L309)
 
 ___
 
 ### LiteralStem
 
-• **LiteralStem**: (`literalStem`: [*LiteralStem*](literalstem.md), `parentStack`: ParentTrace[]) => *Promise*<LiteralStemReturn\>
+• **LiteralStem**: (`literalStem`: LiteralStem, `parentStack`: ParentTrace[]) => *Promise*<LiteralStemReturn\>
 
 #### Type declaration
 
-▸ (`literalStem`: [*LiteralStem*](literalstem.md), `parentStack`: ParentTrace[]): *Promise*<LiteralStemReturn\>
+▸ (`literalStem`: LiteralStem, `parentStack`: ParentTrace[]): *Promise*<LiteralStemReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `literalStem` | [*LiteralStem*](literalstem.md) |
+| `literalStem` | LiteralStem |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<LiteralStemReturn\>
 
-Defined in: [Transformers.ts:193](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L193)
+Defined in: [Transformers.ts:157](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L157)
 
 ___
 
 ### LiteralStemRange
 
-• **LiteralStemRange**: (`literalStemRange`: [*LiteralStemRange*](literalstemrange.md), `transformmedChildren`: { `exclusions`: (*string* \| LiteralStemReturn)[]  }, `parentStack`: ParentTrace[]) => *Promise*<LiteralStemRangeReturn\>
+• **LiteralStemRange**: (`literalStemRange`: LiteralStemRange, `transformedChildren`: { `exclusions`: LiteralStemRange\_exclusionsReturn  }, `parentStack`: ParentTrace[]) => *Promise*<LiteralStemRangeReturn\>
 
 #### Type declaration
 
-▸ (`literalStemRange`: [*LiteralStemRange*](literalstemrange.md), `transformmedChildren`: { `exclusions`: (*string* \| LiteralStemReturn)[]  }, `parentStack`: ParentTrace[]): *Promise*<LiteralStemRangeReturn\>
+▸ (`literalStemRange`: LiteralStemRange, `transformedChildren`: { `exclusions`: LiteralStemRange\_exclusionsReturn  }, `parentStack`: ParentTrace[]): *Promise*<LiteralStemRangeReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `literalStemRange` | [*LiteralStemRange*](literalstemrange.md) |
-| `transformmedChildren` | *object* |
-| `transformmedChildren.exclusions` | (*string* \| LiteralStemReturn)[] |
+| `literalStemRange` | LiteralStemRange |
+| `transformedChildren` | *object* |
+| `transformedChildren.exclusions` | LiteralStemRange\_exclusionsReturn |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<LiteralStemRangeReturn\>
 
-Defined in: [Transformers.ts:197](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L197)
+Defined in: [Transformers.ts:161](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L161)
+
+___
+
+### LiteralStemRange\_exclusions
+
+• **LiteralStemRange\_exclusions**: (`exclusions`: (*string* \| LiteralStem)[], `transformed`: (*string* \| LiteralStemReturn)[], `parentStack`: ParentTrace[]) => *Promise*<LiteralStemRange\_exclusionsReturn\>
+
+#### Type declaration
+
+▸ (`exclusions`: (*string* \| LiteralStem)[], `transformed`: (*string* \| LiteralStemReturn)[], `parentStack`: ParentTrace[]): *Promise*<LiteralStemRange\_exclusionsReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `exclusions` | (*string* \| LiteralStem)[] |
+| `transformed` | (*string* \| LiteralStemReturn)[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<LiteralStemRange\_exclusionsReturn\>
+
+Defined in: [Transformers.ts:304](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L304)
 
 ___
 
 ### NodeConstraint
 
-• **NodeConstraint**: (`nodeConstraint`: [*NodeConstraint*](nodeconstraint.md), `transformmedChildren`: { `values?`: valueSetValueReturn[]  }, `parentStack`: ParentTrace[]) => *Promise*<NodeConstraintReturn\>
+• **NodeConstraint**: (`nodeConstraint`: NodeConstraint, `transformedChildren`: { `values?`: NodeConstraint\_valuesReturn  }, `parentStack`: ParentTrace[]) => *Promise*<NodeConstraintReturn\>
 
 #### Type declaration
 
-▸ (`nodeConstraint`: [*NodeConstraint*](nodeconstraint.md), `transformmedChildren`: { `values?`: valueSetValueReturn[]  }, `parentStack`: ParentTrace[]): *Promise*<NodeConstraintReturn\>
+▸ (`nodeConstraint`: NodeConstraint, `transformedChildren`: { `values?`: NodeConstraint\_valuesReturn  }, `parentStack`: ParentTrace[]): *Promise*<NodeConstraintReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `nodeConstraint` | [*NodeConstraint*](nodeconstraint.md) |
-| `transformmedChildren` | *object* |
-| `transformmedChildren.values?` | valueSetValueReturn[] |
+| `nodeConstraint` | NodeConstraint |
+| `transformedChildren` | *object* |
+| `transformedChildren.values?` | NodeConstraint\_valuesReturn |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<NodeConstraintReturn\>
 
-Defined in: [Transformers.ts:112](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L112)
+Defined in: [Transformers.ts:139](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L139)
+
+___
+
+### NodeConstraint\_values
+
+• **NodeConstraint\_values**: (`values`: valueSetValue[], `transformed`: valueSetValueReturn[], `parentStack`: ParentTrace[]) => *Promise*<NodeConstraint\_valuesReturn\>
+
+#### Type declaration
+
+▸ (`values`: valueSetValue[], `transformed`: valueSetValueReturn[], `parentStack`: ParentTrace[]): *Promise*<NodeConstraint\_valuesReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `values` | valueSetValue[] |
+| `transformed` | valueSetValueReturn[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<NodeConstraint\_valuesReturn\>
+
+Defined in: [Transformers.ts:294](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L294)
 
 ___
 
 ### ObjectLiteral
 
-• **ObjectLiteral**: (`objectLiteral`: [*ObjectLiteral*](objectliteral.md), `parentStack`: ParentTrace[]) => *Promise*<ObjectLiteralReturn\>
+• **ObjectLiteral**: (`objectLiteral`: ObjectLiteral, `parentStack`: ParentTrace[]) => *Promise*<ObjectLiteralReturn\>
 
 #### Type declaration
 
-▸ (`objectLiteral`: [*ObjectLiteral*](objectliteral.md), `parentStack`: ParentTrace[]): *Promise*<ObjectLiteralReturn\>
+▸ (`objectLiteral`: ObjectLiteral, `parentStack`: ParentTrace[]): *Promise*<ObjectLiteralReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `objectLiteral` | [*ObjectLiteral*](objectliteral.md) |
+| `objectLiteral` | ObjectLiteral |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<ObjectLiteralReturn\>
 
-Defined in: [Transformers.ts:180](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L180)
+Defined in: [Transformers.ts:144](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L144)
 
 ___
 
 ### OneOf
 
-• **OneOf**: (`oneOf`: [*OneOf*](oneof.md), `transformmedChildren`: { `annotations?`: AnnotationsReturn ; `expressions?`: tripleExprReturn[] ; `semActs?`: SemActsReturn  }, `parentStack`: ParentTrace[]) => *Promise*<OneOfReturn\>
+• **OneOf**: (`eachOf`: OneOf, `transformedChildren`: { `annotations?`: OneOf\_AnnotationsReturn ; `expressions`: OneOf\_expressionsReturn ; `semActs?`: OneOf\_semActsReturn  }, `parentStack`: ParentTrace[]) => *Promise*<OneOfReturn\>
 
 #### Type declaration
 
-▸ (`oneOf`: [*OneOf*](oneof.md), `transformmedChildren`: { `annotations?`: AnnotationsReturn ; `expressions?`: tripleExprReturn[] ; `semActs?`: SemActsReturn  }, `parentStack`: ParentTrace[]): *Promise*<OneOfReturn\>
+▸ (`eachOf`: OneOf, `transformedChildren`: { `annotations?`: OneOf\_AnnotationsReturn ; `expressions`: OneOf\_expressionsReturn ; `semActs?`: OneOf\_semActsReturn  }, `parentStack`: ParentTrace[]): *Promise*<OneOfReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `oneOf` | [*OneOf*](oneof.md) |
-| `transformmedChildren` | *object* |
-| `transformmedChildren.annotations?` | AnnotationsReturn |
-| `transformmedChildren.expressions?` | tripleExprReturn[] |
-| `transformmedChildren.semActs?` | SemActsReturn |
+| `eachOf` | OneOf |
+| `transformedChildren` | *object* |
+| `transformedChildren.annotations?` | OneOf\_AnnotationsReturn |
+| `transformedChildren.expressions` | OneOf\_expressionsReturn |
+| `transformedChildren.semActs?` | OneOf\_semActsReturn |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<OneOfReturn\>
 
-Defined in: [Transformers.ts:162](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L162)
+Defined in: [Transformers.ts:201](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L201)
+
+___
+
+### OneOf\_Annotations
+
+• **OneOf\_Annotations**: (`annotations`: Annotation[], `transformed`: AnnotationReturn[], `parentStack`: ParentTrace[]) => *Promise*<OneOf\_AnnotationsReturn\>
+
+#### Type declaration
+
+▸ (`annotations`: Annotation[], `transformed`: AnnotationReturn[], `parentStack`: ParentTrace[]): *Promise*<OneOf\_AnnotationsReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `annotations` | Annotation[] |
+| `transformed` | AnnotationReturn[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<OneOf\_AnnotationsReturn\>
+
+Defined in: [Transformers.ts:354](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L354)
+
+___
+
+### OneOf\_expressions
+
+• **OneOf\_expressions**: (`expressions`: tripleExpr[], `transformed`: tripleExprReturn[], `parentStack`: ParentTrace[]) => *Promise*<OneOf\_expressionsReturn\>
+
+#### Type declaration
+
+▸ (`expressions`: tripleExpr[], `transformed`: tripleExprReturn[], `parentStack`: ParentTrace[]): *Promise*<OneOf\_expressionsReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `expressions` | tripleExpr[] |
+| `transformed` | tripleExprReturn[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<OneOf\_expressionsReturn\>
+
+Defined in: [Transformers.ts:344](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L344)
+
+___
+
+### OneOf\_semActs
+
+• **OneOf\_semActs**: (`semActs`: SemAct[], `transformed`: SemActReturn[], `parentStack`: ParentTrace[]) => *Promise*<OneOf\_semActsReturn\>
+
+#### Type declaration
+
+▸ (`semActs`: SemAct[], `transformed`: SemActReturn[], `parentStack`: ParentTrace[]): *Promise*<OneOf\_semActsReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `semActs` | SemAct[] |
+| `transformed` | SemActReturn[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<OneOf\_semActsReturn\>
+
+Defined in: [Transformers.ts:349](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L349)
 
 ___
 
 ### Schema
 
-• **Schema**: (`schema`: [*Schema*](schema.md), `transformmedChildren`: { `prefixes?`: prefixesReturn ; `shapes?`: shapesReturn ; `start?`: shapeExprReturn ; `startActs?`: SemActReturn[]  }) => *Promise*<SchemaReturn\>
+• **Schema**: (`schema`: Schema, `transformedChildren`: { `shapes?`: Schema\_shapesReturn ; `start?`: Schema\_startReturn ; `startActs?`: Schema\_startActsReturn  }) => *Promise*<SchemaReturn\>
 
 #### Type declaration
 
-▸ (`schema`: [*Schema*](schema.md), `transformmedChildren`: { `prefixes?`: prefixesReturn ; `shapes?`: shapesReturn ; `start?`: shapeExprReturn ; `startActs?`: SemActReturn[]  }): *Promise*<SchemaReturn\>
+▸ (`schema`: Schema, `transformedChildren`: { `shapes?`: Schema\_shapesReturn ; `start?`: Schema\_startReturn ; `startActs?`: Schema\_startActsReturn  }): *Promise*<SchemaReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `schema` | [*Schema*](schema.md) |
-| `transformmedChildren` | *object* |
-| `transformmedChildren.prefixes?` | prefixesReturn |
-| `transformmedChildren.shapes?` | shapesReturn |
-| `transformmedChildren.start?` | shapeExprReturn |
-| `transformmedChildren.startActs?` | SemActReturn[] |
+| `schema` | Schema |
+| `transformedChildren` | *object* |
+| `transformedChildren.shapes?` | Schema\_shapesReturn |
+| `transformedChildren.start?` | Schema\_startReturn |
+| `transformedChildren.startActs?` | Schema\_startActsReturn |
 
 **Returns:** *Promise*<SchemaReturn\>
 
-Defined in: [Transformers.ts:65](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L65)
+Defined in: [Transformers.ts:112](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L112)
+
+___
+
+### Schema\_shapes
+
+• **Schema\_shapes**: (`shapes`: shapeExpr[], `transformed`: shapeExprReturn[], `parentStack`: ParentTrace[]) => *Promise*<Schema\_shapesReturn\>
+
+#### Type declaration
+
+▸ (`shapes`: shapeExpr[], `transformed`: shapeExprReturn[], `parentStack`: ParentTrace[]): *Promise*<Schema\_shapesReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shapes` | shapeExpr[] |
+| `transformed` | shapeExprReturn[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<Schema\_shapesReturn\>
+
+Defined in: [Transformers.ts:274](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L274)
+
+___
+
+### Schema\_start
+
+• **Schema\_start**: (`shapeExpr`: shapeExpr, `transformed`: shapeExprReturn, `parentStack`: ParentTrace[]) => *Promise*<Schema\_startReturn\>
+
+#### Type declaration
+
+▸ (`shapeExpr`: shapeExpr, `transformed`: shapeExprReturn, `parentStack`: ParentTrace[]): *Promise*<Schema\_startReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shapeExpr` | shapeExpr |
+| `transformed` | shapeExprReturn |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<Schema\_startReturn\>
+
+Defined in: [Transformers.ts:269](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L269)
+
+___
+
+### Schema\_startActs
+
+• **Schema\_startActs**: (`semActs`: SemAct[], `transformed`: SemActReturn[], `parentStack`: ParentTrace[]) => *Promise*<Schema\_startActsReturn\>
+
+#### Type declaration
+
+▸ (`semActs`: SemAct[], `transformed`: SemActReturn[], `parentStack`: ParentTrace[]): *Promise*<Schema\_startActsReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `semActs` | SemAct[] |
+| `transformed` | SemActReturn[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<Schema\_startActsReturn\>
+
+Defined in: [Transformers.ts:264](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L264)
 
 ___
 
 ### SemAct
 
-• **SemAct**: (`semAct`: [*SemAct*](semact.md), `parentStack`: ParentTrace[]) => *Promise*<SemActReturn\>
+• **SemAct**: (`wildcard`: SemAct, `parentStack`: ParentTrace[]) => *Promise*<SemActReturn\>
 
 #### Type declaration
 
-▸ (`semAct`: [*SemAct*](semact.md), `parentStack`: ParentTrace[]): *Promise*<SemActReturn\>
+▸ (`wildcard`: SemAct, `parentStack`: ParentTrace[]): *Promise*<SemActReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `semAct` | [*SemAct*](semact.md) |
+| `wildcard` | SemAct |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<SemActReturn\>
 
-Defined in: [Transformers.ts:78](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L78)
-
-___
-
-### SemActs
-
-• **SemActs**: (`semActs`: [*SemAct*](semact.md)[], `transformmed`: SemActReturn[], `parentStack`: ParentTrace[]) => *Promise*<SemActsReturn\>
-
-#### Type declaration
-
-▸ (`semActs`: [*SemAct*](semact.md)[], `transformmed`: SemActReturn[], `parentStack`: ParentTrace[]): *Promise*<SemActsReturn\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `semActs` | [*SemAct*](semact.md)[] |
-| `transformmed` | SemActReturn[] |
-| `parentStack` | ParentTrace[] |
-
-**Returns:** *Promise*<SemActsReturn\>
-
-Defined in: [Transformers.ts:220](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L220)
+Defined in: [Transformers.ts:219](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L219)
 
 ___
 
 ### Shape
 
-• **Shape**: (`shape`: [*Shape*](shape.md), `transformmedChildren`: { `annotations?`: AnnotationsReturn ; `expression?`: tripleExprReturn ; `semActs?`: SemActsReturn  }, `parentStack`: ParentTrace[]) => *Promise*<ShapeReturn\>
+• **Shape**: (`shape`: Shape, `transformedChildren`: { `annotations?`: Shape\_AnnotationsReturn ; `expression?`: Shape\_expressionReturn ; `semActs?`: Shape\_semActsReturn  }, `parentStack`: ParentTrace[]) => *Promise*<ShapeReturn\>
 
 #### Type declaration
 
-▸ (`shape`: [*Shape*](shape.md), `transformmedChildren`: { `annotations?`: AnnotationsReturn ; `expression?`: tripleExprReturn ; `semActs?`: SemActsReturn  }, `parentStack`: ParentTrace[]): *Promise*<ShapeReturn\>
+▸ (`shape`: Shape, `transformedChildren`: { `annotations?`: Shape\_AnnotationsReturn ; `expression?`: Shape\_expressionReturn ; `semActs?`: Shape\_semActsReturn  }, `parentStack`: ParentTrace[]): *Promise*<ShapeReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `shape` | [*Shape*](shape.md) |
-| `transformmedChildren` | *object* |
-| `transformmedChildren.annotations?` | AnnotationsReturn |
-| `transformmedChildren.expression?` | tripleExprReturn |
-| `transformmedChildren.semActs?` | SemActsReturn |
+| `shape` | Shape |
+| `transformedChildren` | *object* |
+| `transformedChildren.annotations?` | Shape\_AnnotationsReturn |
+| `transformedChildren.expression?` | Shape\_expressionReturn |
+| `transformedChildren.semActs?` | Shape\_semActsReturn |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<ShapeReturn\>
 
-Defined in: [Transformers.ts:117](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L117)
+Defined in: [Transformers.ts:183](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L183)
 
 ___
 
 ### ShapeAnd
 
-• **ShapeAnd**: (`shapeAnd`: [*ShapeAnd*](shapeand.md), `transformmedChildren`: { `shapeExprs`: shapeExprReturn[]  }, `parentStack`: ParentTrace[]) => *Promise*<ShapeAndReturn\>
+• **ShapeAnd**: (`shapeOr`: ShapeAnd, `transformedChildren`: { `shapeExprs`: ShapeAnd\_shapeExprsReturn  }, `parentStack`: ParentTrace[]) => *Promise*<ShapeAndReturn\>
 
 #### Type declaration
 
-▸ (`shapeAnd`: [*ShapeAnd*](shapeand.md), `transformmedChildren`: { `shapeExprs`: shapeExprReturn[]  }, `parentStack`: ParentTrace[]): *Promise*<ShapeAndReturn\>
+▸ (`shapeOr`: ShapeAnd, `transformedChildren`: { `shapeExprs`: ShapeAnd\_shapeExprsReturn  }, `parentStack`: ParentTrace[]): *Promise*<ShapeAndReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `shapeAnd` | [*ShapeAnd*](shapeand.md) |
-| `transformmedChildren` | *object* |
-| `transformmedChildren.shapeExprs` | shapeExprReturn[] |
+| `shapeOr` | ShapeAnd |
+| `transformedChildren` | *object* |
+| `transformedChildren.shapeExprs` | ShapeAnd\_shapeExprsReturn |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<ShapeAndReturn\>
 
-Defined in: [Transformers.ts:101](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L101)
+Defined in: [Transformers.ts:125](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L125)
+
+___
+
+### ShapeAnd\_shapeExprs
+
+• **ShapeAnd\_shapeExprs**: (`shapeExprs`: shapeExpr[], `transformed`: shapeExprReturn[], `parentStack`: ParentTrace[]) => *Promise*<ShapeAnd\_shapeExprsReturn\>
+
+#### Type declaration
+
+▸ (`shapeExprs`: shapeExpr[], `transformed`: shapeExprReturn[], `parentStack`: ParentTrace[]): *Promise*<ShapeAnd\_shapeExprsReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shapeExprs` | shapeExpr[] |
+| `transformed` | shapeExprReturn[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<ShapeAnd\_shapeExprsReturn\>
+
+Defined in: [Transformers.ts:284](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L284)
+
+___
+
+### ShapeExternal
+
+• **ShapeExternal**: (`shapeExternal`: ShapeExternal, `parentStack`: ParentTrace[]) => *Promise*<ShapeExternalReturn\>
+
+#### Type declaration
+
+▸ (`shapeExternal`: ShapeExternal, `parentStack`: ParentTrace[]): *Promise*<ShapeExternalReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shapeExternal` | ShapeExternal |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<ShapeExternalReturn\>
+
+Defined in: [Transformers.ts:135](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L135)
 
 ___
 
 ### ShapeNot
 
-• **ShapeNot**: (`shapeNot`: [*ShapeNot*](shapenot.md), `transformmedChild`: { `shapeExpr`: shapeExprReturn  }, `parentStack`: ParentTrace[]) => *Promise*<ShapeNotReturn\>
+• **ShapeNot**: (`shapeOr`: ShapeNot, `transformedChildren`: { `shapeExpr`: ShapeNot\_shapeExprReturn  }, `parentStack`: ParentTrace[]) => *Promise*<ShapeNotReturn\>
 
 #### Type declaration
 
-▸ (`shapeNot`: [*ShapeNot*](shapenot.md), `transformmedChild`: { `shapeExpr`: shapeExprReturn  }, `parentStack`: ParentTrace[]): *Promise*<ShapeNotReturn\>
+▸ (`shapeOr`: ShapeNot, `transformedChildren`: { `shapeExpr`: ShapeNot\_shapeExprReturn  }, `parentStack`: ParentTrace[]): *Promise*<ShapeNotReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `shapeNot` | [*ShapeNot*](shapenot.md) |
-| `transformmedChild` | *object* |
-| `transformmedChild.shapeExpr` | shapeExprReturn |
+| `shapeOr` | ShapeNot |
+| `transformedChildren` | *object* |
+| `transformedChildren.shapeExpr` | ShapeNot\_shapeExprReturn |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<ShapeNotReturn\>
 
-Defined in: [Transformers.ts:106](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L106)
+Defined in: [Transformers.ts:130](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L130)
+
+___
+
+### ShapeNot\_shapeExpr
+
+• **ShapeNot\_shapeExpr**: (`shapeExpr`: shapeExpr, `transformed`: shapeExprReturn, `parentStack`: ParentTrace[]) => *Promise*<ShapeNot\_shapeExprReturn\>
+
+#### Type declaration
+
+▸ (`shapeExpr`: shapeExpr, `transformed`: shapeExprReturn, `parentStack`: ParentTrace[]): *Promise*<ShapeNot\_shapeExprReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shapeExpr` | shapeExpr |
+| `transformed` | shapeExprReturn |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<ShapeNot\_shapeExprReturn\>
+
+Defined in: [Transformers.ts:289](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L289)
 
 ___
 
 ### ShapeOr
 
-• **ShapeOr**: (`shapeOr`: [*ShapeOr*](shapeor.md), `transformmedChildren`: { `shapeExprs`: shapeExprReturn[]  }, `parentStack`: ParentTrace[]) => *Promise*<ShapeOrReturn\>
+• **ShapeOr**: (`shapeOr`: ShapeOr, `transformedChildren`: { `shapeExprs`: ShapeOr\_shapeExprsReturn  }, `parentStack`: ParentTrace[]) => *Promise*<ShapeOrReturn\>
 
 #### Type declaration
 
-▸ (`shapeOr`: [*ShapeOr*](shapeor.md), `transformmedChildren`: { `shapeExprs`: shapeExprReturn[]  }, `parentStack`: ParentTrace[]): *Promise*<ShapeOrReturn\>
+▸ (`shapeOr`: ShapeOr, `transformedChildren`: { `shapeExprs`: ShapeOr\_shapeExprsReturn  }, `parentStack`: ParentTrace[]): *Promise*<ShapeOrReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `shapeOr` | [*ShapeOr*](shapeor.md) |
-| `transformmedChildren` | *object* |
-| `transformmedChildren.shapeExprs` | shapeExprReturn[] |
+| `shapeOr` | ShapeOr |
+| `transformedChildren` | *object* |
+| `transformedChildren.shapeExprs` | ShapeOr\_shapeExprsReturn |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<ShapeOrReturn\>
 
-Defined in: [Transformers.ts:96](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L96)
+Defined in: [Transformers.ts:120](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L120)
 
 ___
 
-### ShapeRef
+### ShapeOr\_shapeExprs
 
-• **ShapeRef**: (`shapeRef`: [*ShapeRef*](shaperef.md), `parents`: *unknown*[]) => *Promise*<ShapeRefReturn\>
+• **ShapeOr\_shapeExprs**: (`shapeExprs`: shapeExpr[], `transformed`: shapeExprReturn[], `parentStack`: ParentTrace[]) => *Promise*<ShapeOr\_shapeExprsReturn\>
 
 #### Type declaration
 
-▸ (`shapeRef`: [*ShapeRef*](shaperef.md), `parents`: *unknown*[]): *Promise*<ShapeRefReturn\>
+▸ (`shapeExprs`: shapeExpr[], `transformed`: shapeExprReturn[], `parentStack`: ParentTrace[]): *Promise*<ShapeOr\_shapeExprsReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `shapeRef` | [*ShapeRef*](shaperef.md) |
-| `parents` | *unknown*[] |
+| `shapeExprs` | shapeExpr[] |
+| `transformed` | shapeExprReturn[] |
+| `parentStack` | ParentTrace[] |
 
-**Returns:** *Promise*<ShapeRefReturn\>
+**Returns:** *Promise*<ShapeOr\_shapeExprsReturn\>
 
-Defined in: [Transformers.ts:111](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L111)
+Defined in: [Transformers.ts:279](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L279)
+
+___
+
+### Shape\_Annotations
+
+• **Shape\_Annotations**: (`annotations`: Annotation[], `transformed`: AnnotationReturn[], `parentStack`: ParentTrace[]) => *Promise*<Shape\_AnnotationsReturn\>
+
+#### Type declaration
+
+▸ (`annotations`: Annotation[], `transformed`: AnnotationReturn[], `parentStack`: ParentTrace[]): *Promise*<Shape\_AnnotationsReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `annotations` | Annotation[] |
+| `transformed` | AnnotationReturn[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<Shape\_AnnotationsReturn\>
+
+Defined in: [Transformers.ts:324](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L324)
+
+___
+
+### Shape\_expression
+
+• **Shape\_expression**: (`expression`: tripleExpr, `transformed`: tripleExprReturn, `parentStack`: ParentTrace[]) => *Promise*<Shape\_expressionReturn\>
+
+#### Type declaration
+
+▸ (`expression`: tripleExpr, `transformed`: tripleExprReturn, `parentStack`: ParentTrace[]): *Promise*<Shape\_expressionReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `expression` | tripleExpr |
+| `transformed` | tripleExprReturn |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<Shape\_expressionReturn\>
+
+Defined in: [Transformers.ts:314](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L314)
+
+___
+
+### Shape\_semActs
+
+• **Shape\_semActs**: (`semActs`: SemAct[], `transformed`: SemActReturn[], `parentStack`: ParentTrace[]) => *Promise*<Shape\_semActsReturn\>
+
+#### Type declaration
+
+▸ (`semActs`: SemAct[], `transformed`: SemActReturn[], `parentStack`: ParentTrace[]): *Promise*<Shape\_semActsReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `semActs` | SemAct[] |
+| `transformed` | SemActReturn[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<Shape\_semActsReturn\>
+
+Defined in: [Transformers.ts:319](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L319)
 
 ___
 
 ### TripleConstraint
 
-• **TripleConstraint**: (`TripleConstraint`: [*TripleConstraint*](tripleconstraint.md), `transformmedChildren`: { `annotations?`: AnnotationsReturn ; `semActs?`: SemActsReturn ; `valueExpr?`: shapeExprReturn  }, `parentStack`: ParentTrace[]) => *Promise*<TripleConstraintReturn\>
+• **TripleConstraint**: (`tripleConstraint`: TripleConstraint, `transformedChildren`: { `annotations?`: TripleConstraint\_AnnotationsReturn ; `semActs?`: TripleConstraint\_semActsReturn ; `valueExpr?`: TripleConstraint\_valueExprReturn  }, `parentStack`: ParentTrace[]) => *Promise*<TripleConstraintReturn\>
 
 #### Type declaration
 
-▸ (`TripleConstraint`: [*TripleConstraint*](tripleconstraint.md), `transformmedChildren`: { `annotations?`: AnnotationsReturn ; `semActs?`: SemActsReturn ; `valueExpr?`: shapeExprReturn  }, `parentStack`: ParentTrace[]): *Promise*<TripleConstraintReturn\>
+▸ (`tripleConstraint`: TripleConstraint, `transformedChildren`: { `annotations?`: TripleConstraint\_AnnotationsReturn ; `semActs?`: TripleConstraint\_semActsReturn ; `valueExpr?`: TripleConstraint\_valueExprReturn  }, `parentStack`: ParentTrace[]): *Promise*<TripleConstraintReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TripleConstraint` | [*TripleConstraint*](tripleconstraint.md) |
-| `transformmedChildren` | *object* |
-| `transformmedChildren.annotations?` | AnnotationsReturn |
-| `transformmedChildren.semActs?` | SemActsReturn |
-| `transformmedChildren.valueExpr?` | shapeExprReturn |
+| `tripleConstraint` | TripleConstraint |
+| `transformedChildren` | *object* |
+| `transformedChildren.annotations?` | TripleConstraint\_AnnotationsReturn |
+| `transformedChildren.semActs?` | TripleConstraint\_semActsReturn |
+| `transformedChildren.valueExpr?` | TripleConstraint\_valueExprReturn |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<TripleConstraintReturn\>
 
-Defined in: [Transformers.ts:171](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L171)
+Defined in: [Transformers.ts:210](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L210)
 
 ___
 
-### prefixes
+### TripleConstraint\_Annotations
 
-• **prefixes**: (`prefixes`: [*prefixes*](../modules.md#prefixes), `parentStack`: ParentTrace[]) => *Promise*<prefixesReturn\>
+• **TripleConstraint\_Annotations**: (`annotations`: Annotation[], `transformed`: AnnotationReturn[], `parentStack`: ParentTrace[]) => *Promise*<TripleConstraint\_AnnotationsReturn\>
 
 #### Type declaration
 
-▸ (`prefixes`: [*prefixes*](../modules.md#prefixes), `parentStack`: ParentTrace[]): *Promise*<prefixesReturn\>
+▸ (`annotations`: Annotation[], `transformed`: AnnotationReturn[], `parentStack`: ParentTrace[]): *Promise*<TripleConstraint\_AnnotationsReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `prefixes` | [*prefixes*](../modules.md#prefixes) |
+| `annotations` | Annotation[] |
+| `transformed` | AnnotationReturn[] |
 | `parentStack` | ParentTrace[] |
 
-**Returns:** *Promise*<prefixesReturn\>
+**Returns:** *Promise*<TripleConstraint\_AnnotationsReturn\>
 
-Defined in: [Transformers.ts:74](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L74)
+Defined in: [Transformers.ts:369](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L369)
+
+___
+
+### TripleConstraint\_semActs
+
+• **TripleConstraint\_semActs**: (`semActs`: SemAct[], `transformed`: SemActReturn[], `parentStack`: ParentTrace[]) => *Promise*<TripleConstraint\_semActsReturn\>
+
+#### Type declaration
+
+▸ (`semActs`: SemAct[], `transformed`: SemActReturn[], `parentStack`: ParentTrace[]): *Promise*<TripleConstraint\_semActsReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `semActs` | SemAct[] |
+| `transformed` | SemActReturn[] |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<TripleConstraint\_semActsReturn\>
+
+Defined in: [Transformers.ts:364](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L364)
+
+___
+
+### TripleConstraint\_valueExpr
+
+• **TripleConstraint\_valueExpr**: (`valueExpr`: shapeExpr, `transformed`: shapeExprReturn, `parentStack`: ParentTrace[]) => *Promise*<TripleConstraint\_valueExprReturn\>
+
+#### Type declaration
+
+▸ (`valueExpr`: shapeExpr, `transformed`: shapeExprReturn, `parentStack`: ParentTrace[]): *Promise*<TripleConstraint\_valueExprReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `valueExpr` | shapeExpr |
+| `transformed` | shapeExprReturn |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<TripleConstraint\_valueExprReturn\>
+
+Defined in: [Transformers.ts:359](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L359)
+
+___
+
+### Wildcard
+
+• **Wildcard**: (`wildcard`: Wildcard, `parentStack`: ParentTrace[]) => *Promise*<WildcardReturn\>
+
+#### Type declaration
+
+▸ (`wildcard`: Wildcard, `parentStack`: ParentTrace[]): *Promise*<WildcardReturn\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `wildcard` | Wildcard |
+| `parentStack` | ParentTrace[] |
+
+**Returns:** *Promise*<WildcardReturn\>
+
+Defined in: [Transformers.ts:179](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L179)
 
 ___
 
 ### shapeExpr
 
-• **shapeExpr**: (`shapeExpr`: [*shapeExpr*](../modules.md#shapeexpr), `transformmedChild`: *string* \| ShapeOrReturn \| ShapeAndReturn \| ShapeNotReturn \| ShapeRefReturn \| NodeConstraintReturn \| ShapeReturn, `parentStack`: ParentTrace[]) => *Promise*<shapeExprReturn\>
+• **shapeExpr**: (`shapeExpr`: shapeExpr, `transformmedSelf`: *string* \| ShapeOrReturn \| ShapeAndReturn \| ShapeNotReturn \| ShapeExternalReturn \| NodeConstraintReturn \| ShapeReturn, `parentStack`: ParentTrace[]) => *Promise*<shapeExprReturn\>
 
 #### Type declaration
 
-▸ (`shapeExpr`: [*shapeExpr*](../modules.md#shapeexpr), `transformmedChild`: *string* \| ShapeOrReturn \| ShapeAndReturn \| ShapeNotReturn \| ShapeRefReturn \| NodeConstraintReturn \| ShapeReturn, `parentStack`: ParentTrace[]): *Promise*<shapeExprReturn\>
+▸ (`shapeExpr`: shapeExpr, `transformmedSelf`: *string* \| ShapeOrReturn \| ShapeAndReturn \| ShapeNotReturn \| ShapeExternalReturn \| NodeConstraintReturn \| ShapeReturn, `parentStack`: ParentTrace[]): *Promise*<shapeExprReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `shapeExpr` | [*shapeExpr*](../modules.md#shapeexpr) |
-| `transformmedChild` | *string* \| ShapeOrReturn \| ShapeAndReturn \| ShapeNotReturn \| ShapeRefReturn \| NodeConstraintReturn \| ShapeReturn |
+| `shapeExpr` | shapeExpr |
+| `transformmedSelf` | *string* \| ShapeOrReturn \| ShapeAndReturn \| ShapeNotReturn \| ShapeExternalReturn \| NodeConstraintReturn \| ShapeReturn |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<shapeExprReturn\>
 
-Defined in: [Transformers.ts:79](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L79)
-
-___
-
-### shapes
-
-• **shapes**: (`shapes`: [*shapes*](../modules.md#shapes), `transformmedChildren`: *Record*<string, shapeExprReturn\>, `parentStack`: ParentTrace[]) => *Promise*<shapesReturn\>
-
-#### Type declaration
-
-▸ (`shapes`: [*shapes*](../modules.md#shapes), `transformmedChildren`: *Record*<string, shapeExprReturn\>, `parentStack`: ParentTrace[]): *Promise*<shapesReturn\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `shapes` | [*shapes*](../modules.md#shapes) |
-| `transformmedChildren` | *Record*<string, shapeExprReturn\> |
-| `parentStack` | ParentTrace[] |
-
-**Returns:** *Promise*<shapesReturn\>
-
-Defined in: [Transformers.ts:91](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L91)
+Defined in: [Transformers.ts:228](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L228)
 
 ___
 
 ### tripleExpr
 
-• **tripleExpr**: (`tripleExpr`: [*tripleExpr*](../modules.md#tripleexpr), `transformmedChild`: *string* \| EachOfReturn \| OneOfReturn \| TripleConstraintReturn, `parentStack`: ParentTrace[]) => *Promise*<tripleExprReturn\>
+• **tripleExpr**: (`tripleExpr`: tripleExpr, `transformmedSelf`: *string* \| EachOfReturn \| OneOfReturn \| TripleConstraintReturn, `parentStack`: ParentTrace[]) => *Promise*<tripleExprReturn\>
 
 #### Type declaration
 
-▸ (`tripleExpr`: [*tripleExpr*](../modules.md#tripleexpr), `transformmedChild`: *string* \| EachOfReturn \| OneOfReturn \| TripleConstraintReturn, `parentStack`: ParentTrace[]): *Promise*<tripleExprReturn\>
+▸ (`tripleExpr`: tripleExpr, `transformmedSelf`: *string* \| EachOfReturn \| OneOfReturn \| TripleConstraintReturn, `parentStack`: ParentTrace[]): *Promise*<tripleExprReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `tripleExpr` | [*tripleExpr*](../modules.md#tripleexpr) |
-| `transformmedChild` | *string* \| EachOfReturn \| OneOfReturn \| TripleConstraintReturn |
+| `tripleExpr` | tripleExpr |
+| `transformmedSelf` | *string* \| EachOfReturn \| OneOfReturn \| TripleConstraintReturn |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<tripleExprReturn\>
 
-Defined in: [Transformers.ts:140](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L140)
+Defined in: [Transformers.ts:254](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L254)
 
 ___
 
 ### valueSetValue
 
-• **valueSetValue**: (`valueSetValue`: [*valueSetValue*](../modules.md#valuesetvalue), `transformmedChild`: *string* \| ObjectLiteralReturn \| IriStemReturn \| IriStemRangeReturn \| LiteralStemReturn \| LiteralStemRangeReturn \| LanguageReturn \| LanguageStemReturn \| LanguageStemRangeReturn, `parentStack`: ParentTrace[]) => *Promise*<valueSetValueReturn\>
+• **valueSetValue**: (`valueSetValue`: valueSetValue, `transformmedSelf`: *string* \| ObjectLiteralReturn \| IriStemReturn \| IriStemRangeReturn \| LiteralStemReturn \| LiteralStemRangeReturn \| LanguageReturn \| LanguageStemReturn \| LanguageStemRangeReturn, `parentStack`: ParentTrace[]) => *Promise*<valueSetValueReturn\>
 
 #### Type declaration
 
-▸ (`valueSetValue`: [*valueSetValue*](../modules.md#valuesetvalue), `transformmedChild`: *string* \| ObjectLiteralReturn \| IriStemReturn \| IriStemRangeReturn \| LiteralStemReturn \| LiteralStemRangeReturn \| LanguageReturn \| LanguageStemReturn \| LanguageStemRangeReturn, `parentStack`: ParentTrace[]): *Promise*<valueSetValueReturn\>
+▸ (`valueSetValue`: valueSetValue, `transformmedSelf`: *string* \| ObjectLiteralReturn \| IriStemReturn \| IriStemRangeReturn \| LiteralStemReturn \| LiteralStemRangeReturn \| LanguageReturn \| LanguageStemReturn \| LanguageStemRangeReturn, `parentStack`: ParentTrace[]): *Promise*<valueSetValueReturn\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `valueSetValue` | [*valueSetValue*](../modules.md#valuesetvalue) |
-| `transformmedChild` | *string* \| ObjectLiteralReturn \| IriStemReturn \| IriStemRangeReturn \| LiteralStemReturn \| LiteralStemRangeReturn \| LanguageReturn \| LanguageStemReturn \| LanguageStemRangeReturn |
+| `valueSetValue` | valueSetValue |
+| `transformmedSelf` | *string* \| ObjectLiteralReturn \| IriStemReturn \| IriStemRangeReturn \| LiteralStemReturn \| LiteralStemRangeReturn \| LanguageReturn \| LanguageStemReturn \| LanguageStemRangeReturn |
 | `parentStack` | ParentTrace[] |
 
 **Returns:** *Promise*<valueSetValueReturn\>
 
-Defined in: [Transformers.ts:126](https://github.com/o-development/shexj-traverser/blob/a00dc5a/lib/Transformers.ts#L126)
+Defined in: [Transformers.ts:240](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/Transformers.ts#L240)

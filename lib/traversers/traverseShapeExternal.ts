@@ -1,8 +1,7 @@
-import { ShapeNot } from "shexj";
+import { ShapeExternal } from "shexj";
 import Transformers, { ParentTrace } from "../Transformers";
-import traverseShapeExpr from "./traverseShapeExpr";
 
-export default async function traverseShapeNot<
+export default async function traverseShapeRef<
   SchemaReturn,
   ShapeOrReturn,
   ShapeAndReturn,
@@ -50,7 +49,7 @@ export default async function traverseShapeNot<
   TripleConstraint_semActsReturn,
   TripleConstraint_AnnotationsReturn
 >(
-  shapeNot: ShapeNot,
+  shapeExternal: ShapeExternal,
   transformers: Transformers<
     SchemaReturn,
     ShapeOrReturn,
@@ -100,28 +99,6 @@ export default async function traverseShapeNot<
     TripleConstraint_AnnotationsReturn
   >,
   parentStack: ParentTrace[]
-): Promise<ShapeNotReturn> {
-  const transformed = await traverseShapeExpr(
-    shapeNot.shapeExpr,
-    transformers,
-    parentStack.concat([
-      {
-        parent: shapeNot,
-        type: "ShapeNot",
-        via: "shapeExpr",
-      },
-    ])
-  );
-  const shapeExpr = await transformers.ShapeNot_shapeExpr(
-    shapeNot.shapeExpr,
-    transformed,
-    parentStack.concat([
-      {
-        parent: shapeNot,
-        type: "ShapeNot",
-        via: "shapeExpr",
-      },
-    ])
-  );
-  return await transformers.ShapeNot(shapeNot, { shapeExpr }, parentStack);
+): Promise<ShapeExternalReturn> {
+  return await transformers.ShapeExternal(shapeExternal, parentStack);
 }

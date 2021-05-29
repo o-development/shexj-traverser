@@ -1,4 +1,4 @@
-import { tripleExpr } from "../shexTypes";
+import { tripleExpr } from "shexj";
 import Transformers, { ParentTrace } from "../Transformers";
 import traverseEachOf from "./traverseEachOf";
 import traverseOneOf from "./traverseOneOf";
@@ -6,22 +6,11 @@ import traverseTripleConstraint from "./traverseTipleConstraint";
 
 export default async function traverseTripleExpr<
   SchemaReturn,
-  prefixesReturn,
-  SemActReturn,
-  shapeExprReturn,
-  shapesReturn,
   ShapeOrReturn,
   ShapeAndReturn,
   ShapeNotReturn,
-  ShapeRefReturn,
+  ShapeExternalReturn,
   NodeConstraintReturn,
-  ShapeReturn,
-  valueSetValueReturn,
-  tripleExprReturn,
-  AnnotationReturn,
-  EachOfReturn,
-  OneOfReturn,
-  TripleConstraintReturn,
   ObjectLiteralReturn,
   IriStemReturn,
   IriStemRangeReturn,
@@ -30,28 +19,47 @@ export default async function traverseTripleExpr<
   LanguageReturn,
   LanguageStemReturn,
   LanguageStemRangeReturn,
-  AnnotationsReturn,
-  SemActsReturn
+  WildcardReturn,
+  ShapeReturn,
+  EachOfReturn,
+  OneOfReturn,
+  TripleConstraintReturn,
+  SemActReturn,
+  AnnotationReturn,
+  shapeExprReturn,
+  valueSetValueReturn,
+  tripleExprReturn,
+  Schema_startActsReturn,
+  Schema_startReturn,
+  Schema_shapesReturn,
+  ShapeOr_shapeExprsReturn,
+  ShapeAnd_shapeExprsReturn,
+  ShapeNot_shapeExprReturn,
+  NodeConstraint_valuesReturn,
+  IriStemRange_exclusionsReturn,
+  LiteralStemRange_exclusionsReturn,
+  LanguageStemRange_exclusionsReturn,
+  Shape_expressionReturn,
+  Shape_semActsReturn,
+  Shape_AnnotationsReturn,
+  EachOf_expressionsReturn,
+  EachOf_semActsReturn,
+  EachOf_AnnotationsReturn,
+  OneOf_expressionsReturn,
+  OneOf_semActsReturn,
+  OneOf_AnnotationsReturn,
+  TripleConstraint_valueExprReturn,
+  TripleConstraint_semActsReturn,
+  TripleConstraint_AnnotationsReturn
 >(
   expr: tripleExpr,
   transformers: Transformers<
     SchemaReturn,
-    prefixesReturn,
-    SemActReturn,
-    shapeExprReturn,
-    shapesReturn,
     ShapeOrReturn,
     ShapeAndReturn,
     ShapeNotReturn,
-    ShapeRefReturn,
+    ShapeExternalReturn,
     NodeConstraintReturn,
-    ShapeReturn,
-    valueSetValueReturn,
-    tripleExprReturn,
-    AnnotationReturn,
-    EachOfReturn,
-    OneOfReturn,
-    TripleConstraintReturn,
     ObjectLiteralReturn,
     IriStemReturn,
     IriStemRangeReturn,
@@ -60,8 +68,38 @@ export default async function traverseTripleExpr<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn,
-    AnnotationsReturn,
-    SemActsReturn
+    WildcardReturn,
+    ShapeReturn,
+    EachOfReturn,
+    OneOfReturn,
+    TripleConstraintReturn,
+    SemActReturn,
+    AnnotationReturn,
+    shapeExprReturn,
+    valueSetValueReturn,
+    tripleExprReturn,
+    Schema_startActsReturn,
+    Schema_startReturn,
+    Schema_shapesReturn,
+    ShapeOr_shapeExprsReturn,
+    ShapeAnd_shapeExprsReturn,
+    ShapeNot_shapeExprReturn,
+    NodeConstraint_valuesReturn,
+    IriStemRange_exclusionsReturn,
+    LiteralStemRange_exclusionsReturn,
+    LanguageStemRange_exclusionsReturn,
+    Shape_expressionReturn,
+    Shape_semActsReturn,
+    Shape_AnnotationsReturn,
+    EachOf_expressionsReturn,
+    EachOf_semActsReturn,
+    EachOf_AnnotationsReturn,
+    OneOf_expressionsReturn,
+    OneOf_semActsReturn,
+    OneOf_AnnotationsReturn,
+    TripleConstraint_valueExprReturn,
+    TripleConstraint_semActsReturn,
+    TripleConstraint_AnnotationsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<tripleExprReturn> {
@@ -75,13 +113,25 @@ export default async function traverseTripleExpr<
   } else {
     switch (expr.type) {
       case "EachOf":
-        transformmedChild = await traverseEachOf(expr, transformers, parentStack);
+        transformmedChild = await traverseEachOf(
+          expr,
+          transformers,
+          parentStack
+        );
         break;
       case "OneOf":
-        transformmedChild = await traverseOneOf(expr, transformers, parentStack);
+        transformmedChild = await traverseOneOf(
+          expr,
+          transformers,
+          parentStack
+        );
         break;
       case "TripleConstraint":
-        transformmedChild = await traverseTripleConstraint(expr, transformers, parentStack);
+        transformmedChild = await traverseTripleConstraint(
+          expr,
+          transformers,
+          parentStack
+        );
         break;
     }
   }

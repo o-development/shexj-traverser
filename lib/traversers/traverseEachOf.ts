@@ -1,27 +1,16 @@
-import { EachOf } from "../shexTypes";
+import { EachOf } from "shexj";
 import Transformers, { ParentTrace } from "../Transformers";
+import traverseAnnotation from "./traverseAnnotation";
+import traverseSemAct from "./traverseSemAct";
 import traverseTripleExpr from "./traverseTripleExpr";
-import traverseSemActs from "./traverseSemActs";
-import traverseAnnotations from "./traverseAnnotations";
 
 export default async function traverseEachOf<
   SchemaReturn,
-  prefixesReturn,
-  SemActReturn,
-  shapeExprReturn,
-  shapesReturn,
   ShapeOrReturn,
   ShapeAndReturn,
   ShapeNotReturn,
-  ShapeRefReturn,
+  ShapeExternalReturn,
   NodeConstraintReturn,
-  ShapeReturn,
-  valueSetValueReturn,
-  tripleExprReturn,
-  AnnotationReturn,
-  EachOfReturn,
-  OneOfReturn,
-  TripleConstraintReturn,
   ObjectLiteralReturn,
   IriStemReturn,
   IriStemRangeReturn,
@@ -30,28 +19,47 @@ export default async function traverseEachOf<
   LanguageReturn,
   LanguageStemReturn,
   LanguageStemRangeReturn,
-  AnnotationsReturn,
-  SemActsReturn
+  WildcardReturn,
+  ShapeReturn,
+  EachOfReturn,
+  OneOfReturn,
+  TripleConstraintReturn,
+  SemActReturn,
+  AnnotationReturn,
+  shapeExprReturn,
+  valueSetValueReturn,
+  tripleExprReturn,
+  Schema_startActsReturn,
+  Schema_startReturn,
+  Schema_shapesReturn,
+  ShapeOr_shapeExprsReturn,
+  ShapeAnd_shapeExprsReturn,
+  ShapeNot_shapeExprReturn,
+  NodeConstraint_valuesReturn,
+  IriStemRange_exclusionsReturn,
+  LiteralStemRange_exclusionsReturn,
+  LanguageStemRange_exclusionsReturn,
+  Shape_expressionReturn,
+  Shape_semActsReturn,
+  Shape_AnnotationsReturn,
+  EachOf_expressionsReturn,
+  EachOf_semActsReturn,
+  EachOf_AnnotationsReturn,
+  OneOf_expressionsReturn,
+  OneOf_semActsReturn,
+  OneOf_AnnotationsReturn,
+  TripleConstraint_valueExprReturn,
+  TripleConstraint_semActsReturn,
+  TripleConstraint_AnnotationsReturn
 >(
   eachOf: EachOf,
   transformers: Transformers<
     SchemaReturn,
-    prefixesReturn,
-    SemActReturn,
-    shapeExprReturn,
-    shapesReturn,
     ShapeOrReturn,
     ShapeAndReturn,
     ShapeNotReturn,
-    ShapeRefReturn,
+    ShapeExternalReturn,
     NodeConstraintReturn,
-    ShapeReturn,
-    valueSetValueReturn,
-    tripleExprReturn,
-    AnnotationReturn,
-    EachOfReturn,
-    OneOfReturn,
-    TripleConstraintReturn,
     ObjectLiteralReturn,
     IriStemReturn,
     IriStemRangeReturn,
@@ -60,18 +68,48 @@ export default async function traverseEachOf<
     LanguageReturn,
     LanguageStemReturn,
     LanguageStemRangeReturn,
-    AnnotationsReturn,
-    SemActsReturn
+    WildcardReturn,
+    ShapeReturn,
+    EachOfReturn,
+    OneOfReturn,
+    TripleConstraintReturn,
+    SemActReturn,
+    AnnotationReturn,
+    shapeExprReturn,
+    valueSetValueReturn,
+    tripleExprReturn,
+    Schema_startActsReturn,
+    Schema_startReturn,
+    Schema_shapesReturn,
+    ShapeOr_shapeExprsReturn,
+    ShapeAnd_shapeExprsReturn,
+    ShapeNot_shapeExprReturn,
+    NodeConstraint_valuesReturn,
+    IriStemRange_exclusionsReturn,
+    LiteralStemRange_exclusionsReturn,
+    LanguageStemRange_exclusionsReturn,
+    Shape_expressionReturn,
+    Shape_semActsReturn,
+    Shape_AnnotationsReturn,
+    EachOf_expressionsReturn,
+    EachOf_semActsReturn,
+    EachOf_AnnotationsReturn,
+    OneOf_expressionsReturn,
+    OneOf_semActsReturn,
+    OneOf_AnnotationsReturn,
+    TripleConstraint_valueExprReturn,
+    TripleConstraint_semActsReturn,
+    TripleConstraint_AnnotationsReturn
   >,
   parentStack: ParentTrace[]
 ): Promise<EachOfReturn> {
-  let expressions: tripleExprReturn[] = [];
-  let semActs: SemActsReturn | undefined;
-  let annotations: AnnotationsReturn | undefined;
+  let expressions: EachOf_expressionsReturn;
+  let semActs: EachOf_semActsReturn | undefined;
+  let annotations: EachOf_AnnotationsReturn | undefined;
 
   await Promise.all([
     (async () => {
-      expressions = await Promise.all(
+      const transformed = await Promise.all(
         eachOf.expressions.map(async (curExpr, index) => {
           return await traverseTripleExpr(
             curExpr,
@@ -87,30 +125,77 @@ export default async function traverseEachOf<
           );
         })
       );
+      expressions = await transformers.EachOf_expressions(
+        eachOf.expressions,
+        transformed,
+        parentStack.concat([
+          {
+            parent: eachOf,
+            type: "EachOf",
+            via: "expressions",
+          },
+        ])
+      );
     })(),
     (async () => {
       if (eachOf.semActs) {
-        semActs = await traverseSemActs(
-          eachOf.semActs,
-          transformers,
-          parentStack.concat({
-            parent: eachOf,
-            type: "EachOf",
-            via: "semActs",
+        const transformed = await Promise.all(
+          eachOf.semActs.map(async (curSemAct, index) => {
+            return await traverseSemAct(
+              curSemAct,
+              transformers,
+              parentStack.concat([
+                {
+                  parent: eachOf,
+                  type: "EachOf",
+                  via: "semActs",
+                  viaIndex: index,
+                },
+              ])
+            );
           })
+        );
+        semActs = await transformers.EachOf_semActs(
+          eachOf.semActs,
+          transformed,
+          parentStack.concat([
+            {
+              parent: eachOf,
+              type: "EachOf",
+              via: "semActs",
+            },
+          ])
         );
       }
     })(),
     (async () => {
       if (eachOf.annotations) {
-        annotations = await traverseAnnotations(
-          eachOf.annotations,
-          transformers,
-          parentStack.concat({
-            parent: eachOf,
-            type: "EachOf",
-            via: "annotations",
+        const transformed = await Promise.all(
+          eachOf.annotations.map(async (curAnnotation, index) => {
+            return await traverseAnnotation(
+              curAnnotation,
+              transformers,
+              parentStack.concat([
+                {
+                  parent: eachOf,
+                  type: "EachOf",
+                  via: "annotations",
+                  viaIndex: index,
+                },
+              ])
+            );
           })
+        );
+        annotations = await transformers.EachOf_Annotations(
+          eachOf.annotations,
+          transformed,
+          parentStack.concat([
+            {
+              parent: eachOf,
+              type: "EachOf",
+              via: "annotations",
+            },
+          ])
         );
       }
     })(),
@@ -119,6 +204,8 @@ export default async function traverseEachOf<
   return await transformers.EachOf(
     eachOf,
     {
+      // expressions is defined in promise
+      // @ts-ignore
       expressions,
       semActs,
       annotations,
