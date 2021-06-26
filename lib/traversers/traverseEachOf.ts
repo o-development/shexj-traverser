@@ -1,6 +1,7 @@
 import { EachOf } from "shexj";
 import Transformers, { ParentTrace } from "../Transformers";
 import traverseAnnotation from "./traverseAnnotation";
+import traverseBaseType from "./traverserHelpers/traverseBaseType";
 import traverseSemAct from "./traverseSemAct";
 import traverseTripleExpr from "./traverseTripleExpr";
 
@@ -106,6 +107,46 @@ export default async function traverseEachOf<
   let expressions: EachOf_expressionsReturn;
   let semActs: EachOf_semActsReturn | undefined;
   let annotations: EachOf_AnnotationsReturn | undefined;
+
+
+  await traverseBaseType(eachOf, transformers, parentStack, {
+    transformer: transformers.EachOf,
+    fields: {
+      expressions: {
+        isArray: true,
+        isOptional: false,
+        traverser: traverseTripleExpr,
+        transformer: transformers.EachOf_expressions,
+      },
+      semActs: {
+        isArray: true,
+        isOptional: true,
+        traverser: traverseSemAct,
+        transformer: transformers.EachOf_semActs
+      },
+      annotations: {
+        isArray: true,
+        isOptional: true,
+        traverser: traverseAnnotation,
+        transformer: transformers.EachOf_Annotations
+      },
+      min: {
+        isArray: false,
+        isOptional: true,
+        traverser: (original, transformers, parentTrace): Promise<number> => {
+          throw new Error("Not Implmented")
+        },
+        transformer: (original, transformed, parentStack): 
+      }
+      type: {
+        isArray: false,
+        isOptional: false,
+        traverser: (original, transformers, parentTrace) => {
+          throw new Error("Not Implemented");
+        }
+      }
+    }
+  }) 
 
   await Promise.all([
     (async () => {

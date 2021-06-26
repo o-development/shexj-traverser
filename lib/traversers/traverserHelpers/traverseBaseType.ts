@@ -1,0 +1,295 @@
+// A traverser helper for base types
+import { Schema } from "shexj";
+import { Transform } from "stream";
+import defaultTransformers from "../../defaultTransformers";
+import Transformers, { ParentTrace } from "../../Transformers";
+import Traverser from "./Traverser";
+
+type BasicTypeTransformedChildren<OriginalType> = {
+  [Property in keyof OriginalType]: any;
+};
+type BasicTypeTransformer<
+  TransformerKey extends keyof Transformers,
+  Transformed extends BasicTypeTransformedChildren<OriginalType> = BasicTypeTransformedChildren<OriginalType>
+> = Transformer<TransformerKey, >;
+
+type Transformer<TransformerKey extends keyof Transformers, Transformed> = (
+  originalData: OriginalData<TransformerKey>,
+  transformed: Transformed,
+  parentStack: ParentTrace[]
+) => Promise<ReturnData<TransformerKey>>;
+
+type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
+
+type GetOriginalData<TransformerKey extends keyof Transformers> = Parameters<Transformers[TransformerKey]>[0];
+type GetReturnData<TransformerKey extends keyof Transformers> = ThenArg<ReturnType<Transformers[TransformerKey]>>;
+
+type InferredTraverser<
+  TransformerKey extends keyof Transformers,
+  SchemaReturn,
+  ShapeOrReturn,
+  ShapeAndReturn,
+  ShapeNotReturn,
+  ShapeExternalReturn,
+  NodeConstraintReturn,
+  ObjectLiteralReturn,
+  IriStemReturn,
+  IriStemRangeReturn,
+  LiteralStemReturn,
+  LiteralStemRangeReturn,
+  LanguageReturn,
+  LanguageStemReturn,
+  LanguageStemRangeReturn,
+  WildcardReturn,
+  ShapeReturn,
+  EachOfReturn,
+  OneOfReturn,
+  TripleConstraintReturn,
+  SemActReturn,
+  AnnotationReturn,
+  shapeExprReturn,
+  valueSetValueReturn,
+  tripleExprReturn,
+  Schema_startActsReturn,
+  Schema_startReturn,
+  Schema_shapesReturn,
+  ShapeOr_shapeExprsReturn,
+  ShapeAnd_shapeExprsReturn,
+  ShapeNot_shapeExprReturn,
+  NodeConstraint_valuesReturn,
+  IriStemRange_exclusionsReturn,
+  LiteralStemRange_exclusionsReturn,
+  LanguageStemRange_exclusionsReturn,
+  Shape_expressionReturn,
+  Shape_semActsReturn,
+  Shape_AnnotationsReturn,
+  EachOf_expressionsReturn,
+  EachOf_semActsReturn,
+  EachOf_AnnotationsReturn,
+  OneOf_expressionsReturn,
+  OneOf_semActsReturn,
+  OneOf_AnnotationsReturn,
+  TripleConstraint_valueExprReturn,
+  TripleConstraint_semActsReturn,
+  TripleConstraint_AnnotationsReturn
+> = Traverser<
+  Parameters<Transformers[TransformerKey]>[0],
+  ThenArg<ReturnType<Transformers[TransformerKey]>>,
+  SchemaReturn,
+  ShapeOrReturn,
+  ShapeAndReturn,
+  ShapeNotReturn,
+  ShapeExternalReturn,
+  NodeConstraintReturn,
+  ObjectLiteralReturn,
+  IriStemReturn,
+  IriStemRangeReturn,
+  LiteralStemReturn,
+  LiteralStemRangeReturn,
+  LanguageReturn,
+  LanguageStemReturn,
+  LanguageStemRangeReturn,
+  WildcardReturn,
+  ShapeReturn,
+  EachOfReturn,
+  OneOfReturn,
+  TripleConstraintReturn,
+  SemActReturn,
+  AnnotationReturn,
+  shapeExprReturn,
+  valueSetValueReturn,
+  tripleExprReturn,
+  Schema_startActsReturn,
+  Schema_startReturn,
+  Schema_shapesReturn,
+  ShapeOr_shapeExprsReturn,
+  ShapeAnd_shapeExprsReturn,
+  ShapeNot_shapeExprReturn,
+  NodeConstraint_valuesReturn,
+  IriStemRange_exclusionsReturn,
+  LiteralStemRange_exclusionsReturn,
+  LanguageStemRange_exclusionsReturn,
+  Shape_expressionReturn,
+  Shape_semActsReturn,
+  Shape_AnnotationsReturn,
+  EachOf_expressionsReturn,
+  EachOf_semActsReturn,
+  EachOf_AnnotationsReturn,
+  OneOf_expressionsReturn,
+  OneOf_semActsReturn,
+  OneOf_AnnotationsReturn,
+  TripleConstraint_valueExprReturn,
+  TripleConstraint_semActsReturn,
+  TripleConstraint_AnnotationsReturn
+>
+
+export default async function traverserBaseType<
+  TransformerKey extends keyof Transformers,
+  SchemaReturn,
+  ShapeOrReturn,
+  ShapeAndReturn,
+  ShapeNotReturn,
+  ShapeExternalReturn,
+  NodeConstraintReturn,
+  ObjectLiteralReturn,
+  IriStemReturn,
+  IriStemRangeReturn,
+  LiteralStemReturn,
+  LiteralStemRangeReturn,
+  LanguageReturn,
+  LanguageStemReturn,
+  LanguageStemRangeReturn,
+  WildcardReturn,
+  ShapeReturn,
+  EachOfReturn,
+  OneOfReturn,
+  TripleConstraintReturn,
+  SemActReturn,
+  AnnotationReturn,
+  shapeExprReturn,
+  valueSetValueReturn,
+  tripleExprReturn,
+  Schema_startActsReturn,
+  Schema_startReturn,
+  Schema_shapesReturn,
+  ShapeOr_shapeExprsReturn,
+  ShapeAnd_shapeExprsReturn,
+  ShapeNot_shapeExprReturn,
+  NodeConstraint_valuesReturn,
+  IriStemRange_exclusionsReturn,
+  LiteralStemRange_exclusionsReturn,
+  LanguageStemRange_exclusionsReturn,
+  Shape_expressionReturn,
+  Shape_semActsReturn,
+  Shape_AnnotationsReturn,
+  EachOf_expressionsReturn,
+  EachOf_semActsReturn,
+  EachOf_AnnotationsReturn,
+  OneOf_expressionsReturn,
+  OneOf_semActsReturn,
+  OneOf_AnnotationsReturn,
+  TripleConstraint_valueExprReturn,
+  TripleConstraint_semActsReturn,
+  TripleConstraint_AnnotationsReturn
+>(
+  originalType: OriginalType,
+  transformers: Transformers<
+    SchemaReturn,
+    ShapeOrReturn,
+    ShapeAndReturn,
+    ShapeNotReturn,
+    ShapeExternalReturn,
+    NodeConstraintReturn,
+    ObjectLiteralReturn,
+    IriStemReturn,
+    IriStemRangeReturn,
+    LiteralStemReturn,
+    LiteralStemRangeReturn,
+    LanguageReturn,
+    LanguageStemReturn,
+    LanguageStemRangeReturn,
+    WildcardReturn,
+    ShapeReturn,
+    EachOfReturn,
+    OneOfReturn,
+    TripleConstraintReturn,
+    SemActReturn,
+    AnnotationReturn,
+    shapeExprReturn,
+    valueSetValueReturn,
+    tripleExprReturn,
+    Schema_startActsReturn,
+    Schema_startReturn,
+    Schema_shapesReturn,
+    ShapeOr_shapeExprsReturn,
+    ShapeAnd_shapeExprsReturn,
+    ShapeNot_shapeExprReturn,
+    NodeConstraint_valuesReturn,
+    IriStemRange_exclusionsReturn,
+    LiteralStemRange_exclusionsReturn,
+    LanguageStemRange_exclusionsReturn,
+    Shape_expressionReturn,
+    Shape_semActsReturn,
+    Shape_AnnotationsReturn,
+    EachOf_expressionsReturn,
+    EachOf_semActsReturn,
+    EachOf_AnnotationsReturn,
+    OneOf_expressionsReturn,
+    OneOf_semActsReturn,
+    OneOf_AnnotationsReturn,
+    TripleConstraint_valueExprReturn,
+    TripleConstraint_semActsReturn,
+    TripleConstraint_AnnotationsReturn
+  >,
+  parentStack: ParentTrace[],
+  config: {
+    transformer: BasicTypeTransformer<OriginalType, ReturnType>;
+    fields: Partial<
+      {
+        [Property in keyof OriginalType]: {
+          isArray: OriginalType[Property] extends any[] | undefined ? true : false;
+          isOptional: undefined extends OriginalType[Property] ? true : false;
+          traverser: Traverser<
+            OriginalType[Property] extends Array<infer SingularType> | undefined ? SingularType : NonNullable<OriginalType[Property]>,
+            any,
+            SchemaReturn,
+            ShapeOrReturn,
+            ShapeAndReturn,
+            ShapeNotReturn,
+            ShapeExternalReturn,
+            NodeConstraintReturn,
+            ObjectLiteralReturn,
+            IriStemReturn,
+            IriStemRangeReturn,
+            LiteralStemReturn,
+            LiteralStemRangeReturn,
+            LanguageReturn,
+            LanguageStemReturn,
+            LanguageStemRangeReturn,
+            WildcardReturn,
+            ShapeReturn,
+            EachOfReturn,
+            OneOfReturn,
+            TripleConstraintReturn,
+            SemActReturn,
+            AnnotationReturn,
+            shapeExprReturn,
+            valueSetValueReturn,
+            tripleExprReturn,
+            Schema_startActsReturn,
+            Schema_startReturn,
+            Schema_shapesReturn,
+            ShapeOr_shapeExprsReturn,
+            ShapeAnd_shapeExprsReturn,
+            ShapeNot_shapeExprReturn,
+            NodeConstraint_valuesReturn,
+            IriStemRange_exclusionsReturn,
+            LiteralStemRange_exclusionsReturn,
+            LanguageStemRange_exclusionsReturn,
+            Shape_expressionReturn,
+            Shape_semActsReturn,
+            Shape_AnnotationsReturn,
+            EachOf_expressionsReturn,
+            EachOf_semActsReturn,
+            EachOf_AnnotationsReturn,
+            OneOf_expressionsReturn,
+            OneOf_semActsReturn,
+            OneOf_AnnotationsReturn,
+            TripleConstraint_valueExprReturn,
+            TripleConstraint_semActsReturn,
+            TripleConstraint_AnnotationsReturn
+          >;
+          transformer: Transformer<NonNullable<OriginalType[Property]>, any>;
+        };
+      }
+    >;
+  }
+): Promise<ReturnType> {
+  throw new Error("Not Implemented");
+}
+
+type thing = string | undefined;
+type genericBoy<Type extends any | undefined> = (arg: Type) => void;
+
+const func: genericBoy<thing> = (meh) => {} 
+

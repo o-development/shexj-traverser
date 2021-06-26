@@ -4,7 +4,7 @@ function transformedReturn(_: unknown, transformed: any) {
   return transformed
 }
 
-const defaultTransformers: Transformers = {
+const defaultTransformers: Transformers<> = {
   Schema: async (schema, transformedChildren) => {
     return {
       ...schema,
