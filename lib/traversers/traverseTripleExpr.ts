@@ -1,5 +1,5 @@
 import { tripleExpr } from "shexj";
-import Transformers, { ParentTrace } from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers.type";
 import traverseEachOf from "./traverseEachOf";
 import traverseOneOf from "./traverseOneOf";
 import traverseTripleConstraint from "./traverseTipleConstraint";

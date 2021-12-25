@@ -1,5 +1,5 @@
 import { LanguageStemRange } from "shexj";
-import Transformers, { ParentTrace } from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers.type";
 import traverseLanguageStem from "./traverseLanguageStem";
 
 export default async function traverseLanguageStemRange<

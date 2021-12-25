@@ -1,5 +1,5 @@
 import { shapeExpr, shapeExprRef } from "shexj";
-import Transformers, { ParentTrace } from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers.type";
 import traverseNodeConstraint from "./traverseNodeConstraint";
 import traverseShape from "./traverseShape";
 import traverseShapeAnd from "./traverseShapeAnd";

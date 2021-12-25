@@ -29,6 +29,7 @@ import {
   valueSetValue,
   tripleExpr,
 } from "shexj";
+import TraverserReturnTypes, { InterfaceTraverserReturnType } from "./TraverserReturnTypes.type";
 
 export interface ParentTrace {
   parent: unknown;
@@ -37,7 +38,28 @@ export interface ParentTrace {
   viaIndex?: number;
 }
 
-export default interface Transformers<
+
+type TraverserTypes<ReturnTypes extends TraverserReturnTypes> = {
+  [Property in keyof ReturnTypes]: any;
+}
+
+type ComputeActualReturnTypes<
+  ReturnTypes extends TraverserReturnTypes,
+  ReturnTypeDefaults extends TraverserReturnTypeDefaults<ReturnTypes>
+> = {
+  [Property in keyof ReturnTypes]: ReturnTypes[Property] extends InterfaceTraverserReturnType<any> ? {
+    returns: ReturnTypes[Property]["returns"] extends undefined
+  } : {
+
+  }
+}
+
+type Transformers<ReturnTypes extends TraverserReturnTypes> = {
+
+};
+export default Transformers;
+
+export interface TransformersStructure<
   // Base Return value generics
   SchemaReturn = Schema,
   ShapeOrReturn = ShapeOr,

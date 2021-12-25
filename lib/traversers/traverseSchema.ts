@@ -1,5 +1,5 @@
 import { Schema } from "shexj";
-import Transformers from "../Transformers";
+import Transformers from "../Transformers.type";
 import traverseSemAct from "./traverseSemAct";
 import traverseShapeExpr from "./traverseShapeExpr";
 

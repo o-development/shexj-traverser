@@ -1,4 +1,4 @@
-import Transformers from "./Transformers";
+import Transformers from "./Transformers.type";
 
 function transformedReturn(_: unknown, transformed: any) {
   return transformed

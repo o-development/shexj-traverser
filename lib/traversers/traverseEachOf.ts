@@ -1,5 +1,5 @@
 import { EachOf } from "shexj";
-import Transformers, { ParentTrace } from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers.type";
 import traverseAnnotation from "./traverseAnnotation";
 import traverseSemAct from "./traverseSemAct";
 import traverseTripleExpr from "./traverseTripleExpr";

@@ -1,5 +1,5 @@
 import { NodeConstraint } from "shexj";
-import Transformers, { ParentTrace } from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers.type";
 import traverseValueSetValue from "./traverseValueSetValue";
 
 export default async function traverseNodeConstraint<

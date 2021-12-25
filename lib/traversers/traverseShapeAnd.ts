@@ -1,5 +1,5 @@
 import { ShapeAnd } from "shexj";
-import Transformers, { ParentTrace } from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers.type";
 import traverseShapeExpr from "./traverseShapeExpr";
 
 export default async function traverseShapeAnd<

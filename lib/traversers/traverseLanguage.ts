@@ -1,5 +1,5 @@
 import { Language } from "shexj";
-import Transformers, { ParentTrace } from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers.type";
 
 export default async function traverseLanguage<
   SchemaReturn,

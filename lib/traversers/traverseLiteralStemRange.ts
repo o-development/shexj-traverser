@@ -1,5 +1,5 @@
 import { LiteralStemRange } from "shexj";
-import Transformers, { ParentTrace } from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers.type";
 import traverseLiteralStem from "./traverseLiteralStem";
 
 export default async function traverseLiteralStemRange<

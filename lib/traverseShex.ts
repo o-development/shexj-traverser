@@ -1,4 +1,4 @@
-import Transformers from "./Transformers";
+import Transformers from "./Transformers.type";
 import {
   Annotation,
   EachOf,
@@ -30,77 +30,7 @@ import {
 import traverseSchema from "./traversers/traverseSchema";
 import defaultTransformers from "./defaultTransformers";
 
-export default function traverseShex<
-  // Base Return value generics
-  SchemaReturn = Schema,
-  ShapeOrReturn = ShapeOr,
-  ShapeAndReturn = ShapeAnd,
-  ShapeNotReturn = ShapeNot,
-  ShapeExternalReturn = ShapeExternal,
-  NodeConstraintReturn = NodeConstraint,
-  ObjectLiteralReturn = ObjectLiteral,
-  IriStemReturn = IriStem,
-  IriStemRangeReturn = IriStemRange,
-  LiteralStemReturn = LiteralStem,
-  LiteralStemRangeReturn = LiteralStemRange,
-  LanguageReturn = Language,
-  LanguageStemReturn = LanguageStem,
-  LanguageStemRangeReturn = LanguageStemRange,
-  WildcardReturn = Wildcard,
-  ShapeReturn = Shape,
-  EachOfReturn = EachOf,
-  OneOfReturn = OneOf,
-  TripleConstraintReturn = TripleConstraint,
-  SemActReturn = SemAct,
-  AnnotationReturn = Annotation,
-  // Return types for constructed types
-  shapeExprReturn =
-    | ShapeOrReturn
-    | ShapeAndReturn
-    | ShapeNotReturn
-    | NodeConstraintReturn
-    | ShapeReturn
-    | ShapeExternalReturn
-    | shapeExprRef,
-  valueSetValueReturn =
-    | IRIREF
-    | ObjectLiteralReturn
-    | IriStemReturn
-    | IriStemRangeReturn
-    | LiteralStemReturn
-    | LiteralStemRangeReturn
-    | LanguageReturn
-    | LanguageStemReturn
-    | LanguageStemRangeReturn,
-  tripleExprReturn =
-    | EachOfReturn
-    | OneOfReturn
-    | TripleConstraintReturn
-    | tripleExprRef,
-  // Return specific field values
-  Schema_startActsReturn = SemActReturn[],
-  Schema_startReturn = shapeExprReturn,
-  Schema_shapesReturn = shapeExprReturn[],
-  ShapeOr_shapeExprsReturn = shapeExprReturn[],
-  ShapeAnd_shapeExprsReturn = shapeExprReturn[],
-  ShapeNot_shapeExprReturn = shapeExprReturn,
-  NodeConstraint_valuesReturn = valueSetValueReturn[],
-  IriStemRange_exclusionsReturn = (IRIREF | IriStemReturn)[],
-  LiteralStemRange_exclusionsReturn = (STRING | LiteralStemReturn)[],
-  LanguageStemRange_exclusionsReturn = (LANGTAG | LanguageStemReturn)[],
-  Shape_expressionReturn = tripleExprReturn,
-  Shape_semActsReturn = SemActReturn[],
-  Shape_AnnotationsReturn = AnnotationReturn[],
-  EachOf_expressionsReturn = tripleExprReturn[],
-  EachOf_semActsReturn = SemActReturn[],
-  EachOf_AnnotationsReturn = AnnotationReturn[],
-  OneOf_expressionsReturn = tripleExprReturn[],
-  OneOf_semActsReturn = SemActReturn[],
-  OneOf_AnnotationsReturn = AnnotationReturn[],
-  TripleConstraint_valueExprReturn = shapeExprReturn,
-  TripleConstraint_semActsReturn = SemActReturn[],
-  TripleConstraint_AnnotationsReturn = AnnotationReturn[]
->(
+export default function traverseShex<Return>(
   shexSchema: Schema,
   transformers: Partial<
     Transformers<

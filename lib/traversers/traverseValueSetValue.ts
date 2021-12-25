@@ -9,7 +9,7 @@ import {
   valueSetValue,
   ObjectLiteral,
 } from "shexj";
-import Transformers, { ParentTrace } from "../Transformers";
+import Transformers, { ParentTrace } from "../Transformers.type";
 import traverseIriStem from "./traverseIriStem";
 import traverseIriStemRange from "./traverseIriStemRange";
 import traverseLanguage from "./traverseLanguage";

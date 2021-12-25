@@ -23,54 +23,43 @@ describe("traverseSchema", () => {
   });
 
   it("Traverses a simple schema and makes modifications", async () => {
-    const result = await traverseShex<
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string
-    >(schema, {
+    const result = await traverseShex<{
+      Schema: {
+        returns: string;
+        properties: {
+          startActs: string;
+          start: string;
+          shapes: string;
+        };
+      };
+      ShapeOr: {
+        returns: string;
+        properties: {
+          shapeExprs: string;
+        };
+      };
+      ShapeAnd: {
+        returns: string;
+        properties: {
+          shapeExprs: string;
+        };
+      };
+      ShapeNot: {
+        returns: string;
+        properties: {
+          shapeExpr: string;
+        };
+      };
+      ShapeExternal: {
+        returns: string;
+      };
+      
+
+      shapeExpr: {
+        returns: string;
+      };
+
+    }>(schema, {
       Schema: async (schema, transformedChildren): Promise<string> => {
         return `Schema(${transformedChildren.startActs},${transformedChildren.startActs},${transformedChildren.shapes})`;
       },
