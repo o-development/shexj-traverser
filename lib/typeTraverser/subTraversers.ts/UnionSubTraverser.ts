@@ -29,7 +29,12 @@ export async function unionSubTraverser<
   ] as UnionTraverserDefinition<Type>;
   const transformer = transformers[
     itemTypeName
-  ] as unknown as UnionTransformerDefinition<Types, Type, ReturnType>;
+  ] as unknown as UnionTransformerDefinition<
+    Types,
+    Type,
+    ReturnTypes,
+    ReturnType
+  >;
   const itemSpecificTypeName = definition.selector(item);
   const transformedItem = await parentSubTraverser(
     item,

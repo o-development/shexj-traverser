@@ -30,7 +30,12 @@ export async function interfaceSubTraverser<
   ] as InterfaceTraverserDefinition<Type>;
   const transformer = transformers[
     itemTypeName
-  ] as unknown as InterfaceTransformerDefinition<Types, Type, ReturnType>;
+  ] as unknown as InterfaceTransformerDefinition<
+    Types,
+    Type,
+    ReturnTypes,
+    ReturnType
+  >;
   const propertiesReturn: ReturnType["properties"] = Object.fromEntries(
     await Promise.all(
       Object.entries(definition.properties).map(async ([propertyName]) => {
@@ -66,6 +71,5 @@ export async function interfaceSubTraverser<
       })
     )
   );
-  const transformedObject = { ...item, ...propertiesReturn };
-  return transformer.transformer(item, transformedObject);
+  return transformer.transformer(item, propertiesReturn);
 }

@@ -50,9 +50,15 @@ export class Transformer<
     typePropertiesInput: InterfaceTransformerInputDefinition<
       Types,
       Type,
+      ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
       ReturnType
     >["properties"]
-  ): InterfaceTransformerDefinition<Types, Type, ReturnType>["properties"] {
+  ): InterfaceTransformerDefinition<
+    Types,
+    Type,
+    ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
+    ReturnType
+  >["properties"] {
     return Object.keys(
       (this.traverserDefinition[typeName] as InterfaceTraverserDefinition<Type>)
         .properties
@@ -68,6 +74,7 @@ export class Transformer<
     }, {}) as InterfaceTransformerDefinition<
       Types,
       Type,
+      ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
       ReturnType
     >["properties"];
   }
@@ -77,11 +84,21 @@ export class Transformer<
     ReturnType extends InterfaceReturnType<Type>
   >(
     typeName: keyof Types,
-    typeInput?: InterfaceTransformerInputDefinition<Types, Type, ReturnType>
-  ): InterfaceTransformerDefinition<Types, Type, ReturnType> {
+    typeInput?: InterfaceTransformerInputDefinition<
+      Types,
+      Type,
+      ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
+      ReturnType
+    >
+  ): InterfaceTransformerDefinition<
+    Types,
+    Type,
+    ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
+    ReturnType
+  > {
     if (!typeInput) {
       return {
-        transformer: (originalData, childData) => {
+        transformer: async (originalData, childData) => {
           return childData;
         },
         properties: this.applyDefaultInterfaceTransformerProperties(
@@ -103,10 +120,20 @@ export class Transformer<
     Type extends UnionType<keyof Types, any>,
     ReturnType extends UnionReturnType
   >(
-    typeInput?: UnionTransformerInputDefinition<Types, Type, ReturnType>
-  ): UnionTransformerDefinition<Types, Type, ReturnType> {
+    typeInput?: UnionTransformerInputDefinition<
+      Types,
+      Type,
+      ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
+      ReturnType
+    >
+  ): UnionTransformerDefinition<
+    Types,
+    Type,
+    ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
+    ReturnType
+  > {
     if (!typeInput) {
-      return (originalData, childData) => {
+      return async (originalData, childData) => {
         return childData;
       };
     }

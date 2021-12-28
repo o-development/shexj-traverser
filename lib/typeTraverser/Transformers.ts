@@ -16,22 +16,24 @@ export type InterfaceTransformerFunction<
   ReturnType extends InterfaceReturnType<Type>
 > = (
   originalData: Type["type"],
-  childData: any
+  childData: ReturnType["properties"]
 ) => Promise<ReturnType["return"]>;
 
 export type InterfaceTransformerPropertyFunction<
   Types extends TraverserTypes<any>,
   Type extends InterfaceType<keyof Types, any>,
+  ReturnTypes extends TransformerReturnTypes<Types>,
   ReturnType extends InterfaceReturnType<Type>,
   PropertyName extends keyof Type["properties"]
 > = (
   originalData: Types[Type["properties"][PropertyName]]["type"],
-  childData: any
+  childData: ReturnTypes[Type["properties"][PropertyName]]["return"]
 ) => Promise<ReturnType["properties"][PropertyName]>;
 
 export type InterfaceTransformerDefinition<
   Types extends TraverserTypes<any>,
   Type extends InterfaceType<keyof Types, any>,
+  ReturnTypes extends TransformerReturnTypes<Types>,
   ReturnType extends InterfaceReturnType<Type>
 > = {
   transformer: InterfaceTransformerFunction<Types, Type, ReturnType>;
@@ -39,6 +41,7 @@ export type InterfaceTransformerDefinition<
     [PropertyName in keyof Type["properties"]]: InterfaceTransformerPropertyFunction<
       Types,
       Type,
+      ReturnTypes,
       ReturnType,
       PropertyName
     >;
@@ -48,17 +51,19 @@ export type InterfaceTransformerDefinition<
 export type UnionTransformerFunction<
   Types extends TraverserTypes<any>,
   Type extends UnionType<keyof Types, any>,
+  ReturnTypes extends TransformerReturnTypes<Types>,
   ReturnType extends UnionReturnType
 > = (
   originalData: Type["type"],
-  childData: any
+  childData: ReturnTypes[Type["typeNames"]]["return"]
 ) => Promise<ReturnType["return"]>;
 
 export type UnionTransformerDefinition<
   Types extends TraverserTypes<any>,
   Type extends UnionType<keyof Types, any>,
+  ReturnTypes extends TransformerReturnTypes<Types>,
   ReturnType extends UnionReturnType
-> = UnionTransformerFunction<Types, Type, ReturnType>;
+> = UnionTransformerFunction<Types, Type, ReturnTypes, ReturnType>;
 
 export type TransformerDefinition<
   Types extends TraverserTypes<any>,
@@ -69,12 +74,18 @@ export type TransformerDefinition<
     ? InterfaceTransformerDefinition<
         Types,
         Types[TypeName],
+        ReturnTypes,
         ReturnTypes[TypeName]
       >
     : never
   : Types[TypeName] extends UnionType<keyof Types, any>
   ? ReturnTypes[TypeName] extends UnionReturnType
-    ? UnionTransformerDefinition<Types, Types[TypeName], ReturnTypes[TypeName]>
+    ? UnionTransformerDefinition<
+        Types,
+        Types[TypeName],
+        ReturnTypes,
+        ReturnTypes[TypeName]
+      >
     : never
   : never;
 
@@ -95,6 +106,7 @@ export type Transformers<
 export type InterfaceTransformerInputDefinition<
   Types extends TraverserTypes<any>,
   Type extends InterfaceType<keyof Types, any>,
+  ReturnTypes extends TransformerReturnTypes<Types>,
   ReturnType extends InterfaceReturnType<Type>
 > = {
   transformer: InterfaceTransformerFunction<Types, Type, ReturnType>;
@@ -102,6 +114,7 @@ export type InterfaceTransformerInputDefinition<
     [PropertyName in keyof Type["properties"]]: InterfaceTransformerPropertyFunction<
       Types,
       Type,
+      ReturnTypes,
       ReturnType,
       PropertyName
     >;
@@ -111,8 +124,9 @@ export type InterfaceTransformerInputDefinition<
 export type UnionTransformerInputDefinition<
   Types extends TraverserTypes<any>,
   Type extends UnionType<keyof Types, any>,
+  ReturnTypes extends TransformerReturnTypes<Types>,
   ReturnType extends UnionReturnType
-> = UnionTransformerFunction<Types, Type, ReturnType>;
+> = UnionTransformerFunction<Types, Type, ReturnTypes, ReturnType>;
 
 export type TransformerInputDefinition<
   Types extends TraverserTypes<any>,
@@ -123,6 +137,7 @@ export type TransformerInputDefinition<
     ? InterfaceTransformerInputDefinition<
         Types,
         Types[TypeName],
+        ReturnTypes,
         ReturnTypes[TypeName]
       >
     : never
@@ -131,6 +146,7 @@ export type TransformerInputDefinition<
     ? UnionTransformerInputDefinition<
         Types,
         Types[TypeName],
+        ReturnTypes,
         ReturnTypes[TypeName]
       >
     : never

@@ -1,5 +1,4 @@
 import ShexJTraverser from "./shexJTraverser";
-import allSchema from "shex-test/schemas/_all.json";
 import zeroSchema from "shex-test/schemas/0.json";
 import { Schema } from "shexj";
 
@@ -9,6 +8,9 @@ export const ShexJStringTransformer = ShexJTraverser.createTransformer<{
     properties: {
       shapes: string;
     };
+  };
+  shapeExpr: {
+    return: string;
   };
 }>({
   Schema: {
