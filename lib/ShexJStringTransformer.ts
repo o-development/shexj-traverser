@@ -1,13 +1,26 @@
 import ShexJTraverser from "./shexJTraverser";
+import allSchema from "shex-test/schemas/_all.json";
+import zeroSchema from "shex-test/schemas/0.json";
+import { Schema } from "shexj";
 
 export const ShexJStringTransformer = ShexJTraverser.createTransformer<{
   Schema: {
     return: string;
+    properties: {
+      shapes: string;
+    };
   };
 }>({
   Schema: {
-    transformer: async (originalData, childData): Promise<string> => {
-      return "Schema";
+    transformer: async (_originalData, childData): Promise<string> => {
+      console.log(childData);
+      return "schema";
+    },
+    properties: {
+      shapes: async (_originalData, childData): Promise<string> => {
+        console.log(childData);
+        return "shapes";
+      },
     },
   },
   shapeExpr: undefined,
@@ -34,3 +47,10 @@ export const ShexJStringTransformer = ShexJTraverser.createTransformer<{
   SemAct: undefined,
   Annotation: undefined,
 });
+
+ShexJStringTransformer.transform(zeroSchema as Schema, "Schema").then(
+  (result) => {
+    console.log("Final Result");
+    console.log(result);
+  }
+);

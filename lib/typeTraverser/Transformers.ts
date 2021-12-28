@@ -148,5 +148,3 @@ export type TransformersInput<
     ? TransformerInputDefinition<Types, ReturnTypes, TypeName> | undefined
     : TransformerInputDefinition<Types, ReturnTypes, TypeName>;
 }>;
-
-// export type TransfromersInputToTransformers<Input extends TransformersInput> =

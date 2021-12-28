@@ -11,6 +11,7 @@ import {
   UnionReturnType,
   UnionType,
 } from ".";
+import { parentSubTraverser } from "./subTraversers.ts/ParentSubTraverser";
 import {
   InterfaceTransformerDefinition,
   InterfaceTransformerInputDefinition,
@@ -59,8 +60,8 @@ export class Transformer<
       if (typePropertiesInput && typePropertiesInput[key]) {
         agg[key] = typePropertiesInput[key];
       } else {
-        agg[key] = (originalData: any, _childData: any) => {
-          return originalData;
+        agg[key] = (originalData: any, childData: any) => {
+          return childData;
         };
       }
       return agg;
@@ -80,8 +81,8 @@ export class Transformer<
   ): InterfaceTransformerDefinition<Types, Type, ReturnType> {
     if (!typeInput) {
       return {
-        transformer: (originalData, _childData) => {
-          return originalData;
+        transformer: (originalData, childData) => {
+          return childData;
         },
         properties: this.applyDefaultInterfaceTransformerProperties(
           typeName,
@@ -105,8 +106,8 @@ export class Transformer<
     typeInput?: UnionTransformerInputDefinition<Types, Type, ReturnType>
   ): UnionTransformerDefinition<Types, Type, ReturnType> {
     if (!typeInput) {
-      return (originalData, _childData) => {
-        return originalData;
+      return (originalData, childData) => {
+        return childData;
       };
     }
     return typeInput;
@@ -140,5 +141,22 @@ export class Transformer<
       Types,
       ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>
     >;
+  }
+
+  public transform<TypeName extends keyof Types>(
+    item: Types[TypeName]["type"],
+    itemTypeName: TypeName
+  ): Promise<
+    ApplyTransformerReturnTypesDefaults<
+      Types,
+      InputReturnTypes
+    >[TypeName]["return"]
+  > {
+    return parentSubTraverser(
+      item,
+      itemTypeName,
+      this.traverserDefinition,
+      this.transformers
+    );
   }
 }

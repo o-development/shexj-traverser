@@ -53,12 +53,9 @@ describe("traverseSchema", () => {
       ShapeExternal: {
         returns: string;
       };
-      
-
       shapeExpr: {
         returns: string;
       };
-
     }>(schema, {
       Schema: async (schema, transformedChildren): Promise<string> => {
         return `Schema(${transformedChildren.startActs},${transformedChildren.startActs},${transformedChildren.shapes})`;
