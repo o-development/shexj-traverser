@@ -4,7 +4,7 @@ import { AssertExtends, KeyTypes } from "./UtilTypes";
 export interface InterfaceType<TypeNames extends KeyTypes, Type> {
   kind: "interface";
   type: Type;
-  properties?: {
+  properties: {
     [key in keyof Type]: TypeNames;
   };
 }

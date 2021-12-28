@@ -65,6 +65,7 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
     },
     ShapeExternal: {
       kind: "interface",
+      properties: {},
     },
     NodeConstraint: {
       kind: "interface",
@@ -101,9 +102,11 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
     },
     ObjectLiteral: {
       kind: "interface",
+      properties: {},
     },
     IriStem: {
       kind: "interface",
+      properties: {},
     },
     IriStemRange: {
       kind: "interface",
@@ -117,6 +120,7 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
     },
     LiteralStem: {
       kind: "interface",
+      properties: {},
     },
     LiteralStemRange: {
       kind: "interface",
@@ -130,9 +134,11 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
     },
     Language: {
       kind: "interface",
+      properties: {},
     },
     LanguageStem: {
       kind: "interface",
+      properties: {},
     },
     LanguageStemRange: {
       kind: "interface",
@@ -146,6 +152,7 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
     },
     Wildcard: {
       kind: "interface",
+      properties: {},
     },
     Shape: {
       kind: "interface",
@@ -238,8 +245,10 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
     },
     SemAct: {
       kind: "interface",
+      properties: {},
     },
     Annotation: {
       kind: "interface",
+      properties: {},
     },
   };

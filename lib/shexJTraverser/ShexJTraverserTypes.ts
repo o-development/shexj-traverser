@@ -69,6 +69,7 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
   ShapeExternal: {
     kind: "interface";
     type: ShapeExternal;
+    properties: Record<string, never>;
   };
   NodeConstraint: {
     kind: "interface";
@@ -93,10 +94,12 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
   ObjectLiteral: {
     kind: "interface";
     type: ObjectLiteral;
+    properties: Record<string, never>;
   };
   IriStem: {
     kind: "interface";
     type: IriStem;
+    properties: Record<string, never>;
   };
   IriStemRange: {
     kind: "interface";
@@ -108,6 +111,7 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
   LiteralStem: {
     kind: "interface";
     type: LiteralStem;
+    properties: Record<string, never>;
   };
   LiteralStemRange: {
     kind: "interface";
@@ -119,10 +123,12 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
   Language: {
     kind: "interface";
     type: Language;
+    properties: Record<string, never>;
   };
   LanguageStem: {
     kind: "interface";
     type: LanguageStem;
+    properties: Record<string, never>;
   };
   LanguageStemRange: {
     kind: "interface";
@@ -134,6 +140,7 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
   Wildcard: {
     kind: "interface";
     type: Wildcard;
+    properties: Record<string, never>;
   };
   Shape: {
     kind: "interface";
@@ -179,9 +186,11 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
   SemAct: {
     kind: "interface";
     type: SemAct;
+    properties: Record<string, never>;
   };
   Annotation: {
     kind: "interface";
     type: Annotation;
+    properties: Record<string, never>;
   };
 }>;
