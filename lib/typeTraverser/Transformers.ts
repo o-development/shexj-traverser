@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ApplyTransformerReturnTypesDefaults,
+  AssertExtends,
+  BaseReturnType,
   InterfaceReturnType,
   InterfaceType,
   TransformerInputReturnTypes,
@@ -8,6 +10,7 @@ import {
   TraverserTypes,
   UnionReturnType,
   UnionType,
+  ValidateTraverserTypes,
 } from ".";
 
 export type InterfaceTransformerFunction<
@@ -170,3 +173,36 @@ export type TransformersInput<
     ? TransformerInputDefinition<Types, ReturnTypes, TypeName> | undefined
     : TransformerInputDefinition<Types, ReturnTypes, TypeName>;
 }>;
+
+// type a = b | c;
+// type b = {
+//   b: string;
+// };
+// type c = {
+//   c: string;
+// };
+
+// type testType = ValidateTraverserTypes<{
+//   a: {
+//     kind: "union";
+//     type: a;
+//     typeNames: "b" | "c";
+//   };
+//   b: {
+//     kind: "interface";
+//     type: b;
+//     properties: {};
+//   };
+//   c: {
+//     kind: "interface";
+//     type: c;
+//     properties: {};
+//   };
+// }>;
+
+// type test = AssertExtends<
+//   BaseReturnType<{}, "a">,
+//   {
+//     return: never;
+//   }
+// >;

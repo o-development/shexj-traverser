@@ -15,9 +15,6 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
   };
   EachOf: {
     return: dom.InterfaceDeclaration;
-  },
-  TripleConstraint: {
-    return: 
   }
 }>({
   Schema: {

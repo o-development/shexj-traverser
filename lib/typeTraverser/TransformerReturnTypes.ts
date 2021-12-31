@@ -30,13 +30,13 @@ export type TransformerReturnTypes<Types extends TraverserTypes<any>> = {
  */
 export type InterfacePropertiesInputReturnType<
   Type extends InterfaceType<any, any>
-> = Partial<{
-  [PropertyName in keyof Type["properties"]]: any;
-}>;
+> = {
+  [PropertyName in keyof Type["properties"]]: any | never;
+};
 
 export type InterfaceInputReturnType<Type extends InterfaceType<any, any>> = {
   return: any;
-  properties?: InterfacePropertiesInputReturnType<Type>;
+  properties: InterfacePropertiesInputReturnType<Type> | never;
 };
 
 export type UnionInputReturnType = {
