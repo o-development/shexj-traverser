@@ -6,9 +6,6 @@ import { jsonld2graphobject } from "jsonld2graphobject";
 export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
   Schema: {
     return: dom.NamespaceDeclaration;
-    properties: {
-      shapes: dom.NamespaceMember[];
-    };
   };
   shapeExpr: {
     return: dom.NamespaceMember;
@@ -18,6 +15,9 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
   };
   EachOf: {
     return: dom.InterfaceDeclaration;
+  },
+  TripleConstraint: {
+    return: 
   }
 }>({
   Schema: {
@@ -62,9 +62,10 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
   tripleExpr: undefined,
   EachOf: {
     transformer: (eachOf, transformedChildren): Promise<dom.InterfaceDeclaration> => {
-      transformedChildren.expressions.forEach(() => {
-
-      })
+      transformedChildren.expressions.forEach((child) => {
+        
+      });
+      throw new Error("Not Implemented");
 
     },
   },
