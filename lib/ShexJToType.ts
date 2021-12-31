@@ -6,14 +6,12 @@ import { jsonld2graphobject } from "jsonld2graphobject";
 export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
   Schema: {
     return: dom.NamespaceDeclaration;
-    properties: never;
   };
   shapeExpr: {
     return: dom.NamespaceMember;
   };
   Shape: {
     return: dom.InterfaceDeclaration;
-    properties: never;
   };
   EachOf: {
     return: dom.InterfaceDeclaration;
@@ -35,43 +33,27 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
   shapeExpr: (expr, transformedChildren): Promise<dom.NamespaceMember> => {
     throw new Error("Not Implemented");
   },
-  ShapeOr: undefined,
-  ShapeAnd: undefined,
-  ShapeNot: undefined,
-  ShapeExternal: undefined,
-  NodeConstraint: undefined,
-  valueSetValue: undefined,
-  ObjectLiteral: undefined,
-  IriStem: undefined,
-  IriStemRange: undefined,
-  LiteralStem: undefined,
-  LiteralStemRange: undefined,
-  Language: undefined,
-  LanguageStem: undefined,
-  LanguageStemRange: undefined,
-  Wildcard: undefined,
   Shape: {
-    transformer: (shape, transformedChildren): Promise<dom.InterfaceDeclaration> => {
+    transformer: (
+      shape,
+      transformedChildren
+    ): Promise<dom.InterfaceDeclaration> => {
       const newInterface = dom.create.interface("placeholderName");
       newInterface.jsDocComment = "Placeholder Comment";
-      transformedChildren.expression
+      transformedChildren.expression;
       throw new Error("Not Implemented");
     },
   },
   tripleExpr: undefined,
   EachOf: {
-    transformer: (eachOf, transformedChildren): Promise<dom.InterfaceDeclaration> => {
-      transformedChildren.expressions.forEach((child) => {
-        
-      });
+    transformer: (
+      eachOf,
+      transformedChildren
+    ): Promise<dom.InterfaceDeclaration> => {
+      transformedChildren.expressions.forEach((child) => {});
       throw new Error("Not Implemented");
-
     },
   },
-  OneOf: undefined,
-  TripleConstraint: undefined,
-  SemAct: undefined,
-  Annotation: undefined,
 });
 
 async function run() {
