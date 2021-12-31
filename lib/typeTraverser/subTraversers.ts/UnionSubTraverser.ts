@@ -16,7 +16,7 @@ export async function unionSubTraverser<
   Types extends TraverserTypes<any>,
   TypeName extends keyof Types,
   ReturnTypes extends TransformerReturnTypes<Types>,
-  Type extends UnionType<keyof Types, any>,
+  Type extends UnionType<keyof Types>,
   ReturnType extends UnionReturnType
 >(
   item: Type["type"],

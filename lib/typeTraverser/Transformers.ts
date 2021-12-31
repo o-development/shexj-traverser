@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ApplyTransformerReturnTypesDefaults,
-  AssertExtends,
-  BaseReturnType,
   InterfaceReturnType,
   InterfaceType,
   TransformerInputReturnTypes,
@@ -10,12 +8,11 @@ import {
   TraverserTypes,
   UnionReturnType,
   UnionType,
-  ValidateTraverserTypes,
 } from ".";
 
 export type InterfaceTransformerFunction<
   Types extends TraverserTypes<any>,
-  Type extends InterfaceType<keyof Types, any>,
+  Type extends InterfaceType<keyof Types>,
   ReturnType extends InterfaceReturnType<Type>
 > = (
   originalData: Type["type"],
@@ -30,7 +27,7 @@ export type InterfaceTransformerFunction<
 
 export type InterfaceTransformerPropertyFunction<
   Types extends TraverserTypes<any>,
-  Type extends InterfaceType<keyof Types, any>,
+  Type extends InterfaceType<keyof Types>,
   ReturnTypes extends TransformerReturnTypes<Types>,
   ReturnType extends InterfaceReturnType<Type>,
   PropertyName extends keyof Type["properties"]
@@ -41,7 +38,7 @@ export type InterfaceTransformerPropertyFunction<
 
 export type InterfaceTransformerDefinition<
   Types extends TraverserTypes<any>,
-  Type extends InterfaceType<keyof Types, any>,
+  Type extends InterfaceType<keyof Types>,
   ReturnTypes extends TransformerReturnTypes<Types>,
   ReturnType extends InterfaceReturnType<Type>
 > = {
@@ -59,7 +56,7 @@ export type InterfaceTransformerDefinition<
 
 export type UnionTransformerFunction<
   Types extends TraverserTypes<any>,
-  Type extends UnionType<keyof Types, any>,
+  Type extends UnionType<keyof Types>,
   ReturnTypes extends TransformerReturnTypes<Types>,
   ReturnType extends UnionReturnType
 > = (
@@ -69,7 +66,7 @@ export type UnionTransformerFunction<
 
 export type UnionTransformerDefinition<
   Types extends TraverserTypes<any>,
-  Type extends UnionType<keyof Types, any>,
+  Type extends UnionType<keyof Types>,
   ReturnTypes extends TransformerReturnTypes<Types>,
   ReturnType extends UnionReturnType
 > = UnionTransformerFunction<Types, Type, ReturnTypes, ReturnType>;
@@ -78,7 +75,7 @@ export type TransformerDefinition<
   Types extends TraverserTypes<any>,
   ReturnTypes extends TransformerReturnTypes<Types>,
   TypeName extends keyof Types
-> = Types[TypeName] extends InterfaceType<keyof Types, any>
+> = Types[TypeName] extends InterfaceType<keyof Types>
   ? ReturnTypes[TypeName] extends InterfaceReturnType<Types[TypeName]>
     ? InterfaceTransformerDefinition<
         Types,
@@ -87,7 +84,7 @@ export type TransformerDefinition<
         ReturnTypes[TypeName]
       >
     : never
-  : Types[TypeName] extends UnionType<keyof Types, any>
+  : Types[TypeName] extends UnionType<keyof Types>
   ? ReturnTypes[TypeName] extends UnionReturnType
     ? UnionTransformerDefinition<
         Types,
@@ -114,7 +111,7 @@ export type Transformers<
  */
 export type InterfaceTransformerInputDefinition<
   Types extends TraverserTypes<any>,
-  Type extends InterfaceType<keyof Types, any>,
+  Type extends InterfaceType<keyof Types>,
   ReturnTypes extends TransformerReturnTypes<Types>,
   ReturnType extends InterfaceReturnType<Type>
 > = {
@@ -132,7 +129,7 @@ export type InterfaceTransformerInputDefinition<
 
 export type UnionTransformerInputDefinition<
   Types extends TraverserTypes<any>,
-  Type extends UnionType<keyof Types, any>,
+  Type extends UnionType<keyof Types>,
   ReturnTypes extends TransformerReturnTypes<Types>,
   ReturnType extends UnionReturnType
 > = UnionTransformerFunction<Types, Type, ReturnTypes, ReturnType>;
@@ -141,7 +138,7 @@ export type TransformerInputDefinition<
   Types extends TraverserTypes<any>,
   ReturnTypes extends TransformerReturnTypes<Types>,
   TypeName extends keyof Types
-> = Types[TypeName] extends InterfaceType<keyof Types, any>
+> = Types[TypeName] extends InterfaceType<keyof Types>
   ? ReturnTypes[TypeName] extends InterfaceReturnType<Types[TypeName]>
     ? InterfaceTransformerInputDefinition<
         Types,
@@ -150,7 +147,7 @@ export type TransformerInputDefinition<
         ReturnTypes[TypeName]
       >
     : never
-  : Types[TypeName] extends UnionType<keyof Types, any>
+  : Types[TypeName] extends UnionType<keyof Types>
   ? ReturnTypes[TypeName] extends UnionReturnType
     ? UnionTransformerInputDefinition<
         Types,
@@ -173,36 +170,3 @@ export type TransformersInput<
     ? TransformerInputDefinition<Types, ReturnTypes, TypeName> | undefined
     : TransformerInputDefinition<Types, ReturnTypes, TypeName>;
 }>;
-
-// type a = b | c;
-// type b = {
-//   b: string;
-// };
-// type c = {
-//   c: string;
-// };
-
-// type testType = ValidateTraverserTypes<{
-//   a: {
-//     kind: "union";
-//     type: a;
-//     typeNames: "b" | "c";
-//   };
-//   b: {
-//     kind: "interface";
-//     type: b;
-//     properties: {};
-//   };
-//   c: {
-//     kind: "interface";
-//     type: c;
-//     properties: {};
-//   };
-// }>;
-
-// type test = AssertExtends<
-//   BaseReturnType<{}, "a">,
-//   {
-//     return: never;
-//   }
-// >;

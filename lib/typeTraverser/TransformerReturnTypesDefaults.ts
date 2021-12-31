@@ -10,71 +10,6 @@ import {
   UnionType,
 } from ".";
 
-// export type RecursivelyFindReturnType<
-//   Types extends TraverserTypes<any>,
-//   InputReturnTypes extends TransformerInputReturnTypes<Types>,
-//   KeyToFind extends keyof Types,
-//   KeysVisited extends keyof Types,
-// > = KeyToFind extends KeysVisited ? Types[KeyToFind]["type"] : (
-//   InputReturnTypes[KeyToFind] extends BaseInputReturnType<Types, Types[KeyToFind]> ?
-
-// )
-
-// export type InterfaceReturnTypeDefault<
-//   Types extends TraverserTypes<any>,
-//   Type extends InterfaceType<keyof Types, any>,
-//   InputReturnTypes extends TransformerInputReturnTypes<Types>
-// > = {
-//   return: Type["type"];
-//   properties: {
-//     [PropertyName in keyof Type["properties"]]: InputReturnTypes[Type["properties"][PropertyName]] extends NonNullable<
-//       InterfaceInputReturnType<Type>
-//     >
-//       ? InputReturnTypes[Type["properties"][PropertyName]]["return"]
-//       : Types[Type["properties"][PropertyName]]["type"];
-//   };
-// };
-
-// export type UnionReturnTypeDefault<Type extends UnionType<any, any>> = {
-//   return: Type["type"];
-// };
-
-// export type TransformerReturnTypesDefaults<
-//   Types extends TraverserTypes<any>,
-//   InputReturnTypes extends TransformerInputReturnTypes<Types>
-// > = {
-//   [TypeName in keyof Types]: Types[TypeName] extends InterfaceType<
-//     keyof Types,
-//     any
-//   >
-//     ? InterfaceReturnTypeDefault<Types, Types[TypeName], InputReturnTypes>
-//     : Types[TypeName] extends UnionType<keyof Types, any>
-//     ? UnionReturnTypeDefault<Types[TypeName]>
-//     : never;
-// };
-
-// export type ApplyInterfaceReturnTypeDefault<
-//   Types extends TraverserTypes<any>,
-//   Type extends InterfaceType<keyof Types, any>,
-//   InputReturnTypes extends TransformerInputReturnTypes<Types>,
-//   InputReturnType extends InterfaceInputReturnType<Type>
-// > = {
-//   return: InputReturnType["return"];
-//   properties: InputReturnType["properties"] extends NonNullable<
-//     InterfaceInputReturnType<Type>["properties"]
-//   >
-//     ? {
-//         [PropertyName in keyof Type["properties"]]: undefined extends InputReturnType["properties"][PropertyName]
-//           ? InterfaceReturnTypeDefault<
-//               Types,
-//               Type,
-//               InputReturnTypes
-//             >["properties"][PropertyName]
-//           : InputReturnType["properties"][PropertyName];
-//       }
-//     : InterfaceReturnTypeDefault<Types, Type, InputReturnTypes>["properties"];
-// };
-
 export type RecursivelyFindReturnType<
   Types extends TraverserTypes<any>,
   InputReturnTypes extends TransformerInputReturnTypes<Types>,
@@ -99,7 +34,7 @@ export type HackilyApplyConditionalPropertyDefaults<
   Types extends TraverserTypes<any>,
   InputReturnTypes extends TransformerInputReturnTypes<Types>,
   VisitedTypeNames extends keyof Types,
-  Type extends InterfaceType<keyof Types, any>,
+  Type extends InterfaceType<keyof Types>,
   PropertiesInputRetunType extends InterfacePropertiesInputReturnType<Type>,
   PropertyName extends keyof Types,
   FallbackKey extends keyof Types
@@ -115,9 +50,10 @@ export type HackilyApplyConditionalPropertyDefaults<
 export type HackilyApplyConditionalPropertiesDefaults<
   Types extends TraverserTypes<any>,
   InputReturnTypes extends TransformerInputReturnTypes<Types>,
+  TypeName extends keyof Types,
   VisitedTypeNames extends keyof Types,
-  Type extends InterfaceType<keyof Types, any>,
-  InputReturnType extends InterfaceInputReturnType<Type>,
+  Type extends InterfaceType<keyof Types>,
+  InputReturnType extends InterfaceInputReturnType<Types, TypeName>,
   PropertyName extends keyof Types,
   FallbackKey extends keyof Types
 > = InputReturnType["properties"] extends InterfacePropertiesInputReturnType<Type>
@@ -142,14 +78,16 @@ export type ApplyTransformerInterfacePropertiesReturnTypeDefault<
   InputReturnTypes extends TransformerInputReturnTypes<Types>,
   TypeName extends keyof Types,
   VisitedTypeNames extends keyof Types
-> = Types[TypeName] extends InterfaceType<keyof Types, any>
+> = Types[TypeName] extends InterfaceType<keyof Types>
   ? {
       [PropertyName in keyof Types[TypeName]["properties"]]: InputReturnTypes[TypeName] extends InterfaceInputReturnType<
-        Types[TypeName]
+        Types,
+        TypeName
       >
         ? HackilyApplyConditionalPropertiesDefaults<
             Types,
             InputReturnTypes,
+            TypeName,
             VisitedTypeNames,
             Types[TypeName],
             InputReturnTypes[TypeName],
@@ -170,10 +108,11 @@ export type ApplyTransformerInterfaceReturnTypeDefault<
   InputReturnTypes extends TransformerInputReturnTypes<Types>,
   TypeName extends keyof Types,
   VisitedTypeNames extends keyof Types
-> = Types[TypeName] extends InterfaceType<keyof Types, any>
+> = Types[TypeName] extends InterfaceType<keyof Types>
   ? {
       return: InputReturnTypes[TypeName] extends InterfaceInputReturnType<
-        Types[TypeName]
+        Types,
+        TypeName
       >
         ? InputReturnTypes[TypeName]["return"]
         : ApplyTransformerInterfacePropertiesReturnTypeDefault<
@@ -196,19 +135,20 @@ export type ApplyTransformerUnionReturnTypeDefault<
   InputReturnTypes extends TransformerInputReturnTypes<Types>,
   TypeName extends keyof Types,
   VisitedTypeNames extends keyof Types
-> = Types[TypeName] extends UnionType<keyof Types, any>
-  ? InputReturnTypes[TypeName] extends UnionInputReturnType
-    ? {
-        return: InputReturnTypes[TypeName]["return"];
-      }
-    : {
-        return: RecursivelyFindReturnType<
-          Types,
-          InputReturnTypes,
-          Types[TypeName]["typeNames"],
-          VisitedTypeNames
-        >;
-      }
+> = Types[TypeName] extends UnionType<keyof Types>
+  ? {
+      return: InputReturnTypes[TypeName] extends UnionInputReturnType<
+        Types,
+        TypeName
+      >
+        ? InputReturnTypes[TypeName]["return"]
+        : RecursivelyFindReturnType<
+            Types,
+            InputReturnTypes,
+            Types[TypeName]["typeNames"],
+            VisitedTypeNames
+          >;
+    }
   : never;
 
 export type ApplyTransformerReturnTypeDefault<
@@ -216,19 +156,21 @@ export type ApplyTransformerReturnTypeDefault<
   InputReturnTypes extends TransformerInputReturnTypes<Types>,
   TypeName extends keyof Types,
   VisitedTypeNames extends keyof Types
-> =
-  | ApplyTransformerInterfaceReturnTypeDefault<
+> = Types[TypeName] extends InterfaceType<keyof Types>
+  ? ApplyTransformerInterfaceReturnTypeDefault<
       Types,
       InputReturnTypes,
       TypeName,
       VisitedTypeNames
     >
-  | ApplyTransformerUnionReturnTypeDefault<
+  : Types[TypeName] extends UnionType<keyof Types>
+  ? ApplyTransformerUnionReturnTypeDefault<
       Types,
       InputReturnTypes,
       TypeName,
       VisitedTypeNames
-    >;
+    >
+  : never;
 
 export type ApplyTransformerReturnTypesDefaults<
   Types extends TraverserTypes<any>,

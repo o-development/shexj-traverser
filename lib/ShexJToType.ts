@@ -6,16 +6,18 @@ import { jsonld2graphobject } from "jsonld2graphobject";
 export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
   Schema: {
     return: dom.NamespaceDeclaration;
+    properties: never;
   };
   shapeExpr: {
     return: dom.NamespaceMember;
   };
   Shape: {
     return: dom.InterfaceDeclaration;
+    properties: never;
   };
   EachOf: {
     return: dom.InterfaceDeclaration;
-  }
+  };
 }>({
   Schema: {
     transformer: async (

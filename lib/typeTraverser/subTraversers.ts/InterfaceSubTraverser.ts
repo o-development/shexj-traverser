@@ -16,7 +16,7 @@ export async function interfaceSubTraverser<
   Types extends TraverserTypes<any>,
   TypeName extends keyof Types,
   ReturnTypes extends TransformerReturnTypes<Types>,
-  Type extends InterfaceType<keyof Types, any>,
+  Type extends InterfaceType<keyof Types>,
   ReturnType extends InterfaceReturnType<Type>
 >(
   item: Type["type"],

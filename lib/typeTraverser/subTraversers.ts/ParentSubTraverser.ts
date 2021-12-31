@@ -10,7 +10,7 @@ export async function parentSubTraverser<
   Types extends TraverserTypes<any>,
   TypeName extends keyof Types,
   ReturnTypes extends TransformerReturnTypes<Types>,
-  Type extends BaseTraverserTypes<keyof Types, any>,
+  Type extends BaseTraverserTypes<keyof Types>,
   ReturnType extends BaseReturnType<Types, TypeName>
 >(
   item: Type["type"],

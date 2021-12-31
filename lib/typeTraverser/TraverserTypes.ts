@@ -1,26 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AssertExtends, KeyTypes } from "./UtilTypes";
 
-export interface InterfaceType<TypeNames extends KeyTypes, Type> {
+export interface InterfaceType<TypeNames extends KeyTypes> {
   kind: "interface";
-  type: Type;
+  type: any;
   properties: {
-    [key in keyof Type]: TypeNames;
+    [key: string]: TypeNames;
   };
 }
 
-export interface UnionType<TypeNames extends KeyTypes, Type> {
+export interface UnionType<TypeNames extends KeyTypes> {
   kind: "union";
-  type: Type;
+  type: any;
   typeNames: TypeNames;
 }
 
-export type BaseTraverserTypes<TypeNames extends KeyTypes, Type> =
-  | InterfaceType<TypeNames, Type>
-  | UnionType<TypeNames, Type>;
+export type BaseTraverserTypes<TypeNames extends KeyTypes> =
+  | InterfaceType<TypeNames>
+  | UnionType<TypeNames>;
 
 export type TraverserTypes<TypeNames extends KeyTypes> = {
-  [Property in TypeNames]: BaseTraverserTypes<TypeNames, any>;
+  [Property in TypeNames]: BaseTraverserTypes<TypeNames>;
 };
 
 export type ValidateTraverserTypes<Types extends TraverserTypes<any>> =

@@ -44,7 +44,7 @@ export class Transformer<
   }
 
   private applyDefaultInterfaceTransformerProperties<
-    Type extends InterfaceType<keyof Types, any>,
+    Type extends InterfaceType<keyof Types>,
     ReturnType extends InterfaceReturnType<Type>
   >(
     typeName: keyof Types,
@@ -81,7 +81,7 @@ export class Transformer<
   }
 
   private applyDefaultInterfaceTransformer<
-    Type extends InterfaceType<keyof Types, any>,
+    Type extends InterfaceType<keyof Types>,
     ReturnType extends InterfaceReturnType<Type>
   >(
     typeName: keyof Types,
@@ -118,7 +118,7 @@ export class Transformer<
   }
 
   private applyDefaultUnionTransformer<
-    Type extends UnionType<keyof Types, any>,
+    Type extends UnionType<keyof Types>,
     ReturnType extends UnionReturnType
   >(
     typeInput?: UnionTransformerInputDefinition<
