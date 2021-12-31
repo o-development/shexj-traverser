@@ -148,7 +148,7 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
     properties: {
       expression: "tripleExpr";
       semActs: "SemAct";
-      annotation: "Annotation";
+      annotations: "Annotation";
     };
   };
   tripleExpr: {

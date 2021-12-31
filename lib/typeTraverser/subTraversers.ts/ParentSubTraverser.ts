@@ -15,22 +15,20 @@ export async function parentSubTraverser<
 >(
   item: Type["type"],
   itemTypeName: TypeName,
-  traverserDefinition: TraverserDefinition<Types>,
-  transformers: Transformers<Types, ReturnTypes>
+  globals: {
+    traverserDefinition: TraverserDefinition<Types>;
+    transformers: Transformers<Types, ReturnTypes>;
+    visitedObjects: WeakSet<object>;
+  }
 ): Promise<ReturnType["return"]> {
+  const { traverserDefinition, visitedObjects } = globals;
+  if (visitedObjects.has(item)) {
+    return;
+  }
+  visitedObjects.add(item);
   if (traverserDefinition[itemTypeName].kind === "interface") {
-    return interfaceSubTraverser(
-      item,
-      itemTypeName,
-      traverserDefinition,
-      transformers
-    );
+    return interfaceSubTraverser(item, itemTypeName, globals);
   } else if (traverserDefinition[itemTypeName].kind === "union") {
-    return unionSubTraverser(
-      item,
-      itemTypeName,
-      traverserDefinition,
-      transformers
-    );
+    return unionSubTraverser(item, itemTypeName, globals);
   }
 }

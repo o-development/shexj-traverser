@@ -21,9 +21,13 @@ export async function interfaceSubTraverser<
 >(
   item: Type["type"],
   itemTypeName: TypeName,
-  traverserDefinition: TraverserDefinition<Types>,
-  transformers: Transformers<Types, ReturnTypes>
+  globals: {
+    traverserDefinition: TraverserDefinition<Types>;
+    transformers: Transformers<Types, ReturnTypes>;
+    visitedObjects: WeakSet<object>;
+  }
 ): Promise<ReturnType["return"]> {
+  const { traverserDefinition, transformers } = globals;
   // Get the returns for properties
   const definition = traverserDefinition[
     itemTypeName
@@ -50,8 +54,7 @@ export async function interfaceSubTraverser<
               return parentSubTraverser(
                 subObject,
                 originalPropertyDefinition.typeName,
-                traverserDefinition,
-                transformers
+                globals
               );
             })
           );
@@ -59,8 +62,7 @@ export async function interfaceSubTraverser<
           transformedProperty = await parentSubTraverser(
             originalObject,
             originalPropertyDefinition.typeName,
-            traverserDefinition,
-            transformers
+            globals
           );
         }
         transformedProperty = await transformer.properties[propertyName](

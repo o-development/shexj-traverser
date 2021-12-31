@@ -21,7 +21,8 @@ import {
   UnionTransformerInputDefinition,
 } from "./Transformers";
 
-// TODO: Lots of "any" in this file. I'm just done with fancy typescript, but if I ever feel so inclined, should fix this in the future.
+// TODO: Lots of "any" in this file. I'm just done with fancy typescript,
+// but if I ever feel so inclined, I should fix this in the future.
 
 export class Transformer<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -179,11 +180,10 @@ export class Transformer<
       InputReturnTypes
     >[TypeName]["return"]
   > {
-    return parentSubTraverser(
-      item,
-      itemTypeName,
-      this.traverserDefinition,
-      this.transformers
-    );
+    return parentSubTraverser(item, itemTypeName, {
+      traverserDefinition: this.traverserDefinition,
+      transformers: this.transformers,
+      visitedObjects: new WeakSet(),
+    });
   }
 }

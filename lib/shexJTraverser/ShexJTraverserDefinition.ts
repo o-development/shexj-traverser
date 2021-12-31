@@ -167,8 +167,8 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
           isOptional: true,
           typeName: "SemAct",
         },
-        annotation: {
-          isArray: false,
+        annotations: {
+          isArray: true,
           isOptional: true,
           typeName: "Annotation",
         },

@@ -21,9 +21,13 @@ export async function unionSubTraverser<
 >(
   item: Type["type"],
   itemTypeName: TypeName,
-  traverserDefinition: TraverserDefinition<Types>,
-  transformers: Transformers<Types, ReturnTypes>
+  globals: {
+    traverserDefinition: TraverserDefinition<Types>;
+    transformers: Transformers<Types, ReturnTypes>;
+    visitedObjects: WeakSet<object>;
+  }
 ): Promise<ReturnType["return"]> {
+  const { traverserDefinition, transformers } = globals;
   const definition = traverserDefinition[
     itemTypeName
   ] as UnionTraverserDefinition<Type>;
@@ -39,8 +43,7 @@ export async function unionSubTraverser<
   const transformedItem = await parentSubTraverser(
     item,
     itemSpecificTypeName,
-    traverserDefinition,
-    transformers
+    globals
   );
   return transformer(item, transformedItem);
 }
