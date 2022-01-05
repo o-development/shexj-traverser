@@ -24,7 +24,7 @@ export async function interfaceSubTraverser<
   globals: {
     traverserDefinition: TraverserDefinition<Types>;
     transformers: Transformers<Types, ReturnTypes>;
-    visitedObjects: WeakSet<object>;
+    visitedObjects: WeakMap<object, Map<TypeName, Promise<any>>>;
   }
 ): Promise<ReturnType["return"]> {
   const { traverserDefinition, transformers } = globals;
@@ -54,7 +54,7 @@ export async function interfaceSubTraverser<
               return parentSubTraverser(
                 subObject,
                 originalPropertyDefinition.typeName,
-                globals
+                globals as any
               );
             })
           );
@@ -62,7 +62,7 @@ export async function interfaceSubTraverser<
           transformedProperty = await parentSubTraverser(
             originalObject,
             originalPropertyDefinition.typeName,
-            globals
+            globals as any
           );
         }
         transformedProperty = await transformer.properties[propertyName](

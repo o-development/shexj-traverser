@@ -18,17 +18,36 @@ export async function parentSubTraverser<
   globals: {
     traverserDefinition: TraverserDefinition<Types>;
     transformers: Transformers<Types, ReturnTypes>;
-    visitedObjects: WeakSet<object>;
+    visitedObjects: WeakMap<object, Map<TypeName, Promise<any>>>;
   }
 ): Promise<ReturnType["return"]> {
+  console.log(itemTypeName);
   const { traverserDefinition, visitedObjects } = globals;
-  if (visitedObjects.has(item)) {
-    return;
+  if (visitedObjects.has(item) && visitedObjects.get(item)?.has(itemTypeName)) {
+    return visitedObjects.get(item)?.get(itemTypeName);
   }
-  visitedObjects.add(item);
+  if (!visitedObjects.has(item)) {
+    visitedObjects.set(item, new Map());
+  }
+  let promiseResolve: (
+    value: ReturnType["return"] | PromiseLike<ReturnType["return"]>
+  ) => void;
+  const promiseToReturn: Promise<ReturnType["return"]> = new Promise<
+    ReturnType["return"]
+  >((resolve) => {
+    promiseResolve = resolve;
+  });
+  let valueToReturn: ReturnType["return"];
+  visitedObjects.get(item)?.set(itemTypeName, promiseToReturn);
   if (traverserDefinition[itemTypeName].kind === "interface") {
-    return interfaceSubTraverser(item, itemTypeName, globals);
+    valueToReturn = await interfaceSubTraverser(item, itemTypeName, globals);
   } else if (traverserDefinition[itemTypeName].kind === "union") {
-    return unionSubTraverser(item, itemTypeName, globals);
+    valueToReturn = await unionSubTraverser(item, itemTypeName, globals);
+  } else {
+    throw new Error("Unsupported Traverser Type");
   }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  promiseResolve(valueToReturn);
+  return valueToReturn;
 }

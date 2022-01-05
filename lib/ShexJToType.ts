@@ -2,19 +2,38 @@ import ShexJTraverser from "./shexJTraverser";
 import kitchenSinkSchema from "shex-test/schemas/kitchenSink.json";
 import * as dom from "dts-dom";
 import { jsonld2graphobject } from "jsonld2graphobject";
+import { circular } from "./testShape";
 
 export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
   Schema: {
     return: dom.NamespaceDeclaration;
   };
-  shapeExpr: {
-    return: dom.NamespaceMember;
-  };
   Shape: {
-    return: dom.InterfaceDeclaration;
+    return: dom.InterfaceDeclaration | dom.UnionType | dom.IntersectionType;
+  };
+  ShapeOr: {
+    return: dom.InterfaceDeclaration | dom.UnionType | dom.IntersectionType;
+  };
+  ShapeAnd: {
+    return: dom.InterfaceDeclaration | dom.UnionType | dom.IntersectionType;
+  };
+  ShapeNot: {
+    return: dom.InterfaceDeclaration | dom.UnionType | dom.IntersectionType;
+  };
+  ShapeExternal: {
+    return: dom.InterfaceDeclaration | dom.UnionType | dom.IntersectionType;
   };
   EachOf: {
-    return: dom.InterfaceDeclaration;
+    return: dom.InterfaceDeclaration | dom.IntersectionType;
+  };
+  OneOf: {
+    return: dom.UnionType;
+  };
+  TripleConstraint: {
+    return: dom.PropertyDeclaration;
+  };
+  NodeConstraint: {
+    return: dom.Type;
   };
 }>({
   Schema: {
@@ -22,46 +41,94 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
       schema,
       transformedChildren
     ): Promise<dom.NamespaceDeclaration> => {
-      transformedChildren.shapes;
       const namespace = dom.create.namespace("namespace");
-      if (transformedChildren.shapes) {
-        namespace.members.push(...transformedChildren.shapes);
-      }
+      console.log(transformedChildren.shapes);
+      transformedChildren.shapes.forEach((shape, index) => {
+        namespace.members.push(
+          dom.create.alias(`typePlaceholder${index}`, shape)
+        );
+      });
       return namespace;
     },
   },
-  shapeExpr: (expr, transformedChildren): Promise<dom.NamespaceMember> => {
-    throw new Error("Not Implemented");
-  },
+
   Shape: {
-    transformer: (
-      shape,
-      transformedChildren
-    ): Promise<dom.InterfaceDeclaration> => {
-      const newInterface = dom.create.interface("placeholderName");
-      newInterface.jsDocComment = "Placeholder Comment";
-      transformedChildren.expression;
-      throw new Error("Not Implemented");
+    transformer: async (shape, transformedChildren) => {
+      console.log("In Shape Transformer");
+      if (transformedChildren.expression.kind === "property") {
+        const newInterface = dom.create.interface(
+          "yetAnotherAnotherPlaceholder"
+        );
+        newInterface.members.push(transformedChildren.expression);
+        return newInterface;
+      }
+      return transformedChildren.expression;
     },
   },
-  tripleExpr: undefined,
   EachOf: {
-    transformer: (
+    transformer: async (
       eachOf,
       transformedChildren
-    ): Promise<dom.InterfaceDeclaration> => {
-      transformedChildren.expressions.forEach((child) => {});
-      throw new Error("Not Implemented");
+    ): Promise<dom.InterfaceDeclaration | dom.IntersectionType> => {
+      const newInterface = dom.create.interface("anotherPlaceholder");
+      const nonPropertyExpressions: (dom.UnionType | dom.IntersectionType)[] =
+        [];
+      transformedChildren.expressions.forEach((expression) => {
+        if (expression.kind === "property") {
+          newInterface.members.push(expression);
+        } else if (expression.kind === "interface") {
+          newInterface.members.push(...expression.members);
+        } else {
+          nonPropertyExpressions.push(expression);
+        }
+      });
+      if (nonPropertyExpressions.length === 0) {
+        return newInterface;
+      }
+      return dom.create.intersection([newInterface, ...nonPropertyExpressions]);
+    },
+  },
+  OneOf: {
+    transformer: async (oneOf, transformedChildren): Promise<dom.UnionType> => {
+      const newUnion = dom.create.union([]);
+      transformedChildren.expressions.forEach((child) => {
+        let actualChild;
+        if (child.kind === "property") {
+          const newInterface = dom.create.interface("yetAnotherPlaceholder");
+          newInterface.members.push(child);
+          actualChild = newInterface;
+        } else {
+          actualChild = child;
+        }
+        newUnion.members.push(actualChild);
+      });
+      return newUnion;
+    },
+  },
+  TripleConstraint: {
+    transformer: async (
+      tripleConstraint,
+      transformedChildren
+    ): Promise<dom.PropertyDeclaration> => {
+      return dom.create.property(
+        tripleConstraint.predicate,
+        transformedChildren.valueExpr
+      );
+    },
+  },
+  NodeConstraint: {
+    transformer: async (
+      nodeConstraint,
+      transformedChildren
+    ): Promise<dom.Type> => {
+      return dom.type.string;
     },
   },
 });
 
 async function run() {
   const result = await ShexJTypeTransformer.transform(
-    await jsonld2graphobject(
-      { "@id": "SCHEMA", ...kitchenSinkSchema },
-      "SCHEMA"
-    ),
+    await jsonld2graphobject({ "@id": "SCHEMA", ...circular }, "SCHEMA"),
     "Schema"
   );
   console.log("Final Result");

@@ -24,7 +24,7 @@ export async function unionSubTraverser<
   globals: {
     traverserDefinition: TraverserDefinition<Types>;
     transformers: Transformers<Types, ReturnTypes>;
-    visitedObjects: WeakSet<object>;
+    visitedObjects: WeakMap<object, Map<TypeName, Promise<any>>>;
   }
 ): Promise<ReturnType["return"]> {
   const { traverserDefinition, transformers } = globals;

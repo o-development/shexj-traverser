@@ -17,11 +17,7 @@ export type InterfaceTransformerFunction<
 > = (
   originalData: Type["type"],
   childData: {
-    [PropertyName in keyof ReturnType["properties"]]: NonNullable<
-      Type["type"][PropertyName]
-    > extends Array<any>
-      ? Array<ReturnType["properties"][PropertyName]>
-      : ReturnType["properties"][PropertyName];
+    [PropertyName in keyof ReturnType["properties"]]: ReturnType["properties"][PropertyName];
   }
 ) => Promise<ReturnType["return"]>;
 

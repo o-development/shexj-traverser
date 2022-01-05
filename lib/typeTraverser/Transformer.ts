@@ -183,7 +183,7 @@ export class Transformer<
     return parentSubTraverser(item, itemTypeName, {
       traverserDefinition: this.traverserDefinition,
       transformers: this.transformers,
-      visitedObjects: new WeakSet(),
+      visitedObjects: new WeakMap(),
     });
   }
 }

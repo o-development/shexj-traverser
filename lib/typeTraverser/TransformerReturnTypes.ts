@@ -34,31 +34,23 @@ export type InterfacePropertiesInputReturnType<
   [PropertyName in keyof Type["properties"]]: any;
 }>;
 
-export type InterfaceInputReturnType<
-  Types extends TraverserTypes<any>,
-  TypeName extends keyof Types
-> = Types[TypeName] extends InterfaceType<keyof Types>
-  ? {
-      return: any;
-      properties?: InterfacePropertiesInputReturnType<Types[TypeName]>;
-    }
-  : never;
+export type InterfaceInputReturnType<Type extends InterfaceType<any>> = {
+  return: any;
+  properties?: InterfacePropertiesInputReturnType<Type>;
+};
 
-export type UnionInputReturnType<
-  Types extends TraverserTypes<any>,
-  TypeName extends keyof Types
-> = Types[TypeName] extends UnionType<keyof Types>
-  ? {
-      return: any;
-    }
-  : never;
+export type UnionInputReturnType = {
+  return: any;
+};
 
 export type BaseInputReturnType<
   Types extends TraverserTypes<any>,
   TypeName extends keyof Types
-> =
-  | InterfaceInputReturnType<Types, TypeName>
-  | UnionInputReturnType<Types, TypeName>;
+> = Types[TypeName] extends InterfaceType<keyof Types>
+  ? InterfaceInputReturnType<Types[TypeName]>
+  : Types[TypeName] extends UnionType<keyof Types>
+  ? UnionInputReturnType
+  : never;
 
 export type TransformerInputReturnTypes<Types extends TraverserTypes<any>> =
   Partial<{

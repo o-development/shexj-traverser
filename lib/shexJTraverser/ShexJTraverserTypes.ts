@@ -21,6 +21,7 @@ import {
   shapeExpr,
   valueSetValue,
   tripleExpr,
+  TripleConstraint,
 } from "shexj";
 import { ValidateTraverserTypes } from "../typeTraverser";
 
@@ -176,7 +177,7 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
   };
   TripleConstraint: {
     kind: "interface";
-    type: EachOf;
+    type: TripleConstraint;
     properties: {
       valueExpr: "shapeExpr";
       semActs: "SemAct";
