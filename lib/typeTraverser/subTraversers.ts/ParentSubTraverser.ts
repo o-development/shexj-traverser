@@ -18,36 +18,31 @@ export async function parentSubTraverser<
   globals: {
     traverserDefinition: TraverserDefinition<Types>;
     transformers: Transformers<Types, ReturnTypes>;
-    visitedObjects: WeakMap<object, Map<TypeName, Promise<any>>>;
+    visitedObjects: Map<object, Set<TypeName>>;
+    objectReturns: Map<object, Map<TypeName, Promise<any>>>;
   }
 ): Promise<ReturnType["return"]> {
-  console.log(itemTypeName);
   const { traverserDefinition, visitedObjects } = globals;
-  if (visitedObjects.has(item) && visitedObjects.get(item)?.has(itemTypeName)) {
-    return visitedObjects.get(item)?.get(itemTypeName);
+  if (visitedObjects.get(item)?.has(itemTypeName)) {
+    return;
   }
-  if (!visitedObjects.has(item)) {
-    visitedObjects.set(item, new Map());
-  }
-  let promiseResolve: (
-    value: ReturnType["return"] | PromiseLike<ReturnType["return"]>
-  ) => void;
-  const promiseToReturn: Promise<ReturnType["return"]> = new Promise<
-    ReturnType["return"]
-  >((resolve) => {
-    promiseResolve = resolve;
-  });
-  let valueToReturn: ReturnType["return"];
-  visitedObjects.get(item)?.set(itemTypeName, promiseToReturn);
+  const newVisitedObjects = new Map(visitedObjects);
+  newVisitedObjects.set(
+    item,
+    new Set(newVisitedObjects.get(item)).add(itemTypeName)
+  );
+
   if (traverserDefinition[itemTypeName].kind === "interface") {
-    valueToReturn = await interfaceSubTraverser(item, itemTypeName, globals);
+    return interfaceSubTraverser(item, itemTypeName, {
+      ...globals,
+      visitedObjects: newVisitedObjects,
+    });
   } else if (traverserDefinition[itemTypeName].kind === "union") {
-    valueToReturn = await unionSubTraverser(item, itemTypeName, globals);
+    return unionSubTraverser(item, itemTypeName, {
+      ...globals,
+      visitedObjects: newVisitedObjects,
+    });
   } else {
     throw new Error("Unsupported Traverser Type");
   }
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  promiseResolve(valueToReturn);
-  return valueToReturn;
 }

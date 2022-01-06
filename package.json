@@ -9,6 +9,7 @@
     "docs": "typedoc",
     "prepublishOnly": "npm run test && npm run build && npm run docs",
     "start": "ts-node ./lib/ShexJToType",
+    "start:string": "ts-node ./lib/ShexJToString",
     "experiment": "ts-node ./lib/test"
   },
   "repository": {

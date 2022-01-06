@@ -24,7 +24,8 @@ export async function interfaceSubTraverser<
   globals: {
     traverserDefinition: TraverserDefinition<Types>;
     transformers: Transformers<Types, ReturnTypes>;
-    visitedObjects: WeakMap<object, Map<TypeName, Promise<any>>>;
+    visitedObjects: Map<object, Set<TypeName>>;
+    objectReturns: Map<object, Map<TypeName, Promise<any>>>;
   }
 ): Promise<ReturnType["return"]> {
   const { traverserDefinition, transformers } = globals;

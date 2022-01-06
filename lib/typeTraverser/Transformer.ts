@@ -183,7 +183,8 @@ export class Transformer<
     return parentSubTraverser(item, itemTypeName, {
       traverserDefinition: this.traverserDefinition,
       transformers: this.transformers,
-      visitedObjects: new WeakMap(),
+      visitedObjects: new Map(),
+      objectReturns: new Map(),
     });
   }
 }

@@ -91,6 +91,7 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
         | "LanguageStemRange"
         | "ObjectLiteral" => {
         if (typeof item === "string") {
+          console.log(item);
           throw new Error("string valueSetValue not supported");
         }
         if (item.type) {
