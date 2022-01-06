@@ -3,6 +3,8 @@ import {
   ApplyTransformerReturnTypesDefaults,
   InterfaceReturnType,
   InterfaceType,
+  PrimitiveReturnType,
+  PrimitiveType,
   TransformerInputReturnTypes,
   TransformerReturnTypes,
   TraverserTypes,
@@ -67,6 +69,16 @@ export type UnionTransformerDefinition<
   ReturnType extends UnionReturnType
 > = UnionTransformerFunction<Types, Type, ReturnTypes, ReturnType>;
 
+export type PrimitiveTransformerFunction<
+  Type extends PrimitiveType,
+  ReturnType extends PrimitiveReturnType
+> = (originalData: Type["type"]) => Promise<ReturnType["return"]>;
+
+export type PrimitiveTransformerDefinition<
+  Type extends PrimitiveType,
+  ReturnType extends PrimitiveReturnType
+> = PrimitiveTransformerFunction<Type, ReturnType>;
+
 export type TransformerDefinition<
   Types extends TraverserTypes<any>,
   ReturnTypes extends TransformerReturnTypes<Types>,
@@ -88,6 +100,10 @@ export type TransformerDefinition<
         ReturnTypes,
         ReturnTypes[TypeName]
       >
+    : never
+  : Types[TypeName] extends PrimitiveType
+  ? ReturnTypes[TypeName] extends PrimitiveReturnType
+    ? PrimitiveTransformerDefinition<Types[TypeName], ReturnTypes[TypeName]>
     : never
   : never;
 
@@ -130,6 +146,11 @@ export type UnionTransformerInputDefinition<
   ReturnType extends UnionReturnType
 > = UnionTransformerFunction<Types, Type, ReturnTypes, ReturnType>;
 
+export type PrimitiveTransformerInputDefinition<
+  Type extends PrimitiveType,
+  ReturnType extends PrimitiveReturnType
+> = PrimitiveTransformerFunction<Type, ReturnType>;
+
 export type TransformerInputDefinition<
   Types extends TraverserTypes<any>,
   ReturnTypes extends TransformerReturnTypes<Types>,
@@ -149,6 +170,13 @@ export type TransformerInputDefinition<
         Types,
         Types[TypeName],
         ReturnTypes,
+        ReturnTypes[TypeName]
+      >
+    : never
+  : Types[TypeName] extends PrimitiveType
+  ? ReturnTypes[TypeName] extends PrimitiveReturnType
+    ? PrimitiveTransformerInputDefinition<
+        Types[TypeName],
         ReturnTypes[TypeName]
       >
     : never

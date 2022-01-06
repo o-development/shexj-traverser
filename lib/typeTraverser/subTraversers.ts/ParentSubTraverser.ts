@@ -4,6 +4,7 @@ import { TransformerReturnTypes } from "../TransformerReturnTypes";
 import { Transformers } from "../Transformers";
 import { TraverserDefinition } from "../TraverserDefinition";
 import { interfaceSubTraverser } from "./InterfaceSubTraverser";
+import { primitiveSubTraverser } from "./PrimitiveSubTraverser";
 import { unionSubTraverser } from "./UnionSubTraverser";
 
 export async function parentSubTraverser<
@@ -31,17 +32,17 @@ export async function parentSubTraverser<
     item,
     new Set(newVisitedObjects.get(item)).add(itemTypeName)
   );
+  const newGlobals = {
+    ...globals,
+    visitedObjects: newVisitedObjects,
+  };
 
   if (traverserDefinition[itemTypeName].kind === "interface") {
-    return interfaceSubTraverser(item, itemTypeName, {
-      ...globals,
-      visitedObjects: newVisitedObjects,
-    });
+    return interfaceSubTraverser(item, itemTypeName, newGlobals);
   } else if (traverserDefinition[itemTypeName].kind === "union") {
-    return unionSubTraverser(item, itemTypeName, {
-      ...globals,
-      visitedObjects: newVisitedObjects,
-    });
+    return unionSubTraverser(item, itemTypeName, newGlobals);
+  } else if (traverserDefinition[itemTypeName].kind === "primitive") {
+    return primitiveSubTraverser(item, itemTypeName, newGlobals);
   } else {
     throw new Error("Unsupported Traverser Type");
   }

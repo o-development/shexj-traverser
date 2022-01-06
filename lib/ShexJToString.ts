@@ -3,6 +3,7 @@ import kitchenSinkSchema from "shex-test/schemas/kitchenSink.json";
 import { jsonld2graphobject } from "jsonld2graphobject";
 import { circular, profile, simple } from "./testShape";
 
+console.time("a");
 export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
   Schema: {
     return: string;
@@ -240,10 +241,14 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
 
 async function run() {
   const result = await ShexJTypeTransformer.transform(
-    await jsonld2graphobject({ "@id": "SCHEMA", ...profile }, "SCHEMA"),
+    await jsonld2graphobject(
+      { "@id": "SCHEMA", ...kitchenSinkSchema },
+      "SCHEMA"
+    ),
     "Schema"
   );
   console.log("Final Result");
   console.log(result);
+  console.timeEnd("a");
 }
 run();

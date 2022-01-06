@@ -5,6 +5,8 @@ import {
   InterfaceTraverserDefinition,
   InterfaceType,
   KeyTypes,
+  PrimitiveReturnType,
+  PrimitiveType,
   TransformerInputReturnTypes,
   TraverserDefinition,
   TraverserTypes,
@@ -15,6 +17,8 @@ import { parentSubTraverser } from "./subTraversers.ts/ParentSubTraverser";
 import {
   InterfaceTransformerDefinition,
   InterfaceTransformerInputDefinition,
+  PrimitiveTransformerDefinition,
+  PrimitiveTransformerInputDefinition,
   Transformers,
   TransformersInput,
   UnionTransformerDefinition,
@@ -141,6 +145,20 @@ export class Transformer<
     return typeInput;
   }
 
+  private applyDefaultPrimitiveTransformer<
+    Type extends PrimitiveType,
+    ReturnType extends PrimitiveReturnType
+  >(
+    typeInput?: PrimitiveTransformerInputDefinition<Type, ReturnType>
+  ): PrimitiveTransformerDefinition<Type, ReturnType> {
+    if (!typeInput) {
+      return async (originalData) => {
+        return originalData;
+      };
+    }
+    return typeInput;
+  }
+
   private applyDefaultTransformers(
     inputTransformers: TransformersInput<Types, InputReturnTypes>
   ): Transformers<
@@ -161,6 +179,10 @@ export class Transformer<
         ) as any;
       } else if (this.traverserDefinition[typeName].kind === "union") {
         finalTansformers[typeName] = this.applyDefaultUnionTransformer(
+          inputTransformers[typeName] as any
+        ) as any;
+      } else if (this.traverserDefinition[typeName].kind === "primitive") {
+        finalTansformers[typeName] = this.applyDefaultPrimitiveTransformer(
           inputTransformers[typeName] as any
         ) as any;
       }

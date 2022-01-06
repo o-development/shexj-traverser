@@ -54,7 +54,7 @@ export async function interfaceSubTraverser<
             originalObject.map(async (subObject) => {
               return parentSubTraverser(
                 subObject,
-                originalPropertyDefinition.typeName,
+                originalPropertyDefinition,
                 globals as any
               );
             })
@@ -62,7 +62,7 @@ export async function interfaceSubTraverser<
         } else {
           transformedProperty = await parentSubTraverser(
             originalObject,
-            originalPropertyDefinition.typeName,
+            originalPropertyDefinition,
             globals as any
           );
         }

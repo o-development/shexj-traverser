@@ -1,4 +1,4 @@
-import { InterfaceType, TraverserTypes, UnionType } from ".";
+import { InterfaceType, PrimitiveType, TraverserTypes, UnionType } from ".";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type InterfaceReturnType<Type extends InterfaceType<any>> = {
@@ -12,6 +12,10 @@ export type UnionReturnType = {
   return: any;
 };
 
+export type PrimitiveReturnType = {
+  return: any;
+};
+
 export type BaseReturnType<
   Types extends TraverserTypes<any>,
   TypeName extends keyof Types
@@ -19,6 +23,8 @@ export type BaseReturnType<
   ? InterfaceReturnType<Types[TypeName]>
   : Types[TypeName] extends UnionType<keyof Types>
   ? UnionReturnType
+  : Types[TypeName] extends PrimitiveType
+  ? PrimitiveReturnType
   : never;
 
 export type TransformerReturnTypes<Types extends TraverserTypes<any>> = {
@@ -43,6 +49,10 @@ export type UnionInputReturnType = {
   return: any;
 };
 
+export type PrimitiveInputReturnType = {
+  return: any;
+};
+
 export type BaseInputReturnType<
   Types extends TraverserTypes<any>,
   TypeName extends keyof Types
@@ -50,6 +60,8 @@ export type BaseInputReturnType<
   ? InterfaceInputReturnType<Types[TypeName]>
   : Types[TypeName] extends UnionType<keyof Types>
   ? UnionInputReturnType
+  : Types[TypeName] extends PrimitiveType
+  ? PrimitiveInputReturnType
   : never;
 
 export type TransformerInputReturnTypes<Types extends TraverserTypes<any>> =

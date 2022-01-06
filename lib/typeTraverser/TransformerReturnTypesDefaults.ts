@@ -4,6 +4,8 @@ import {
   InterfaceInputReturnType,
   InterfacePropertiesInputReturnType,
   InterfaceType,
+  PrimitiveReturnType,
+  PrimitiveType,
   TransformerInputReturnTypes,
   TraverserTypes,
   UnionInputReturnType,
@@ -159,6 +161,17 @@ export type ApplyTransformerUnionReturnTypeDefault<
       >;
 };
 
+export type ApplyTransformerPrimitiveReturnTypeDefault<
+  Types extends TraverserTypes<any>,
+  InputReturnTypes extends TransformerInputReturnTypes<Types>,
+  TypeName extends keyof Types,
+  Type extends PrimitiveType
+> = {
+  return: InputReturnTypes[TypeName] extends PrimitiveReturnType
+    ? InputReturnTypes[TypeName]["return"]
+    : Type["type"];
+};
+
 export type ApplyTransformerReturnTypeDefault<
   Types extends TraverserTypes<any>,
   InputReturnTypes extends TransformerInputReturnTypes<Types>,
@@ -179,6 +192,13 @@ export type ApplyTransformerReturnTypeDefault<
       TypeName,
       Types[TypeName],
       VisitedTypeNames
+    >
+  : Types[TypeName] extends PrimitiveType
+  ? ApplyTransformerPrimitiveReturnTypeDefault<
+      Types,
+      InputReturnTypes,
+      TypeName,
+      Types[TypeName]
     >
   : never;
 

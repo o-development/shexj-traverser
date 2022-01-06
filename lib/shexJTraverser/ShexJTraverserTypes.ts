@@ -22,6 +22,16 @@ import {
   valueSetValue,
   tripleExpr,
   TripleConstraint,
+  shapeExprRef,
+  IRIREF,
+  STRING,
+  LANGTAG,
+  INTEGER,
+  numericLiteral,
+  BOOL,
+  tripleExprRef,
+  IRI,
+  objectValue,
 } from "shexj";
 import { ValidateTraverserTypes } from "../typeTraverser";
 
@@ -32,6 +42,7 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
     properties: {
       startActs: "SemAct";
       start: "shapeExpr";
+      imports: "IRIREF";
       shapes: "shapeExpr";
     };
   };
@@ -44,12 +55,14 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
       | "ShapeNot"
       | "NodeConstraint"
       | "Shape"
-      | "ShapeExternal";
+      | "ShapeExternal"
+      | "shapeExprRef";
   };
   ShapeOr: {
     kind: "interface";
     type: ShapeOr;
     properties: {
+      id: "shapeExprRef";
       shapeExprs: "shapeExpr";
     };
   };
@@ -57,6 +70,7 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
     kind: "interface";
     type: ShapeAnd;
     properties: {
+      id: "shapeExprRef";
       shapeExprs: "shapeExpr";
     };
   };
@@ -64,79 +78,153 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
     kind: "interface";
     type: ShapeNot;
     properties: {
+      id: "shapeExprRef";
       shapeExpr: "shapeExpr";
     };
   };
   ShapeExternal: {
     kind: "interface";
     type: ShapeExternal;
-    properties: Record<string, never>;
+    properties: {
+      id: "shapeExprRef";
+    };
+  };
+  shapeExprRef: {
+    kind: "primitive";
+    type: shapeExprRef;
   };
   NodeConstraint: {
     kind: "interface";
     type: NodeConstraint;
     properties: {
+      id: "shapeExprRef";
+      datatype: "IRIREF";
       values: "valueSetValue";
+      length: "INTEGER";
+      minlength: "INTEGER";
+      maxlength: "INTEGER";
+      pattern: "STRING";
+      flags: "STRING";
+      mininclusive: "numericLiteral";
+      minexclusive: "numericLiteral";
+      maxinclusive: "numericLiteral";
+      maxexclusive: "numericLiteral";
+      totaldigits: "INTEGER";
+      fractiondigits: "INTEGER";
     };
+  };
+  numericLiteral: {
+    kind: "primitive";
+    type: numericLiteral;
   };
   valueSetValue: {
     kind: "union";
     type: valueSetValue;
     typeNames:
+      | "objectValue"
       | "IriStem"
       | "IriStemRange"
       | "LiteralStem"
       | "LiteralStemRange"
       | "Language"
       | "LanguageStem"
-      | "LanguageStemRange"
-      | "ObjectLiteral";
+      | "LanguageStemRange";
+  };
+  objectValue: {
+    kind: "union";
+    type: objectValue;
+    typeNames: "IRIREF" | "ObjectLiteral";
   };
   ObjectLiteral: {
     kind: "interface";
     type: ObjectLiteral;
-    properties: Record<string, never>;
+    properties: {
+      value: "STRING";
+      language: "STRING";
+      type: "STRING";
+    };
   };
   IriStem: {
     kind: "interface";
     type: IriStem;
-    properties: Record<string, never>;
+    properties: {
+      stem: "IRIREF";
+    };
   };
   IriStemRange: {
     kind: "interface";
     type: IriStem;
     properties: {
-      exclusions: "IriStem";
+      stem: "IriStemRangeStem";
+      exclusions: "IriStemRangeExclusions";
     };
+  };
+  IriStemRangeStem: {
+    kind: "union";
+    type: IRIREF | Wildcard;
+    typeNames: "IRIREF" | "Wildcard";
+  };
+  IriStemRangeExclusions: {
+    kind: "union";
+    type: IRIREF | IriStem;
+    typeNames: "IRIREF" | "IriStem";
   };
   LiteralStem: {
     kind: "interface";
     type: LiteralStem;
-    properties: Record<string, never>;
+    properties: {
+      stem: "STRING";
+    };
   };
   LiteralStemRange: {
     kind: "interface";
     type: LiteralStemRange;
     properties: {
-      exclusions: "LiteralStem";
+      stem: "LiteralStemRangeStem";
+      exclusions: "LiteralStemRangeExclusions";
     };
+  };
+  LiteralStemRangeStem: {
+    kind: "union";
+    type: STRING | Wildcard;
+    typeNames: "STRING" | "Wildcard";
+  };
+  LiteralStemRangeExclusions: {
+    kind: "union";
+    type: STRING | LiteralStem;
+    typeNames: "STRING" | "LiteralStem";
   };
   Language: {
     kind: "interface";
     type: Language;
-    properties: Record<string, never>;
+    properties: {
+      languageTag: "LANGTAG";
+    };
   };
   LanguageStem: {
     kind: "interface";
     type: LanguageStem;
-    properties: Record<string, never>;
+    properties: {
+      stem: "LANGTAG";
+    };
   };
   LanguageStemRange: {
     kind: "interface";
     type: LanguageStemRange;
     properties: {
-      exclusions: "LanguageStem";
+      stem: "LanguageStemRangeStem";
+      exclusions: "LanguageStemRangeExclusions";
     };
+  };
+  LanguageStemRangeStem: {
+    kind: "union";
+    type: LANGTAG | Wildcard;
+    typeNames: "LANGTAG" | "Wildcard";
+  };
+  LanguageStemRangeExclusions: {
+    kind: "union";
+    type: LANGTAG | LanguageStem;
+    typeNames: "LANGTAG" | "LanguageStem";
   };
   Wildcard: {
     kind: "interface";
@@ -147,6 +235,9 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
     kind: "interface";
     type: Shape;
     properties: {
+      id: "shapeExprRef";
+      closed: "BOOL";
+      extra: "IRIREF";
       expression: "tripleExpr";
       semActs: "SemAct";
       annotations: "Annotation";
@@ -155,13 +246,16 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
   tripleExpr: {
     kind: "union";
     type: tripleExpr;
-    typeNames: "EachOf" | "OneOf" | "TripleConstraint";
+    typeNames: "tripleExprRef" | "EachOf" | "OneOf" | "TripleConstraint";
   };
   EachOf: {
     kind: "interface";
     type: EachOf;
     properties: {
       expressions: "tripleExpr";
+      id: "shapeExprRef";
+      min: "INTEGER";
+      max: "INTEGER";
       semActs: "SemAct";
       annotations: "Annotation";
     };
@@ -171,6 +265,9 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
     type: OneOf;
     properties: {
       expressions: "tripleExpr";
+      id: "shapeExprRef";
+      min: "INTEGER";
+      max: "INTEGER";
       semActs: "SemAct";
       annotations: "Annotation";
     };
@@ -179,19 +276,58 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
     kind: "interface";
     type: TripleConstraint;
     properties: {
+      inverse: "BOOL";
+      predicate: "IRIREF";
       valueExpr: "shapeExpr";
+      id: "shapeExprRef";
+      min: "INTEGER";
+      max: "INTEGER";
       semActs: "SemAct";
       annotations: "Annotation";
     };
   };
+  tripleExprRef: {
+    kind: "primitive";
+    type: tripleExprRef;
+  };
   SemAct: {
     kind: "interface";
     type: SemAct;
-    properties: Record<string, never>;
+    properties: {
+      name: "IRIREF";
+      code: "STRING";
+    };
   };
   Annotation: {
     kind: "interface";
     type: Annotation;
-    properties: Record<string, never>;
+    properties: {
+      predicate: "IRI";
+      object: "objectValue";
+    };
+  };
+  IRIREF: {
+    kind: "primitive";
+    type: IRIREF;
+  };
+  STRING: {
+    kind: "primitive";
+    type: STRING;
+  };
+  LANGTAG: {
+    kind: "primitive";
+    type: LANGTAG;
+  };
+  INTEGER: {
+    kind: "primitive";
+    type: INTEGER;
+  };
+  BOOL: {
+    kind: "primitive";
+    type: BOOL;
+  };
+  IRI: {
+    kind: "primitive";
+    type: IRI;
   };
 }>;

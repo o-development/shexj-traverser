@@ -15,9 +15,15 @@ export interface UnionType<TypeNames extends KeyTypes> {
   typeNames: TypeNames;
 }
 
+export interface PrimitiveType {
+  kind: "primitive";
+  type: any;
+}
+
 export type BaseTraverserTypes<TypeNames extends KeyTypes> =
   | InterfaceType<TypeNames>
-  | UnionType<TypeNames>;
+  | UnionType<TypeNames>
+  | PrimitiveType;
 
 export type TraverserTypes<TypeNames extends KeyTypes> = {
   [Property in TypeNames]: BaseTraverserTypes<TypeNames>;
