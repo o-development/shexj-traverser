@@ -10,6 +10,8 @@
     "prepublishOnly": "npm run test && npm run build && npm run docs",
     "start": "ts-node ./lib/ShexJToType",
     "start:string": "ts-node ./lib/ShexJToString",
+    "start:simpleCircle": "ts-node ./lib/SimpleCircle",
+    "start:simpleConverge": "ts-node ./lib/SimpleConverge",
     "experiment": "ts-node ./lib/test"
   },
   "repository": {

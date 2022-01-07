@@ -5,7 +5,7 @@ export const circular: Schema = {
   type: "Schema",
   shapes: [
     {
-      id: "http://example.com/parent",
+      id: "http://example.com/Parent",
       type: "Shape",
       expression: {
         type: "EachOf",
@@ -19,7 +19,7 @@ export const circular: Schema = {
       },
     },
     {
-      id: "http://example.com/child",
+      id: "http://example.com/Child",
       type: "Shape",
       expression: {
         type: "EachOf",
