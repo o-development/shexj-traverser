@@ -1,4 +1,5 @@
 import { Traverser, ValidateTraverserTypes } from "./typeTraverser";
+import { timeout } from "./typeTraverser/subTraversers/util/timeout";
 
 interface Parent {
   name: string;
@@ -68,7 +69,6 @@ const SimpleCircleTransformer = SimpleCircleTraverser.createTransformer<{
       await setReturnPointer(newParent as NewParent);
       const transformedChildren = await getTransformedChildren();
       newParent.newHasChild = transformedChildren.hasChild;
-      console.log("Still Going");
       return newParent as NewParent;
     },
   },

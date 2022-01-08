@@ -17,6 +17,7 @@ import { parentSubTraverser } from "./subTraversers/ParentSubTraverser";
 import { CircularDepenedencyAwaiter } from "./subTraversers/util/CircularDependencyAwaiter";
 import { MultiMap } from "./subTraversers/util/MultiMap";
 import { MultiSet } from "./subTraversers/util/MultiSet";
+import { SuperPromise } from "./subTraversers/util/SuperPromise";
 import {
   GetTransformedChildrenFunction,
   InterfaceTransformerDefinition,
@@ -215,15 +216,16 @@ export class Transformer<
       InputReturnTypes
     >[TypeName]["return"]
   > {
-    const circularDependencyAwaiter = new CircularDepenedencyAwaiter();
+    const superPromise = new SuperPromise();
     const toReturn = await parentSubTraverser(item, itemTypeName, {
       traverserDefinition: this.traverserDefinition,
       transformers: this.transformers,
       visitedObjects: new MultiSet(),
       executingPromises: new MultiMap(),
-      circularDependencyAwaiter,
+      circularDependencyAwaiter: new CircularDepenedencyAwaiter(),
+      superPromise,
     });
-    await circularDependencyAwaiter.wait();
+    await superPromise.wait();
     return toReturn;
   }
 }

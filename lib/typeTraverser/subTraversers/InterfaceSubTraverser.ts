@@ -26,7 +26,9 @@ export async function interfaceSubTraverser<
     transformers,
     circularDependencyAwaiter,
     executingPromises,
+    superPromise,
   } = globals;
+  const resolveSuperPromise = superPromise.add();
   return new Promise<ReturnType["return"]>(async (resolve, reject) => {
     try {
       // Get the returns for properties
@@ -104,6 +106,7 @@ export async function interfaceSubTraverser<
         }
       );
       resolve(transformedObject);
+      resolveSuperPromise();
     } catch (err) {
       reject(err);
     }

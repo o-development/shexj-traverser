@@ -26,7 +26,9 @@ export async function unionSubTraverser<
     transformers,
     circularDependencyAwaiter,
     executingPromises,
+    superPromise,
   } = globals;
+  const resolveSuperPromise = superPromise.add();
   return new Promise<ReturnType["return"]>(async (resolve, reject) => {
     try {
       const definition = traverserDefinition[
@@ -64,6 +66,7 @@ export async function unionSubTraverser<
         }
       );
       resolve(transformedObject);
+      resolveSuperPromise();
     } catch (err) {
       reject(err);
     }
