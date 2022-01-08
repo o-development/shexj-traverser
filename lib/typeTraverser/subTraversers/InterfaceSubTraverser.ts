@@ -101,7 +101,7 @@ export async function interfaceSubTraverser<
           );
           return propertiesReturn;
         },
-        async (input) => {
+        (input) => {
           resolve(input);
         }
       );

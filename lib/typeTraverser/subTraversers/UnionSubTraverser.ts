@@ -61,7 +61,7 @@ export async function unionSubTraverser<
           onResolve();
           return toReturn;
         },
-        async (input) => {
+        (input) => {
           resolve(input);
         }
       );

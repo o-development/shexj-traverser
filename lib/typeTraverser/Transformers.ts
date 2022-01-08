@@ -17,7 +17,7 @@ export type GetTransformedChildrenFunction<TransformedChildrenType> =
 
 export type SetReturnPointerFunction<ReturnType> = (
   returnPointer: ReturnType
-) => Promise<void>;
+) => void;
 
 export type InterfaceTransformerFunction<
   Types extends TraverserTypes<any>,
