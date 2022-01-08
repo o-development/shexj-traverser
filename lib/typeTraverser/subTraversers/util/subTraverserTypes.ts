@@ -2,14 +2,15 @@
 import {
   BaseReturnType,
   BaseTraverserTypes,
+  KeyTypes,
   TransformerReturnTypes,
   TraverserDefinition,
   TraverserTypes,
 } from "../..";
 import { Transformers } from "../../Transformers";
+import { CircularDepenedencyAwaiter } from "./CircularDependencyAwaiter";
 import { MultiMap } from "./MultiMap";
 import { MultiSet } from "./MultiSet";
-import { SuperPromise } from "./SuperPromise";
 
 export type SubTraverser<
   Types extends TraverserTypes<any>,
@@ -30,6 +31,9 @@ export interface SubTraverserGlobals<
   traverserDefinition: TraverserDefinition<Types>;
   transformers: Transformers<Types, ReturnTypes>;
   visitedObjects: MultiSet<object, keyof Types>;
-  executingPromises: MultiMap<object, keyof Types, Promise<any>>;
-  superPromise: SuperPromise;
+  executingPromises: SubTraverserExecutingPromises<keyof Types>;
+  circularDependencyAwaiter: CircularDepenedencyAwaiter;
 }
+
+export type SubTraverserExecutingPromises<Keys extends KeyTypes = KeyTypes> =
+  MultiMap<object, Keys, { promise: Promise<any>; isResolved: boolean }>;

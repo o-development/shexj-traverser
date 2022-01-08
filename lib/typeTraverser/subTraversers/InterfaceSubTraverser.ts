@@ -21,8 +21,12 @@ export async function interfaceSubTraverser<
   itemTypeName: TypeName,
   globals: SubTraverserGlobals<Types, ReturnTypes>
 ): Promise<ReturnType["return"]> {
-  const { traverserDefinition, transformers, superPromise } = globals;
-  const resolveSuperPromise = superPromise.add();
+  const {
+    traverserDefinition,
+    transformers,
+    circularDependencyAwaiter,
+    executingPromises,
+  } = globals;
   return new Promise<ReturnType["return"]>(async (resolve, reject) => {
     try {
       // Get the returns for properties
@@ -55,19 +59,37 @@ export async function interfaceSubTraverser<
                     } else if (Array.isArray(originalObject)) {
                       return Promise.all(
                         originalObject.map(async (subObject) => {
-                          return parentSubTraverser(
+                          const onResolve = circularDependencyAwaiter.add(
+                            item,
+                            itemTypeName,
+                            subObject,
+                            originalPropertyDefinition,
+                            executingPromises
+                          );
+                          const toReturn = await parentSubTraverser(
                             subObject,
                             originalPropertyDefinition,
                             globals as any
                           );
+                          onResolve();
+                          return toReturn;
                         })
                       );
                     } else {
-                      return await parentSubTraverser(
+                      const onResolve = circularDependencyAwaiter.add(
+                        item,
+                        itemTypeName,
+                        originalObject,
+                        originalPropertyDefinition,
+                        executingPromises
+                      );
+                      const toReturn = await parentSubTraverser(
                         originalObject,
                         originalPropertyDefinition,
                         globals as any
                       );
+                      onResolve();
+                      return toReturn;
                     }
                   });
                   return [propertyName, transformedProperty];
@@ -82,7 +104,6 @@ export async function interfaceSubTraverser<
         }
       );
       resolve(transformedObject);
-      resolveSuperPromise();
     } catch (err) {
       reject(err);
     }

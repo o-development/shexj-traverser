@@ -1,24 +1,35 @@
+import { KeyTypes } from "../..";
 import { MultiMap } from "./MultiMap";
 import { MultiSet } from "./MultiSet";
+import { SubTraverserExecutingPromises } from "./subTraverserTypes";
 
 export class CircularDepenedencyAwaiter {
-  private graphNodes: MultiMap<object, string, MultiSet<object, string>> =
+  private graphNodes: MultiMap<object, KeyTypes, MultiSet<object, KeyTypes>> =
     new MultiMap();
   private waitResolve: (() => void) | undefined = undefined;
   private waitReject: ((err: Error) => void) | undefined = undefined;
 
   add(
     subjectItem: object,
-    subjectItemName: string,
+    subjectItemName: KeyTypes,
     awaitedItem: object,
-    awaitedItemName: string
+    awaitedItemName: KeyTypes,
+    executingPromises: SubTraverserExecutingPromises
   ): () => void {
+    // If the promise has already resolved, do not add
+    if (executingPromises.get(awaitedItem, awaitedItemName)?.isResolved) {
+      return () => {
+        /* Do Nothing */
+      };
+    }
+    // If it hasn't then add to the graph
     if (!this.graphNodes.has(subjectItem, subjectItemName)) {
       this.graphNodes.set(subjectItem, subjectItemName, new MultiSet());
     }
     this.graphNodes
       .get(subjectItem, subjectItemName)
       ?.add(awaitedItem, awaitedItemName);
+    console.log("Add", this.graphNodes);
     this.checkForCircuit(
       awaitedItem,
       awaitedItemName,
@@ -31,6 +42,7 @@ export class CircularDepenedencyAwaiter {
       if (awaitedSet?.size === 0) {
         this.graphNodes.delete(subjectItem, subjectItemName);
       }
+      console.log("Delete", this.graphNodes);
       if (this.graphNodes.size === 0 && this.waitResolve) {
         this.waitResolve();
       }
@@ -39,9 +51,9 @@ export class CircularDepenedencyAwaiter {
 
   checkForCircuit(
     curItem: object,
-    curItemName: string,
+    curItemName: KeyTypes,
     subjectItem: object,
-    subjectItemName: string
+    subjectItemName: KeyTypes
   ): void {
     const nextNodes = this.graphNodes.get(curItem, curItemName);
     if (!nextNodes) {

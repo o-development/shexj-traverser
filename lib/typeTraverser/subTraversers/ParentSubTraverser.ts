@@ -29,7 +29,7 @@ export async function parentSubTraverser<
     // This item is a part of a circuit
   }
   if (executingPromises.has(item, itemTypeName)) {
-    return executingPromises.get(item, itemTypeName);
+    return executingPromises.get(item, itemTypeName)?.promise;
   }
   const newVisitedObjects = visitedObjects.clone();
   newVisitedObjects.add(item, itemTypeName);
@@ -45,12 +45,17 @@ export async function parentSubTraverser<
     Type,
     ReturnType
   > = subTraversers[traverserDefinition[itemTypeName].kind];
-  const executingPromise = (async () => {
-    // This timeout exists to ensure that this promise is recorded
-    // in executing promises before we continue traversing.
-    await timeout(0);
-    return subTraverser(item, itemTypeName, newGlobals);
-  })();
+  const executingPromise = {
+    promise: (async () => {
+      // This timeout exists to ensure that this promise is recorded
+      // in executing promises before we continue traversing.
+      await timeout(0);
+      return subTraverser(item, itemTypeName, newGlobals);
+    })(),
+    isResolved: false,
+  };
   executingPromises.set(item, itemTypeName, executingPromise);
-  return executingPromise;
+  const toReturn = await executingPromise.promise;
+  executingPromise.isResolved = true;
+  return toReturn;
 }

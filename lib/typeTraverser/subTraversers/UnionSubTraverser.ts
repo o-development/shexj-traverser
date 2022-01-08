@@ -21,8 +21,12 @@ export async function unionSubTraverser<
   itemTypeName: TypeName,
   globals: SubTraverserGlobals<Types, ReturnTypes>
 ): Promise<ReturnType["return"]> {
-  const { traverserDefinition, transformers, superPromise } = globals;
-  const resolveSuperPromise = superPromise.add();
+  const {
+    traverserDefinition,
+    transformers,
+    circularDependencyAwaiter,
+    executingPromises,
+  } = globals;
   return new Promise<ReturnType["return"]>(async (resolve, reject) => {
     try {
       const definition = traverserDefinition[
@@ -40,14 +44,26 @@ export async function unionSubTraverser<
         item,
         async () => {
           const itemSpecificTypeName = definition.selector(item);
-          return parentSubTraverser(item, itemSpecificTypeName, globals);
+          const onResolve = circularDependencyAwaiter.add(
+            item,
+            itemTypeName,
+            item,
+            itemSpecificTypeName,
+            executingPromises
+          );
+          const toReturn = parentSubTraverser(
+            item,
+            itemSpecificTypeName,
+            globals
+          );
+          onResolve();
+          return toReturn;
         },
         async (input) => {
           resolve(input);
         }
       );
       resolve(transformedObject);
-      resolveSuperPromise();
     } catch (err) {
       reject(err);
     }
