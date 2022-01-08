@@ -10,7 +10,6 @@ import {
 import { Transformers } from "../../Transformers";
 import { CircularDepenedencyAwaiter } from "./CircularDependencyAwaiter";
 import { MultiMap } from "./MultiMap";
-import { MultiSet } from "./MultiSet";
 import { SuperPromise } from "./SuperPromise";
 
 export type SubTraverser<
@@ -31,7 +30,6 @@ export interface SubTraverserGlobals<
 > {
   traverserDefinition: TraverserDefinition<Types>;
   transformers: Transformers<Types, ReturnTypes>;
-  visitedObjects: MultiSet<object, keyof Types>;
   executingPromises: SubTraverserExecutingPromises<keyof Types>;
   circularDependencyAwaiter: CircularDepenedencyAwaiter;
   superPromise: SuperPromise;

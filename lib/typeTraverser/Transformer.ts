@@ -16,7 +16,6 @@ import {
 import { parentSubTraverser } from "./subTraversers/ParentSubTraverser";
 import { CircularDepenedencyAwaiter } from "./subTraversers/util/CircularDependencyAwaiter";
 import { MultiMap } from "./subTraversers/util/MultiMap";
-import { MultiSet } from "./subTraversers/util/MultiSet";
 import { SuperPromise } from "./subTraversers/util/SuperPromise";
 import {
   GetTransformedChildrenFunction,
@@ -220,7 +219,6 @@ export class Transformer<
     const toReturn = await parentSubTraverser(item, itemTypeName, {
       traverserDefinition: this.traverserDefinition,
       transformers: this.transformers,
-      visitedObjects: new MultiSet(),
       executingPromises: new MultiMap(),
       circularDependencyAwaiter: new CircularDepenedencyAwaiter(),
       superPromise,

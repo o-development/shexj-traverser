@@ -66,6 +66,7 @@ const SimpleCircleTransformer = SimpleCircleTraverser.createTransformer<{
       const newParent: Partial<NewParent> = {
         newName: parent.name,
       };
+      await timeout(5000);
       await setReturnPointer(newParent as NewParent);
       const transformedChildren = await getTransformedChildren();
       newParent.newHasChild = transformedChildren.hasChild;

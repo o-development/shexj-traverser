@@ -6,8 +6,6 @@ import { SubTraverserExecutingPromises } from "./subTraverserTypes";
 export class CircularDepenedencyAwaiter {
   private graphNodes: MultiMap<object, KeyTypes, MultiSet<object, KeyTypes>> =
     new MultiMap();
-  private waitResolve: (() => void) | undefined = undefined;
-  private waitReject: ((err: Error) => void) | undefined = undefined;
 
   add(
     subjectItem: object,
@@ -29,7 +27,6 @@ export class CircularDepenedencyAwaiter {
     this.graphNodes
       .get(subjectItem, subjectItemName)
       ?.add(awaitedItem, awaitedItemName);
-    console.log("Add", this.graphNodes);
     this.checkForCircuit(
       awaitedItem,
       awaitedItemName,
@@ -42,14 +39,10 @@ export class CircularDepenedencyAwaiter {
       if (awaitedSet?.size === 0) {
         this.graphNodes.delete(subjectItem, subjectItemName);
       }
-      console.log("Delete", this.graphNodes);
-      if (this.graphNodes.size === 0 && this.waitResolve) {
-        this.waitResolve();
-      }
     };
   }
 
-  checkForCircuit(
+  private checkForCircuit(
     curItem: object,
     curItemName: KeyTypes,
     subjectItem: object,
@@ -61,13 +54,9 @@ export class CircularDepenedencyAwaiter {
     }
     nextNodes.forEach((nextItem, nextItemName) => {
       if (subjectItem === nextItem && subjectItemName === nextItemName) {
-        const err = new Error(
+        throw new Error(
           `Circular dependency found. Use the 'setReturnPointer' function.`
         );
-        if (this.waitReject) {
-          this.waitReject(err);
-        }
-        throw err;
       }
       this.checkForCircuit(
         nextItem,
@@ -75,16 +64,6 @@ export class CircularDepenedencyAwaiter {
         subjectItem,
         subjectItemName
       );
-    });
-  }
-
-  async wait(): Promise<void> {
-    if (this.graphNodes.size === 0) {
-      return;
-    }
-    return new Promise<void>((resolve, reject) => {
-      this.waitResolve = resolve;
-      this.waitReject = reject;
     });
   }
 }

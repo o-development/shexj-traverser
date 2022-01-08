@@ -24,20 +24,10 @@ export async function parentSubTraverser<
   itemTypeName: TypeName,
   globals: SubTraverserGlobals<Types, ReturnTypes>
 ): Promise<ReturnType["return"]> {
-  const { traverserDefinition, visitedObjects, executingPromises } = globals;
-  if (visitedObjects.has(item, itemTypeName)) {
-    // This item is a part of a circuit
-  }
+  const { traverserDefinition, executingPromises } = globals;
   if (executingPromises.has(item, itemTypeName)) {
     return executingPromises.get(item, itemTypeName)?.promise;
   }
-  const newVisitedObjects = visitedObjects.clone();
-  newVisitedObjects.add(item, itemTypeName);
-  const newGlobals = {
-    ...globals,
-    visitedObjects: newVisitedObjects,
-  };
-
   const subTraverser: SubTraverser<
     Types,
     TypeName,
@@ -50,7 +40,7 @@ export async function parentSubTraverser<
       // This timeout exists to ensure that this promise is recorded
       // in executing promises before we continue traversing.
       await timeout(0);
-      return subTraverser(item, itemTypeName, newGlobals);
+      return subTraverser(item, itemTypeName, globals);
     })(),
     isResolved: false,
   };
