@@ -4,9 +4,9 @@ import {
   PrimitiveReturnType,
   TransformerReturnTypes,
 } from "../TransformerReturnTypes";
-import { PrimitiveTransformerDefinition, Transformers } from "../Transformers";
-import { TraverserDefinition } from "../TraverserDefinition";
+import { PrimitiveTransformerDefinition } from "../Transformers";
 import { PrimitiveType } from "../TraverserTypes";
+import { SubTraverserGlobals } from "./util/subTraverserTypes";
 
 export async function primitiveSubTraverser<
   Types extends TraverserTypes<any>,
@@ -17,12 +17,7 @@ export async function primitiveSubTraverser<
 >(
   item: Type["type"],
   itemTypeName: TypeName,
-  globals: {
-    traverserDefinition: TraverserDefinition<Types>;
-    transformers: Transformers<Types, ReturnTypes>;
-    visitedObjects: Map<object, Set<TypeName>>;
-    objectReturns: Map<object, Map<TypeName, Promise<any>>>;
-  }
+  globals: SubTraverserGlobals<Types, ReturnTypes>
 ): Promise<ReturnType["return"]> {
   const { transformers } = globals;
   const transformer = transformers[

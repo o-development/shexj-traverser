@@ -13,8 +13,12 @@ import {
   UnionReturnType,
   UnionType,
 } from ".";
-import { parentSubTraverser } from "./subTraversers.ts/ParentSubTraverser";
+import { parentSubTraverser } from "./subTraversers/ParentSubTraverser";
+import { MultiMap } from "./subTraversers/util/MultiMap";
+import { MultiSet } from "./subTraversers/util/MultiSet";
+import { SuperPromise } from "./subTraversers/util/SuperPromise";
 import {
+  GetTransformedChildrenFunction,
   InterfaceTransformerDefinition,
   InterfaceTransformerInputDefinition,
   PrimitiveTransformerDefinition,
@@ -71,8 +75,11 @@ export class Transformer<
       if (typePropertiesInput && typePropertiesInput[key]) {
         agg[key] = typePropertiesInput[key];
       } else {
-        agg[key] = (originalData: any, childData: any) => {
-          return childData;
+        agg[key] = (
+          originalData: any,
+          getTransformedChildren: GetTransformedChildrenFunction<any>
+        ) => {
+          return getTransformedChildren();
         };
       }
       return agg;
@@ -103,8 +110,11 @@ export class Transformer<
   > {
     if (!typeInput) {
       return {
-        transformer: async (originalData, childData) => {
-          return childData;
+        transformer: async (
+          originalData,
+          getTransformedChildren: GetTransformedChildrenFunction<any>
+        ) => {
+          return getTransformedChildren();
         },
         properties: this.applyDefaultInterfaceTransformerProperties(
           typeName,
@@ -138,8 +148,11 @@ export class Transformer<
     ReturnType
   > {
     if (!typeInput) {
-      return async (originalData, childData) => {
-        return childData;
+      return async (
+        originalData,
+        getTransformedChildren: GetTransformedChildrenFunction<any>
+      ) => {
+        return getTransformedChildren();
       };
     }
     return typeInput;
@@ -193,7 +206,7 @@ export class Transformer<
     >;
   }
 
-  public transform<TypeName extends keyof Types>(
+  public async transform<TypeName extends keyof Types>(
     item: Types[TypeName]["type"],
     itemTypeName: TypeName
   ): Promise<
@@ -202,11 +215,15 @@ export class Transformer<
       InputReturnTypes
     >[TypeName]["return"]
   > {
-    return parentSubTraverser(item, itemTypeName, {
+    const superPromise = new SuperPromise();
+    const toReturn = await parentSubTraverser(item, itemTypeName, {
       traverserDefinition: this.traverserDefinition,
       transformers: this.transformers,
-      visitedObjects: new Map(),
-      objectReturns: new Map(),
+      visitedObjects: new MultiSet(),
+      executingPromises: new MultiMap(),
+      superPromise,
     });
+    await superPromise.wait();
+    return toReturn;
   }
 }

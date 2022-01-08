@@ -61,15 +61,19 @@ const SimpleCircleTransformer = SimpleCircleTraverser.createTransformer<{
   };
 }>({
   Parent: {
-    transformer: async (parent, transformedChildren) => {
-      return {
+    transformer: async (parent, getTransformedChildren, setReturnPointer) => {
+      const newParent: Partial<NewParent> = {
         newName: parent.name,
-        newHasChild: transformedChildren.hasChild,
       };
+      await setReturnPointer(newParent as NewParent);
+      const transformedChildren = await getTransformedChildren();
+      newParent.newHasChild = transformedChildren.hasChild;
+      return newParent as NewParent;
     },
   },
   Child: {
-    transformer: async (parent, transformedChildren) => {
+    transformer: async (parent, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return {
         newName: parent.name,
         newHasParent: transformedChildren.hasParent,

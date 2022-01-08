@@ -85,7 +85,8 @@ const SimpleConvergeTransformer = SimpleConvergeTraverser.createTransformer<{
   };
 }>({
   Student: {
-    transformer: async (student, transformedChildren) => {
+    transformer: async (student, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return {
         newName: student.name,
         newHasLecture: transformedChildren.hasLecture,
@@ -94,7 +95,8 @@ const SimpleConvergeTransformer = SimpleConvergeTraverser.createTransformer<{
     },
   },
   Lecture: {
-    transformer: async (lecture, transformedChildren) => {
+    transformer: async (lecture, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return {
         newName: lecture.name,
         newHasTeacher: transformedChildren.hasTeacher,
@@ -102,7 +104,7 @@ const SimpleConvergeTransformer = SimpleConvergeTraverser.createTransformer<{
     },
   },
   Teacher: {
-    transformer: async (teacher, _transformedChildren) => {
+    transformer: async (teacher) => {
       return {
         newName: teacher.name,
       };

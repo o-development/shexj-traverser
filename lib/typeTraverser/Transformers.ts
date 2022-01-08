@@ -12,15 +12,23 @@ import {
   UnionType,
 } from ".";
 
+export type GetTransformedChildrenFunction<TransformedChildrenType> =
+  () => Promise<TransformedChildrenType>;
+
+export type SetReturnPointerFunction<ReturnType> = (
+  returnPointer: ReturnType
+) => Promise<void>;
+
 export type InterfaceTransformerFunction<
   Types extends TraverserTypes<any>,
   Type extends InterfaceType<keyof Types>,
   ReturnType extends InterfaceReturnType<Type>
 > = (
   originalData: Type["type"],
-  childData: {
+  getTransformedChildren: GetTransformedChildrenFunction<{
     [PropertyName in keyof ReturnType["properties"]]: ReturnType["properties"][PropertyName];
-  }
+  }>,
+  setReturnPointer: SetReturnPointerFunction<ReturnType["return"]>
 ) => Promise<ReturnType["return"]>;
 
 export type InterfaceTransformerPropertyFunction<
@@ -31,7 +39,9 @@ export type InterfaceTransformerPropertyFunction<
   PropertyName extends keyof Type["properties"]
 > = (
   originalData: Types[Type["properties"][PropertyName]]["type"],
-  childData: ReturnTypes[Type["properties"][PropertyName]]["return"]
+  getTransfromedChildren: GetTransformedChildrenFunction<
+    ReturnTypes[Type["properties"][PropertyName]]["return"]
+  >
 ) => Promise<ReturnType["properties"][PropertyName]>;
 
 export type InterfaceTransformerDefinition<
@@ -59,7 +69,10 @@ export type UnionTransformerFunction<
   ReturnType extends UnionReturnType
 > = (
   originalData: Type["type"],
-  childData: ReturnTypes[Type["typeNames"]]["return"]
+  getTransformedChildren: GetTransformedChildrenFunction<
+    ReturnTypes[Type["typeNames"]]["return"]
+  >,
+  setReturnPointer: SetReturnPointerFunction<ReturnType["return"]>
 ) => Promise<ReturnType["return"]>;
 
 export type UnionTransformerDefinition<
