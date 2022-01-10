@@ -41,6 +41,9 @@ export class MultiMap<Key1, Key2, Value> {
     }
     return firstValue.has(key2);
   }
+  log(): void {
+    console.log(this.map);
+  }
   get size() {
     return this.internalSize;
   }

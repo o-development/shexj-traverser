@@ -13,7 +13,7 @@ export const circular: Schema = {
           {
             type: "TripleConstraint",
             predicate: "http://example.com/hasChild",
-            valueExpr: "http://example.com/child",
+            valueExpr: "http://example.com/Child",
           },
         ],
       },
@@ -27,10 +27,7 @@ export const circular: Schema = {
           {
             type: "TripleConstraint",
             predicate: "http://example.com/hasParent",
-            valueExpr: {
-              type: "NodeConstraint",
-              values: ["http://ex.example/#Issue"],
-            },
+            valueExpr: "http://example.com/Parent",
           },
         ],
       },

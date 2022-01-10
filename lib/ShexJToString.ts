@@ -124,25 +124,30 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
   };
 }>({
   Schema: {
-    transformer: async (schema, transformedChildren) => {
+    transformer: async (schema, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return `Schema(startActs:${transformedChildren.startActs},start:${transformedChildren.start},shapes:${transformedChildren.shapes})`;
     },
   },
-  shapeExpr: async (shapeExpression, transformedChildren) => {
+  shapeExpr: async (shapeExpression, getTransformedChildren) => {
+    const transformedChildren = await getTransformedChildren();
     return `shapeExpr(${transformedChildren})`;
   },
   ShapeOr: {
-    transformer: async (shapeOr, transformedChildren) => {
+    transformer: async (shapeOr, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return `ShapeOr(shapeExprs:${transformedChildren.shapeExprs})`;
     },
   },
   ShapeAnd: {
-    transformer: async (shapeAnd, transformedChildren) => {
+    transformer: async (shapeAnd, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return `ShapeAnd(shapeExprs:${transformedChildren.shapeExprs})`;
     },
   },
   ShapeNot: {
-    transformer: async (shapeNot, transformedChildren) => {
+    transformer: async (shapeNot, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return `ShapeNot(shapeExpr:${transformedChildren.shapeExpr})`;
     },
   },
@@ -152,11 +157,13 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
     },
   },
   NodeConstraint: {
-    transformer: async (nodeConstraint, transformedChildren) => {
+    transformer: async (nodeConstraint, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return `NodeConstraint(values:${transformedChildren.values})`;
     },
   },
-  valueSetValue: async (valueSetVal, transformedChildren) => {
+  valueSetValue: async (valueSetVal, getTransformedChildren) => {
+    const transformedChildren = await getTransformedChildren();
     return `valueSetValue(${transformedChildren})`;
   },
   ObjectLiteral: {
@@ -170,7 +177,8 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
     },
   },
   IriStemRange: {
-    transformer: async (iriStemRange, transformedChildren) => {
+    transformer: async (iriStemRange, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return `IriStemRange(exclusions:${transformedChildren.exclusions})`;
     },
   },
@@ -180,7 +188,8 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
     },
   },
   LiteralStemRange: {
-    transformer: async (literalStemRange, transformedChildren) => {
+    transformer: async (literalStemRange, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return `LiteralStemRange(exclusions:${transformedChildren.exclusions})`;
     },
   },
@@ -195,7 +204,8 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
     },
   },
   LanguageStemRange: {
-    transformer: async (languageStemRange, transformedChildren) => {
+    transformer: async (languageStemRange, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return `LanguageStemRange(exclusions:${transformedChildren.exclusions})`;
     },
   },
@@ -205,25 +215,30 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
     },
   },
   Shape: {
-    transformer: async (shape, transformedChildren) => {
+    transformer: async (shape, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return `Shape(expression:${transformedChildren.expression},annotations:${transformedChildren.annotations},semActs:${transformedChildren.semActs})`;
     },
   },
-  tripleExpr: async (tripleExpr, transformedChildren) => {
+  tripleExpr: async (tripleExpr, getTransformedChildren) => {
+    const transformedChildren = await getTransformedChildren();
     return `tripleExpr(${transformedChildren})`;
   },
   EachOf: {
-    transformer: async (eachOf, transformedChildren) => {
+    transformer: async (eachOf, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return `EachOf(expressions:${transformedChildren.expressions},annotations:${transformedChildren.annotations},semActs:${transformedChildren.semActs})`;
     },
   },
   OneOf: {
-    transformer: async (eachOf, transformedChildren) => {
+    transformer: async (eachOf, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return `OneOf(expressions:${transformedChildren.expressions},annotations:${transformedChildren.annotations},semActs:${transformedChildren.semActs})`;
     },
   },
   TripleConstraint: {
-    transformer: async (tripleConstraint, transformedChildren) => {
+    transformer: async (tripleConstraint, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       return `TripleConstraint(valueExpr:${transformedChildren.valueExpr},annotations:${transformedChildren.annotations},semActs:${transformedChildren.semActs})`;
     },
   },
@@ -241,10 +256,7 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
 
 async function run() {
   const result = await ShexJTypeTransformer.transform(
-    await jsonld2graphobject(
-      { "@id": "SCHEMA", ...kitchenSinkSchema },
-      "SCHEMA"
-    ),
+    await jsonld2graphobject({ "@id": "SCHEMA", ...circular }, "SCHEMA"),
     "Schema"
   );
   console.log("Final Result");

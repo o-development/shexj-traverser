@@ -2,14 +2,14 @@ import ShexJTraverser from "./shexJTraverser";
 import kitchenSinkSchema from "shex-test/schemas/kitchenSink.json";
 import * as dom from "dts-dom";
 import { jsonld2graphobject } from "jsonld2graphobject";
-import { circular, simple } from "./testShape";
-import { Annotation } from "shexj";
+import { circular, profile, simple } from "./testShape";
+import { Annotation, Schema } from "shexj";
 
 export function iriToName(iri: string): string {
   try {
     const url = new URL(iri);
     if (url.hash) {
-      return url.hash;
+      return url.hash.slice(1);
     } else {
       const splitPathname = url.pathname.split("/");
       return splitPathname[splitPathname.length - 1];
@@ -83,8 +83,9 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
   Schema: {
     transformer: async (
       _schema,
-      transformedChildren
+      getTransformedChildren
     ): Promise<dom.NamespaceDeclaration> => {
+      const transformedChildren = await getTransformedChildren();
       const namespace = dom.create.namespace("");
       transformedChildren.shapes?.forEach((shape) => {
         if (
@@ -98,9 +99,11 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
     },
   },
   Shape: {
-    transformer: async (shape, transformedChildren) => {
+    transformer: async (shape, getTransformedChildren, setReturnPointer) => {
       const shapeName = nameFromObject(shape) || "Shape";
       const newInterface = dom.create.interface(shapeName);
+      setReturnPointer(newInterface);
+      const transformedChildren = await getTransformedChildren();
       if (
         typeof transformedChildren.expression !== "string" &&
         (transformedChildren.expression as dom.ObjectType).kind === "object"
@@ -113,28 +116,63 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
     },
   },
   EachOf: {
-    transformer: async (eachOf, transformedChildren) => {
+    transformer: async (eachOf, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       const name = nameFromObject(eachOf);
       const objectType = name
         ? dom.create.interface(name)
         : dom.create.objectType([]);
+      const properties: Record<string, dom.PropertyDeclaration> = {};
       transformedChildren.expressions.forEach((expression) => {
         if (
           typeof expression !== "string" &&
           (expression as dom.PropertyDeclaration).kind === "property"
         ) {
-          objectType.members.push(expression as dom.PropertyDeclaration);
+          const propertyDeclaration = expression as dom.PropertyDeclaration;
+          // Combine properties if they're duplicates
+          if (properties[propertyDeclaration.name]) {
+            const oldPropertyDeclaration = properties[propertyDeclaration.name];
+            const oldPropertyTypeAsArray =
+              oldPropertyDeclaration.type as dom.ArrayTypeReference;
+            const oldProeprtyType =
+              oldPropertyTypeAsArray.kind === "array"
+                ? oldPropertyTypeAsArray.type
+                : oldPropertyDeclaration.type;
+            const isOptional =
+              propertyDeclaration.flags === dom.DeclarationFlags.Optional ||
+              oldPropertyDeclaration.flags === dom.DeclarationFlags.Optional;
+            properties[propertyDeclaration.name] = dom.create.property(
+              propertyDeclaration.name,
+              dom.type.array(
+                dom.create.union([oldProeprtyType, propertyDeclaration.type])
+              ),
+              isOptional
+                ? dom.DeclarationFlags.Optional
+                : dom.DeclarationFlags.None
+            );
+            properties[propertyDeclaration.name].jsDocComment =
+              oldPropertyDeclaration.jsDocComment &&
+              propertyDeclaration.jsDocComment
+                ? `${oldPropertyDeclaration.jsDocComment} | ${propertyDeclaration.jsDocComment}`
+                : oldPropertyDeclaration.jsDocComment ||
+                  propertyDeclaration.jsDocComment;
+          } else {
+            properties[propertyDeclaration.name] = propertyDeclaration;
+          }
         }
       });
+      objectType.members.push(...Object.values(properties));
       return objectType;
     },
   },
   TripleConstraint: {
-    transformer: async (tripleConstraint, transformedChildren) => {
+    transformer: async (tripleConstraint, getTransformedChildren) => {
+      const transformedChildren = await getTransformedChildren();
       const propertyName =
         nameFromObject(tripleConstraint) ||
         toCamelCase(iriToName(tripleConstraint.predicate));
-      const isArray = tripleConstraint.max !== 1;
+      const isArray =
+        tripleConstraint.max !== undefined && tripleConstraint.max !== 1;
       const isOptional = tripleConstraint.min === 0;
       let type: dom.Type = dom.type.undefined;
       if (transformedChildren.valueExpr) {
@@ -153,7 +191,7 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
     },
   },
   NodeConstraint: {
-    transformer: async (nodeConstraint, _transformedChildren) => {
+    transformer: async (nodeConstraint, _getTransformedChildren) => {
       if (nodeConstraint.datatype) {
         switch (nodeConstraint.datatype) {
           case "http://www.w3.org/2001/XMLSchema#string":
@@ -209,19 +247,33 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
       if (nodeConstraint.nodeKind) {
         return dom.type.string;
       }
+      if (nodeConstraint.values) {
+        const valuesUnion = dom.create.union([]);
+        nodeConstraint.values.forEach((value) => {
+          if (typeof value === "string") {
+            valuesUnion.members.push(
+              dom.type.stringLiteral(toCamelCase(iriToName(value)))
+            );
+          }
+        });
+        return valuesUnion;
+      }
       return dom.type.undefined;
     },
   },
 });
 
 async function run() {
-  const result = await ShexJTypeTransformer.transform(
-    await jsonld2graphobject({ "@id": "SCHEMA", ...circular }, "SCHEMA"),
-    "Schema"
-  );
+  console.time("a");
+  const input: Schema = (await jsonld2graphobject(
+    { "@id": "SCHEMA", ...profile },
+    "SCHEMA"
+  )) as unknown as Schema;
+  // console.log((input as any).shapes[0].expression.expressions);
+  const result = await ShexJTypeTransformer.transform(input, "Schema");
   result.name = "circular";
   console.log("Final Result");
-  console.log(result);
   console.log(dom.emit(result));
+  console.timeEnd("a");
 }
 run();
