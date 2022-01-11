@@ -16,6 +16,7 @@ import {
   Visitors,
   VisitorsInput,
 } from ".";
+import { MultiSet } from "./transformerSubTraversers/util/MultiSet";
 import { visitorParentSubTraverser } from "./visitorSubTraversers/VisitorParentSubTraverser";
 
 // TODO: Lots of "any" in this file. I'm just done with fancy typescript,
@@ -136,6 +137,7 @@ export class Visitor<
     const toReturn = await visitorParentSubTraverser(item, itemTypeName, {
       traverserDefinition: this.traverserDefinition,
       visitors: this.visitors,
+      visitedObjects: new MultiSet(),
       context,
     });
     return toReturn;

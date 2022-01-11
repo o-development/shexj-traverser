@@ -9,7 +9,7 @@ import { createIriNames } from "./createIriNames";
 async function run() {
   console.time("a");
   const input: Schema = (await jsonld2graphobject(
-    { "@id": "SCHEMA", ...profile },
+    { "@id": "SCHEMA", ...circular },
     "SCHEMA"
   )) as unknown as Schema;
   const iriNameMap = await createIriNames(input);

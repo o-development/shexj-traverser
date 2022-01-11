@@ -5,6 +5,7 @@ import {
   TraverserTypes,
   Visitors,
 } from "../..";
+import { MultiSet } from "../../transformerSubTraversers/util/MultiSet";
 
 export type VisitorSubTraverser<
   Types extends TraverserTypes<any>,
@@ -23,5 +24,6 @@ export interface VisitorSubTraverserGlobals<
 > {
   traverserDefinition: TraverserDefinition<Types>;
   visitors: Visitors<Types, Context>;
+  visitedObjects: MultiSet<object, keyof Types>;
   context: Context;
 }

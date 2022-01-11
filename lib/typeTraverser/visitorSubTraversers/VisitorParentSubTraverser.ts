@@ -24,7 +24,11 @@ export async function visitorParentSubTraverser<
   itemTypeName: TypeName,
   globals: VisitorSubTraverserGlobals<Types, Context>
 ): Promise<void> {
-  const { traverserDefinition } = globals;
+  const { traverserDefinition, visitedObjects } = globals;
+  if (visitedObjects.has(item, itemTypeName)) {
+    return;
+  }
+  visitedObjects.add(item, itemTypeName);
   const subTraverser: VisitorSubTraverser<Types, TypeName, Type, Context> =
     subTraversers[traverserDefinition[itemTypeName].kind];
   return subTraverser(item, itemTypeName, globals);
