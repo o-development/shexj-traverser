@@ -4,6 +4,8 @@ import {
   TransformerInputReturnTypes,
   TraverserDefinition,
   TraverserTypes,
+  Visitor,
+  VisitorsInput,
 } from ".";
 import { TransformersInput } from "./Transformers";
 
@@ -18,11 +20,18 @@ export class Traverser<
   }
 
   public createTransformer<
-    ReturnTypes extends TransformerInputReturnTypes<Types>
-  >(transformers: TransformersInput<Types, ReturnTypes>) {
-    return new Transformer<Types, ReturnTypes>(
+    ReturnTypes extends TransformerInputReturnTypes<Types>,
+    Context = undefined
+  >(transformers: TransformersInput<Types, ReturnTypes, Context>) {
+    return new Transformer<Types, ReturnTypes, Context>(
       this.traverserDefinition,
       transformers
     );
+  }
+
+  public createVisitor<Context = undefined>(
+    visitors: VisitorsInput<Types, Context>
+  ) {
+    return new Visitor<Types, Context>(this.traverserDefinition, visitors);
   }
 }

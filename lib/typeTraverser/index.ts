@@ -5,3 +5,5 @@ export * from "./TransformerReturnTypes";
 export * from "./TransformerReturnTypesDefaults";
 export * from "./Traverser";
 export * from "./Transformer";
+export * from "./Visitor";
+export * from "./Visitors";

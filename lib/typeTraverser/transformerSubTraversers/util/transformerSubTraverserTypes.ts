@@ -12,28 +12,32 @@ import { CircularDepenedencyAwaiter } from "./CircularDependencyAwaiter";
 import { MultiMap } from "./MultiMap";
 import { SuperPromise } from "./SuperPromise";
 
-export type SubTraverser<
+export type TransformerSubTraverser<
   Types extends TraverserTypes<any>,
   TypeName extends keyof Types,
   ReturnTypes extends TransformerReturnTypes<Types>,
   Type extends BaseTraverserTypes<keyof Types>,
-  ReturnType extends BaseReturnType<Types, TypeName>
+  ReturnType extends BaseReturnType<Types, TypeName>,
+  Context
 > = (
   item: Type["type"],
   itemTypeName: TypeName,
-  globals: SubTraverserGlobals<Types, ReturnTypes>
+  globals: TransformerSubTraverserGlobals<Types, ReturnTypes, Context>
 ) => Promise<ReturnType["return"]>;
 
-export interface SubTraverserGlobals<
+export interface TransformerSubTraverserGlobals<
   Types extends TraverserTypes<any>,
-  ReturnTypes extends TransformerReturnTypes<Types>
+  ReturnTypes extends TransformerReturnTypes<Types>,
+  Context
 > {
   traverserDefinition: TraverserDefinition<Types>;
-  transformers: Transformers<Types, ReturnTypes>;
-  executingPromises: SubTraverserExecutingPromises<keyof Types>;
+  transformers: Transformers<Types, ReturnTypes, Context>;
+  executingPromises: TransformerSubTraverserExecutingPromises<keyof Types>;
   circularDependencyAwaiter: CircularDepenedencyAwaiter;
   superPromise: SuperPromise;
+  context: Context;
 }
 
-export type SubTraverserExecutingPromises<Keys extends KeyTypes = KeyTypes> =
-  MultiMap<object, Keys, { promise: Promise<any>; isResolved: boolean }>;
+export type TransformerSubTraverserExecutingPromises<
+  Keys extends KeyTypes = KeyTypes
+> = MultiMap<object, Keys, { promise: Promise<any>; isResolved: boolean }>;

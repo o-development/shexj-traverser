@@ -1,39 +1,47 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BaseReturnType, BaseTraverserTypes, TraverserTypes } from "../";
+import { BaseReturnType, BaseTraverserTypes, TraverserTypes } from "..";
 import { TransformerReturnTypes } from "../TransformerReturnTypes";
-import { interfaceSubTraverser } from "./InterfaceSubTraverser";
-import { primitiveSubTraverser } from "./PrimitiveSubTraverser";
-import { unionSubTraverser } from "./UnionSubTraverser";
-import { SubTraverser, SubTraverserGlobals } from "./util/subTraverserTypes";
+import { transformerInterfaceSubTraverser } from "./TransformerInterfaceSubTraverser";
+import { transformerPrimitiveSubTraverser } from "./TransformerPrimitiveSubTraverser";
+import { transformerUnionSubTraverser } from "./TransformerUnionSubTraverser";
+import {
+  TransformerSubTraverser,
+  TransformerSubTraverserGlobals,
+} from "./util/transformerSubTraverserTypes";
 import { timeout } from "./util/timeout";
 
-const subTraversers: Record<string, SubTraverser<any, any, any, any, any>> = {
-  interface: interfaceSubTraverser,
-  union: unionSubTraverser,
-  primitive: primitiveSubTraverser,
+const subTraversers: Record<
+  string,
+  TransformerSubTraverser<any, any, any, any, any, any>
+> = {
+  interface: transformerInterfaceSubTraverser,
+  union: transformerUnionSubTraverser,
+  primitive: transformerPrimitiveSubTraverser,
 };
 
-export async function parentSubTraverser<
+export async function transformerParentSubTraverser<
   Types extends TraverserTypes<any>,
   TypeName extends keyof Types,
   ReturnTypes extends TransformerReturnTypes<Types>,
   Type extends BaseTraverserTypes<keyof Types>,
-  ReturnType extends BaseReturnType<Types, TypeName>
+  ReturnType extends BaseReturnType<Types, TypeName>,
+  Context
 >(
   item: Type["type"],
   itemTypeName: TypeName,
-  globals: SubTraverserGlobals<Types, ReturnTypes>
+  globals: TransformerSubTraverserGlobals<Types, ReturnTypes, Context>
 ): Promise<ReturnType["return"]> {
   const { traverserDefinition, executingPromises } = globals;
   if (executingPromises.has(item, itemTypeName)) {
     return executingPromises.get(item, itemTypeName)?.promise;
   }
-  const subTraverser: SubTraverser<
+  const subTraverser: TransformerSubTraverser<
     Types,
     TypeName,
     ReturnTypes,
     Type,
-    ReturnType
+    ReturnType,
+    Context
   > = subTraversers[traverserDefinition[itemTypeName].kind];
   const executingPromise = {
     promise: (async () => {

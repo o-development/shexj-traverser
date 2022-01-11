@@ -13,10 +13,10 @@ import {
   UnionReturnType,
   UnionType,
 } from ".";
-import { parentSubTraverser } from "./subTraversers/ParentSubTraverser";
-import { CircularDepenedencyAwaiter } from "./subTraversers/util/CircularDependencyAwaiter";
-import { MultiMap } from "./subTraversers/util/MultiMap";
-import { SuperPromise } from "./subTraversers/util/SuperPromise";
+import { transformerParentSubTraverser } from "./transformerSubTraversers/TransformerParentSubTraverser";
+import { CircularDepenedencyAwaiter } from "./transformerSubTraversers/util/CircularDependencyAwaiter";
+import { MultiMap } from "./transformerSubTraversers/util/MultiMap";
+import { SuperPromise } from "./transformerSubTraversers/util/SuperPromise";
 import {
   GetTransformedChildrenFunction,
   InterfaceTransformerDefinition,
@@ -35,17 +35,19 @@ import {
 export class Transformer<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Types extends TraverserTypes<any>,
-  InputReturnTypes extends TransformerInputReturnTypes<Types>
+  InputReturnTypes extends TransformerInputReturnTypes<Types>,
+  Context = undefined
 > {
   private traverserDefinition: TraverserDefinition<Types>;
   private transformers: Transformers<
     Types,
-    ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>
+    ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
+    Context
   >;
 
   constructor(
     traverserDefinition: TraverserDefinition<Types>,
-    transformers: TransformersInput<Types, InputReturnTypes>
+    transformers: TransformersInput<Types, InputReturnTypes, Context>
   ) {
     this.traverserDefinition = traverserDefinition;
     this.transformers = this.applyDefaultTransformers(transformers);
@@ -60,13 +62,15 @@ export class Transformer<
       Types,
       Type,
       ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
-      ReturnType
+      ReturnType,
+      Context
     >["properties"]
   ): InterfaceTransformerDefinition<
     Types,
     Type,
     ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
-    ReturnType
+    ReturnType,
+    Context
   >["properties"] {
     return Object.keys(
       (this.traverserDefinition[typeName] as InterfaceTraverserDefinition<Type>)
@@ -87,7 +91,8 @@ export class Transformer<
       Types,
       Type,
       ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
-      ReturnType
+      ReturnType,
+      Context
     >["properties"];
   }
 
@@ -100,13 +105,15 @@ export class Transformer<
       Types,
       Type,
       ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
-      ReturnType
+      ReturnType,
+      Context
     >
   ): InterfaceTransformerDefinition<
     Types,
     Type,
     ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
-    ReturnType
+    ReturnType,
+    Context
   > {
     if (!typeInput) {
       return {
@@ -139,13 +146,15 @@ export class Transformer<
       Types,
       Type,
       ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
-      ReturnType
+      ReturnType,
+      Context
     >
   ): UnionTransformerDefinition<
     Types,
     Type,
     ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
-    ReturnType
+    ReturnType,
+    Context
   > {
     if (!typeInput) {
       return async (
@@ -162,8 +171,8 @@ export class Transformer<
     Type extends PrimitiveType,
     ReturnType extends PrimitiveReturnType
   >(
-    typeInput?: PrimitiveTransformerInputDefinition<Type, ReturnType>
-  ): PrimitiveTransformerDefinition<Type, ReturnType> {
+    typeInput?: PrimitiveTransformerInputDefinition<Type, ReturnType, Context>
+  ): PrimitiveTransformerDefinition<Type, ReturnType, Context> {
     if (!typeInput) {
       return async (originalData) => {
         return originalData;
@@ -173,15 +182,17 @@ export class Transformer<
   }
 
   private applyDefaultTransformers(
-    inputTransformers: TransformersInput<Types, InputReturnTypes>
+    inputTransformers: TransformersInput<Types, InputReturnTypes, Context>
   ): Transformers<
     Types,
-    ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>
+    ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
+    Context
   > {
     const finalTansformers: Partial<
       Transformers<
         Types,
-        ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>
+        ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
+        Context
       >
     > = {};
     Object.keys(this.traverserDefinition).forEach((typeName: keyof Types) => {
@@ -202,13 +213,15 @@ export class Transformer<
     });
     return finalTansformers as Transformers<
       Types,
-      ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>
+      ApplyTransformerReturnTypesDefaults<Types, InputReturnTypes>,
+      Context
     >;
   }
 
   public async transform<TypeName extends keyof Types>(
     item: Types[TypeName]["type"],
-    itemTypeName: TypeName
+    itemTypeName: TypeName,
+    context: Context
   ): Promise<
     ApplyTransformerReturnTypesDefaults<
       Types,
@@ -216,12 +229,13 @@ export class Transformer<
     >[TypeName]["return"]
   > {
     const superPromise = new SuperPromise();
-    const toReturn = await parentSubTraverser(item, itemTypeName, {
+    const toReturn = await transformerParentSubTraverser(item, itemTypeName, {
       traverserDefinition: this.traverserDefinition,
       transformers: this.transformers,
       executingPromises: new MultiMap(),
       circularDependencyAwaiter: new CircularDepenedencyAwaiter(),
       superPromise,
+      context,
     });
     await superPromise.wait();
     return toReturn;

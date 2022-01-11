@@ -1,7 +1,7 @@
 import { KeyTypes } from "../..";
 import { MultiMap } from "./MultiMap";
 import { MultiSet } from "./MultiSet";
-import { SubTraverserExecutingPromises } from "./subTraverserTypes";
+import { TransformerSubTraverserExecutingPromises } from "./transformerSubTraverserTypes";
 
 export class CircularDepenedencyAwaiter {
   private graphNodes: MultiMap<object, KeyTypes, MultiSet<object, KeyTypes>> =
@@ -12,7 +12,7 @@ export class CircularDepenedencyAwaiter {
     subjectItemName: KeyTypes,
     awaitedItem: object,
     awaitedItemName: KeyTypes,
-    executingPromises: SubTraverserExecutingPromises
+    executingPromises: TransformerSubTraverserExecutingPromises
   ): () => void {
     // If the promise has already resolved, do not add
     if (executingPromises.get(awaitedItem, awaitedItemName)?.isResolved) {

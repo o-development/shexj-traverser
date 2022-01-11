@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { TraverserTypes } from "../";
+import { TraverserTypes } from "..";
 import {
   TransformerReturnTypes,
   UnionReturnType,
@@ -7,19 +7,20 @@ import {
 import { UnionTransformerDefinition } from "../Transformers";
 import { UnionTraverserDefinition } from "../TraverserDefinition";
 import { UnionType } from "../TraverserTypes";
-import { parentSubTraverser } from "./ParentSubTraverser";
-import { SubTraverserGlobals } from "./util/subTraverserTypes";
+import { transformerParentSubTraverser } from "./TransformerParentSubTraverser";
+import { TransformerSubTraverserGlobals } from "./util/transformerSubTraverserTypes";
 
-export async function unionSubTraverser<
+export async function transformerUnionSubTraverser<
   Types extends TraverserTypes<any>,
   TypeName extends keyof Types,
   ReturnTypes extends TransformerReturnTypes<Types>,
   Type extends UnionType<keyof Types>,
-  ReturnType extends UnionReturnType
+  ReturnType extends UnionReturnType,
+  Context
 >(
   item: Type["type"],
   itemTypeName: TypeName,
-  globals: SubTraverserGlobals<Types, ReturnTypes>
+  globals: TransformerSubTraverserGlobals<Types, ReturnTypes, Context>
 ): Promise<ReturnType["return"]> {
   const {
     traverserDefinition,
@@ -40,9 +41,10 @@ export async function unionSubTraverser<
         Types,
         Type,
         ReturnTypes,
-        ReturnType
+        ReturnType,
+        Context
       >;
-      const transformedObject = transformer(
+      const transformedObject = await transformer(
         item,
         async () => {
           const itemSpecificTypeName = definition.selector(item);
@@ -53,7 +55,7 @@ export async function unionSubTraverser<
             itemSpecificTypeName,
             executingPromises
           );
-          const toReturn = parentSubTraverser(
+          const toReturn = transformerParentSubTraverser(
             item,
             itemSpecificTypeName,
             globals
@@ -63,7 +65,8 @@ export async function unionSubTraverser<
         },
         (input) => {
           resolve(input);
-        }
+        },
+        globals.context
       );
       resolve(transformedObject);
       resolveSuperPromise();

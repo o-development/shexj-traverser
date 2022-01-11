@@ -1,5 +1,5 @@
 import { Traverser, ValidateTraverserTypes } from "./typeTraverser";
-import { timeout } from "./typeTraverser/subTraversers/util/timeout";
+import { timeout } from "./typeTraverser/transformerSubTraversers/util/timeout";
 
 interface Parent {
   name: string;
