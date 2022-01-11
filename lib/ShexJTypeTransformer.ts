@@ -66,9 +66,12 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<
       const newInterface = dom.create.interface(shapeName);
       setReturnPointer(newInterface);
       const transformedChildren = await getTransformedChildren();
-      if (
-        typeof transformedChildren.expression !== "string" &&
-        (transformedChildren.expression as dom.ObjectType).kind === "object"
+      if (typeof transformedChildren.expression === "string") {
+        // TODO: handle string
+      } else if (
+        (transformedChildren.expression as dom.ObjectType).kind === "object" ||
+        (transformedChildren.expression as dom.InterfaceDeclaration).kind ===
+          "interface"
       ) {
         newInterface.members.push(
           ...(transformedChildren.expression as dom.ObjectType).members
@@ -78,49 +81,86 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<
     },
   },
   EachOf: {
-    transformer: async (eachOf, getTransformedChildren) => {
+    transformer: async (eachOf, getTransformedChildren, setReturnPointer) => {
       const transformedChildren = await getTransformedChildren();
       const name = nameFromObject(eachOf);
       const objectType = name
         ? dom.create.interface(name)
         : dom.create.objectType([]);
-      const properties: Record<string, dom.PropertyDeclaration> = {};
-      transformedChildren.expressions.forEach((expression) => {
-        if (
-          typeof expression !== "string" &&
-          (expression as dom.PropertyDeclaration).kind === "property"
-        ) {
-          const propertyDeclaration = expression as dom.PropertyDeclaration;
-          // Combine properties if they're duplicates
-          if (properties[propertyDeclaration.name]) {
-            const oldPropertyDeclaration = properties[propertyDeclaration.name];
-            const oldPropertyTypeAsArray =
-              oldPropertyDeclaration.type as dom.ArrayTypeReference;
-            const oldProeprtyType =
-              oldPropertyTypeAsArray.kind === "array"
-                ? oldPropertyTypeAsArray.type
-                : oldPropertyDeclaration.type;
-            const isOptional =
-              propertyDeclaration.flags === dom.DeclarationFlags.Optional ||
-              oldPropertyDeclaration.flags === dom.DeclarationFlags.Optional;
-            properties[propertyDeclaration.name] = dom.create.property(
-              propertyDeclaration.name,
-              dom.type.array(
-                dom.create.union([oldProeprtyType, propertyDeclaration.type])
-              ),
-              isOptional
-                ? dom.DeclarationFlags.Optional
-                : dom.DeclarationFlags.None
+      const eachOfComment = commentFromAnnotations(eachOf.annotations);
+      setReturnPointer(objectType);
+      // Get Input property expressions
+      const inputPropertyExpressions: dom.PropertyDeclaration[] = [];
+      transformedChildren.expressions
+        .filter(
+          (
+            expression
+          ): expression is dom.ObjectType | dom.PropertyDeclaration => {
+            return (
+              (expression as dom.PropertyDeclaration).kind === "property" ||
+              (expression as dom.ObjectType).kind === "object" ||
+              (expression as dom.InterfaceDeclaration).kind === "interface"
             );
-            properties[propertyDeclaration.name].jsDocComment =
-              oldPropertyDeclaration.jsDocComment &&
-              propertyDeclaration.jsDocComment
-                ? `${oldPropertyDeclaration.jsDocComment} | ${propertyDeclaration.jsDocComment}`
-                : oldPropertyDeclaration.jsDocComment ||
-                  propertyDeclaration.jsDocComment;
-          } else {
-            properties[propertyDeclaration.name] = propertyDeclaration;
           }
+        )
+        .forEach(
+          (
+            expression:
+              | dom.ObjectType
+              | dom.InterfaceDeclaration
+              | dom.PropertyDeclaration
+          ) => {
+            if (expression.kind === "property") {
+              inputPropertyExpressions.push(expression);
+            } else {
+              expression.members.forEach((objectMember) => {
+                if (objectMember.kind === "property") {
+                  inputPropertyExpressions.push(objectMember);
+                }
+              });
+            }
+          }
+        );
+
+      // Merge property expressions
+      const properties: Record<string, dom.PropertyDeclaration> = {};
+      inputPropertyExpressions.forEach((expression) => {
+        const propertyDeclaration = expression as dom.PropertyDeclaration;
+        // Combine properties if they're duplicates
+        if (properties[propertyDeclaration.name]) {
+          const oldPropertyDeclaration = properties[propertyDeclaration.name];
+          const oldPropertyTypeAsArray =
+            oldPropertyDeclaration.type as dom.ArrayTypeReference;
+          const oldProeprtyType =
+            oldPropertyTypeAsArray.kind === "array"
+              ? oldPropertyTypeAsArray.type
+              : oldPropertyDeclaration.type;
+          const propertyTypeAsArray =
+            propertyDeclaration.type as dom.ArrayTypeReference;
+          const propertyType =
+            propertyTypeAsArray.kind === "array"
+              ? propertyTypeAsArray.type
+              : propertyDeclaration.type;
+          const isOptional =
+            propertyDeclaration.flags === dom.DeclarationFlags.Optional ||
+            oldPropertyDeclaration.flags === dom.DeclarationFlags.Optional;
+          properties[propertyDeclaration.name] = dom.create.property(
+            propertyDeclaration.name,
+            dom.type.array(dom.create.union([oldProeprtyType, propertyType])),
+            isOptional
+              ? dom.DeclarationFlags.Optional
+              : dom.DeclarationFlags.None
+          );
+          // Set JS Comment
+          properties[propertyDeclaration.name].jsDocComment =
+            oldPropertyDeclaration.jsDocComment &&
+            propertyDeclaration.jsDocComment
+              ? `${oldPropertyDeclaration.jsDocComment} | ${propertyDeclaration.jsDocComment}`
+              : oldPropertyDeclaration.jsDocComment ||
+                propertyDeclaration.jsDocComment ||
+                eachOfComment;
+        } else {
+          properties[propertyDeclaration.name] = propertyDeclaration;
         }
       });
       objectType.members.push(...Object.values(properties));

@@ -129,7 +129,8 @@ const SampleStudent: Student = {
 async function run() {
   const result = await SimpleConvergeTransformer.transform(
     SampleStudent,
-    "Student"
+    "Student",
+    undefined
   );
   console.log("Before Result");
   console.log(SampleStudent);

@@ -257,7 +257,8 @@ export const ShexJTypeTransformer = ShexJTraverser.createTransformer<{
 async function run() {
   const result = await ShexJTypeTransformer.transform(
     await jsonld2graphobject({ "@id": "SCHEMA", ...circular }, "SCHEMA"),
-    "Schema"
+    "Schema",
+    undefined
   );
   console.log("Final Result");
   console.log(result);

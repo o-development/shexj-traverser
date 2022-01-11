@@ -11,7 +11,7 @@
     "start": "ts-node ./lib/ShexJToType",
     "start:string": "ts-node ./lib/ShexJToString",
     "start:simpleCircle": "ts-node ./lib/SimpleCircle",
-    "start:simpleConverge": "ts-node ./lib/SimpleConverge",
+    "start:simpleConverge": "ts-node --stack_ize=3600 ./lib/SimpleConverge",
     "start:test": "ts-node ./lib/test",
     "start:name": "ts-node ./lib/ShexJNameVisitor"
   },

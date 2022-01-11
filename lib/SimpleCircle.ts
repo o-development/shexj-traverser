@@ -100,7 +100,8 @@ SampleParent.hasChild = SampleChild;
 async function run() {
   const result = await SimpleCircleTransformer.transform(
     SampleParent as Parent,
-    "Parent"
+    "Parent",
+    undefined
   );
   console.log("Final Result");
   console.log(result);
