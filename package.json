@@ -13,7 +13,8 @@
     "start:simpleCircle": "ts-node ./lib/SimpleCircle",
     "start:simpleConverge": "ts-node --stack_ize=3600 ./lib/SimpleConverge",
     "start:test": "ts-node ./lib/test",
-    "start:name": "ts-node ./lib/ShexJNameVisitor"
+    "start:name": "ts-node ./lib/ShexJNameVisitor",
+    "start:context": "ts-node ./lib/ShexJToContext"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.4.5",
+    "jsonld": "^5.2.0",
     "jsonld2graphobject": "^0.0.3",
     "prettier": "^2.5.1",
     "shex-test": "^2.1.0",
@@ -48,6 +50,7 @@
     "dist"
   ],
   "dependencies": {
+    "@frogcat/ttl2jsonld": "^0.0.6",
     "dts-dom": "^3.6.0",
     "uuid": "^8.3.2"
   }
