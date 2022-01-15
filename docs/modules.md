@@ -4,78 +4,41 @@
 
 ## Table of contents
 
-### Interfaces
+### Type aliases
 
-- [Transformers](interfaces/transformers.md)
+- [ShexJTraverserTypes](modules.md#shexjtraversertypes)
 
-### Functions
+### Variables
 
-- [traverseShex](modules.md#traverseshex)
+- [ShexJTraverserDefinition](modules.md#shexjtraverserdefinition)
+- [default](modules.md#default)
 
-## Functions
+## Type aliases
 
-### traverseShex
+### ShexJTraverserTypes
 
-▸ **traverseShex**<SchemaReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeExternalReturn, NodeConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn, WildcardReturn, ShapeReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, SemActReturn, AnnotationReturn, shapeExprReturn, valueSetValueReturn, tripleExprReturn, Schema_startActsReturn, Schema_startReturn, Schema_shapesReturn, ShapeOr_shapeExprsReturn, ShapeAnd_shapeExprsReturn, ShapeNot_shapeExprReturn, NodeConstraint_valuesReturn, IriStemRange_exclusionsReturn, LiteralStemRange_exclusionsReturn, LanguageStemRange_exclusionsReturn, Shape_expressionReturn, Shape_semActsReturn, Shape_AnnotationsReturn, EachOf_expressionsReturn, EachOf_semActsReturn, EachOf_AnnotationsReturn, OneOf_expressionsReturn, OneOf_semActsReturn, OneOf_AnnotationsReturn, TripleConstraint_valueExprReturn, TripleConstraint_semActsReturn, TripleConstraint_AnnotationsReturn\>(`shexSchema`: Schema, `transformers`: *Partial*<[*Transformers*](interfaces/transformers.md)<SchemaReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeExternalReturn, NodeConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn, WildcardReturn, ShapeReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, SemActReturn, AnnotationReturn, shapeExprReturn, valueSetValueReturn, tripleExprReturn, Schema\_startActsReturn, Schema\_startReturn, Schema\_shapesReturn, ShapeOr\_shapeExprsReturn, ShapeAnd\_shapeExprsReturn, ShapeNot\_shapeExprReturn, NodeConstraint\_valuesReturn, IriStemRange\_exclusionsReturn, LiteralStemRange\_exclusionsReturn, LanguageStemRange\_exclusionsReturn, Shape\_expressionReturn, Shape\_semActsReturn, Shape\_AnnotationsReturn, EachOf\_expressionsReturn, EachOf\_semActsReturn, EachOf\_AnnotationsReturn, OneOf\_expressionsReturn, OneOf\_semActsReturn, OneOf\_AnnotationsReturn, TripleConstraint\_valueExprReturn, TripleConstraint\_semActsReturn, TripleConstraint\_AnnotationsReturn\>\>): *Promise*<SchemaReturn\>
+Ƭ **ShexJTraverserTypes**: `ValidateTraverserTypes`<{ `Annotation`: { `kind`: ``"interface"`` ; `properties`: { `object`: ``"objectValue"`` ; `predicate`: ``"IRI"``  } ; `type`: `Annotation`  } ; `BOOL`: { `kind`: ``"primitive"`` ; `type`: `BOOL`  } ; `EachOf`: { `kind`: ``"interface"`` ; `properties`: { `annotations`: ``"Annotation"`` ; `expressions`: ``"tripleExpr"`` ; `id`: ``"shapeExprRef"`` ; `max`: ``"INTEGER"`` ; `min`: ``"INTEGER"`` ; `semActs`: ``"SemAct"``  } ; `type`: `EachOf`  } ; `INTEGER`: { `kind`: ``"primitive"`` ; `type`: `INTEGER`  } ; `IRI`: { `kind`: ``"primitive"`` ; `type`: `IRI`  } ; `IRIREF`: { `kind`: ``"primitive"`` ; `type`: `IRIREF`  } ; `IriStem`: { `kind`: ``"interface"`` ; `properties`: { `stem`: ``"IRIREF"``  } ; `type`: `IriStem`  } ; `IriStemRange`: { `kind`: ``"interface"`` ; `properties`: { `exclusions`: ``"IriStemRangeExclusions"`` ; `stem`: ``"IriStemRangeStem"``  } ; `type`: `IriStem`  } ; `IriStemRangeExclusions`: { `kind`: ``"union"`` ; `type`: `IRIREF` \| `IriStem` ; `typeNames`: ``"IRIREF"`` \| ``"IriStem"``  } ; `IriStemRangeStem`: { `kind`: ``"union"`` ; `type`: `IRIREF` \| `Wildcard` ; `typeNames`: ``"IRIREF"`` \| ``"Wildcard"``  } ; `LANGTAG`: { `kind`: ``"primitive"`` ; `type`: `LANGTAG`  } ; `Language`: { `kind`: ``"interface"`` ; `properties`: { `languageTag`: ``"LANGTAG"``  } ; `type`: `Language`  } ; `LanguageStem`: { `kind`: ``"interface"`` ; `properties`: { `stem`: ``"LANGTAG"``  } ; `type`: `LanguageStem`  } ; `LanguageStemRange`: { `kind`: ``"interface"`` ; `properties`: { `exclusions`: ``"LanguageStemRangeExclusions"`` ; `stem`: ``"LanguageStemRangeStem"``  } ; `type`: `LanguageStemRange`  } ; `LanguageStemRangeExclusions`: { `kind`: ``"union"`` ; `type`: `LANGTAG` \| `LanguageStem` ; `typeNames`: ``"LANGTAG"`` \| ``"LanguageStem"``  } ; `LanguageStemRangeStem`: { `kind`: ``"union"`` ; `type`: `LANGTAG` \| `Wildcard` ; `typeNames`: ``"LANGTAG"`` \| ``"Wildcard"``  } ; `LiteralStem`: { `kind`: ``"interface"`` ; `properties`: { `stem`: ``"STRING"``  } ; `type`: `LiteralStem`  } ; `LiteralStemRange`: { `kind`: ``"interface"`` ; `properties`: { `exclusions`: ``"LiteralStemRangeExclusions"`` ; `stem`: ``"LiteralStemRangeStem"``  } ; `type`: `LiteralStemRange`  } ; `LiteralStemRangeExclusions`: { `kind`: ``"union"`` ; `type`: `STRING` \| `LiteralStem` ; `typeNames`: ``"STRING"`` \| ``"LiteralStem"``  } ; `LiteralStemRangeStem`: { `kind`: ``"union"`` ; `type`: `STRING` \| `Wildcard` ; `typeNames`: ``"STRING"`` \| ``"Wildcard"``  } ; `NodeConstraint`: { `kind`: ``"interface"`` ; `properties`: { `datatype`: ``"IRIREF"`` ; `flags`: ``"STRING"`` ; `fractiondigits`: ``"INTEGER"`` ; `id`: ``"shapeExprRef"`` ; `length`: ``"INTEGER"`` ; `maxexclusive`: ``"numericLiteral"`` ; `maxinclusive`: ``"numericLiteral"`` ; `maxlength`: ``"INTEGER"`` ; `minexclusive`: ``"numericLiteral"`` ; `mininclusive`: ``"numericLiteral"`` ; `minlength`: ``"INTEGER"`` ; `pattern`: ``"STRING"`` ; `totaldigits`: ``"INTEGER"`` ; `values`: ``"valueSetValue"``  } ; `type`: `NodeConstraint`  } ; `ObjectLiteral`: { `kind`: ``"interface"`` ; `properties`: { `language`: ``"STRING"`` ; `type`: ``"STRING"`` ; `value`: ``"STRING"``  } ; `type`: `ObjectLiteral`  } ; `OneOf`: { `kind`: ``"interface"`` ; `properties`: { `annotations`: ``"Annotation"`` ; `expressions`: ``"tripleExpr"`` ; `id`: ``"shapeExprRef"`` ; `max`: ``"INTEGER"`` ; `min`: ``"INTEGER"`` ; `semActs`: ``"SemAct"``  } ; `type`: `OneOf`  } ; `STRING`: { `kind`: ``"primitive"`` ; `type`: `STRING`  } ; `Schema`: { `kind`: ``"interface"`` ; `properties`: { `imports`: ``"IRIREF"`` ; `shapes`: ``"shapeExpr"`` ; `start`: ``"shapeExpr"`` ; `startActs`: ``"SemAct"``  } ; `type`: `Schema`  } ; `SemAct`: { `kind`: ``"interface"`` ; `properties`: { `code`: ``"STRING"`` ; `name`: ``"IRIREF"``  } ; `type`: `SemAct`  } ; `Shape`: { `kind`: ``"interface"`` ; `properties`: { `annotations`: ``"Annotation"`` ; `closed`: ``"BOOL"`` ; `expression`: ``"tripleExpr"`` ; `extra`: ``"IRIREF"`` ; `id`: ``"shapeExprRef"`` ; `semActs`: ``"SemAct"``  } ; `type`: `Shape`  } ; `ShapeAnd`: { `kind`: ``"interface"`` ; `properties`: { `id`: ``"shapeExprRef"`` ; `shapeExprs`: ``"shapeExpr"``  } ; `type`: `ShapeAnd`  } ; `ShapeExternal`: { `kind`: ``"interface"`` ; `properties`: { `id`: ``"shapeExprRef"``  } ; `type`: `ShapeExternal`  } ; `ShapeNot`: { `kind`: ``"interface"`` ; `properties`: { `id`: ``"shapeExprRef"`` ; `shapeExpr`: ``"shapeExpr"``  } ; `type`: `ShapeNot`  } ; `ShapeOr`: { `kind`: ``"interface"`` ; `properties`: { `id`: ``"shapeExprRef"`` ; `shapeExprs`: ``"shapeExpr"``  } ; `type`: `ShapeOr`  } ; `TripleConstraint`: { `kind`: ``"interface"`` ; `properties`: { `annotations`: ``"Annotation"`` ; `id`: ``"shapeExprRef"`` ; `inverse`: ``"BOOL"`` ; `max`: ``"INTEGER"`` ; `min`: ``"INTEGER"`` ; `predicate`: ``"IRIREF"`` ; `semActs`: ``"SemAct"`` ; `valueExpr`: ``"shapeExpr"``  } ; `type`: `TripleConstraint`  } ; `Wildcard`: { `kind`: ``"interface"`` ; `properties`: `Record`<`string`, `never`\> ; `type`: `Wildcard`  } ; `numericLiteral`: { `kind`: ``"primitive"`` ; `type`: `numericLiteral`  } ; `objectValue`: { `kind`: ``"union"`` ; `type`: `objectValue` ; `typeNames`: ``"IRIREF"`` \| ``"ObjectLiteral"``  } ; `shapeExpr`: { `kind`: ``"union"`` ; `type`: `shapeExpr` ; `typeNames`: ``"ShapeOr"`` \| ``"ShapeAnd"`` \| ``"ShapeNot"`` \| ``"NodeConstraint"`` \| ``"Shape"`` \| ``"ShapeExternal"`` \| ``"shapeExprRef"``  } ; `shapeExprRef`: { `kind`: ``"primitive"`` ; `type`: `shapeExprRef`  } ; `tripleExpr`: { `kind`: ``"union"`` ; `type`: `tripleExpr` ; `typeNames`: ``"tripleExprRef"`` \| ``"EachOf"`` \| ``"OneOf"`` \| ``"TripleConstraint"``  } ; `tripleExprRef`: { `kind`: ``"primitive"`` ; `type`: `tripleExprRef`  } ; `valueSetValue`: { `kind`: ``"union"`` ; `type`: `valueSetValue` ; `typeNames`: ``"objectValue"`` \| ``"IriStem"`` \| ``"IriStemRange"`` \| ``"LiteralStem"`` \| ``"LiteralStemRange"`` \| ``"Language"`` \| ``"LanguageStem"`` \| ``"LanguageStemRange"``  }  }\>
 
-#### Type parameters
+#### Defined in
 
-| Name | Default |
-| :------ | :------ |
-| `SchemaReturn` | Schema |
-| `ShapeOrReturn` | ShapeOr |
-| `ShapeAndReturn` | ShapeAnd |
-| `ShapeNotReturn` | ShapeNot |
-| `ShapeExternalReturn` | ShapeExternal |
-| `NodeConstraintReturn` | NodeConstraint |
-| `ObjectLiteralReturn` | ObjectLiteral |
-| `IriStemReturn` | IriStem |
-| `IriStemRangeReturn` | IriStemRange |
-| `LiteralStemReturn` | LiteralStem |
-| `LiteralStemRangeReturn` | LiteralStemRange |
-| `LanguageReturn` | Language |
-| `LanguageStemReturn` | LanguageStem |
-| `LanguageStemRangeReturn` | LanguageStemRange |
-| `WildcardReturn` | Wildcard |
-| `ShapeReturn` | Shape |
-| `EachOfReturn` | EachOf |
-| `OneOfReturn` | OneOf |
-| `TripleConstraintReturn` | TripleConstraint |
-| `SemActReturn` | SemAct |
-| `AnnotationReturn` | Annotation |
-| `shapeExprReturn` | *string* \| ShapeOrReturn \| ShapeAndReturn \| ShapeNotReturn \| ShapeExternalReturn \| NodeConstraintReturn \| ShapeReturn |
-| `valueSetValueReturn` | *string* \| ObjectLiteralReturn \| IriStemReturn \| IriStemRangeReturn \| LiteralStemReturn \| LiteralStemRangeReturn \| LanguageReturn \| LanguageStemReturn \| LanguageStemRangeReturn |
-| `tripleExprReturn` | *string* \| EachOfReturn \| OneOfReturn \| TripleConstraintReturn |
-| `Schema_startActsReturn` | SemActReturn[] |
-| `Schema_startReturn` | shapeExprReturn |
-| `Schema_shapesReturn` | shapeExprReturn[] |
-| `ShapeOr_shapeExprsReturn` | shapeExprReturn[] |
-| `ShapeAnd_shapeExprsReturn` | shapeExprReturn[] |
-| `ShapeNot_shapeExprReturn` | shapeExprReturn |
-| `NodeConstraint_valuesReturn` | valueSetValueReturn[] |
-| `IriStemRange_exclusionsReturn` | (*string* \| IriStemReturn)[] |
-| `LiteralStemRange_exclusionsReturn` | (*string* \| LiteralStemReturn)[] |
-| `LanguageStemRange_exclusionsReturn` | (*string* \| LanguageStemReturn)[] |
-| `Shape_expressionReturn` | tripleExprReturn |
-| `Shape_semActsReturn` | SemActReturn[] |
-| `Shape_AnnotationsReturn` | AnnotationReturn[] |
-| `EachOf_expressionsReturn` | tripleExprReturn[] |
-| `EachOf_semActsReturn` | SemActReturn[] |
-| `EachOf_AnnotationsReturn` | AnnotationReturn[] |
-| `OneOf_expressionsReturn` | tripleExprReturn[] |
-| `OneOf_semActsReturn` | SemActReturn[] |
-| `OneOf_AnnotationsReturn` | AnnotationReturn[] |
-| `TripleConstraint_valueExprReturn` | shapeExprReturn |
-| `TripleConstraint_semActsReturn` | SemActReturn[] |
-| `TripleConstraint_AnnotationsReturn` | AnnotationReturn[] |
+ShexJTraverserTypes.ts:38
 
-#### Parameters
+## Variables
 
-| Name | Type |
-| :------ | :------ |
-| `shexSchema` | Schema |
-| `transformers` | *Partial*<[*Transformers*](interfaces/transformers.md)<SchemaReturn, ShapeOrReturn, ShapeAndReturn, ShapeNotReturn, ShapeExternalReturn, NodeConstraintReturn, ObjectLiteralReturn, IriStemReturn, IriStemRangeReturn, LiteralStemReturn, LiteralStemRangeReturn, LanguageReturn, LanguageStemReturn, LanguageStemRangeReturn, WildcardReturn, ShapeReturn, EachOfReturn, OneOfReturn, TripleConstraintReturn, SemActReturn, AnnotationReturn, shapeExprReturn, valueSetValueReturn, tripleExprReturn, Schema\_startActsReturn, Schema\_startReturn, Schema\_shapesReturn, ShapeOr\_shapeExprsReturn, ShapeAnd\_shapeExprsReturn, ShapeNot\_shapeExprReturn, NodeConstraint\_valuesReturn, IriStemRange\_exclusionsReturn, LiteralStemRange\_exclusionsReturn, LanguageStemRange\_exclusionsReturn, Shape\_expressionReturn, Shape\_semActsReturn, Shape\_AnnotationsReturn, EachOf\_expressionsReturn, EachOf\_semActsReturn, EachOf\_AnnotationsReturn, OneOf\_expressionsReturn, OneOf\_semActsReturn, OneOf\_AnnotationsReturn, TripleConstraint\_valueExprReturn, TripleConstraint\_semActsReturn, TripleConstraint\_AnnotationsReturn\>\> |
+### ShexJTraverserDefinition
 
-**Returns:** *Promise*<SchemaReturn\>
+• **ShexJTraverserDefinition**: `TraverserDefinition`<[`ShexJTraverserTypes`](modules.md#shexjtraversertypes)\>
 
-Defined in: [traverseShex.ts:33](https://github.com/o-development/shexj-traverser/blob/9d521f3/lib/traverseShex.ts#L33)
+#### Defined in
+
+ShexJTraverserDefinition.ts:5
+
+___
+
+### default
+
+• **default**: `Traverser`<{ `Annotation`: { `kind`: ``"interface"`` ; `properties`: { `object`: ``"objectValue"`` ; `predicate`: ``"IRI"``  } ; `type`: `Annotation`  } ; `BOOL`: { `kind`: ``"primitive"`` ; `type`: `boolean`  } ; `EachOf`: { `kind`: ``"interface"`` ; `properties`: { `annotations`: ``"Annotation"`` ; `expressions`: ``"tripleExpr"`` ; `id`: ``"shapeExprRef"`` ; `max`: ``"INTEGER"`` ; `min`: ``"INTEGER"`` ; `semActs`: ``"SemAct"``  } ; `type`: `EachOf`  } ; `INTEGER`: { `kind`: ``"primitive"`` ; `type`: `number`  } ; `IRI`: { `kind`: ``"primitive"`` ; `type`: `string`  } ; `IRIREF`: { `kind`: ``"primitive"`` ; `type`: `string`  } ; `IriStem`: { `kind`: ``"interface"`` ; `properties`: { `stem`: ``"IRIREF"``  } ; `type`: `IriStem`  } ; `IriStemRange`: { `kind`: ``"interface"`` ; `properties`: { `exclusions`: ``"IriStemRangeExclusions"`` ; `stem`: ``"IriStemRangeStem"``  } ; `type`: `IriStem`  } ; `IriStemRangeExclusions`: { `kind`: ``"union"`` ; `type`: `string` \| `IriStem` ; `typeNames`: ``"IriStem"`` \| ``"IRIREF"``  } ; `IriStemRangeStem`: { `kind`: ``"union"`` ; `type`: `string` \| `Wildcard` ; `typeNames`: ``"Wildcard"`` \| ``"IRIREF"``  } ; `LANGTAG`: { `kind`: ``"primitive"`` ; `type`: `string`  } ; `Language`: { `kind`: ``"interface"`` ; `properties`: { `languageTag`: ``"LANGTAG"``  } ; `type`: `Language`  } ; `LanguageStem`: { `kind`: ``"interface"`` ; `properties`: { `stem`: ``"LANGTAG"``  } ; `type`: `LanguageStem`  } ; `LanguageStemRange`: { `kind`: ``"interface"`` ; `properties`: { `exclusions`: ``"LanguageStemRangeExclusions"`` ; `stem`: ``"LanguageStemRangeStem"``  } ; `type`: `LanguageStemRange`  } ; `LanguageStemRangeExclusions`: { `kind`: ``"union"`` ; `type`: `string` \| `LanguageStem` ; `typeNames`: ``"LanguageStem"`` \| ``"LANGTAG"``  } ; `LanguageStemRangeStem`: { `kind`: ``"union"`` ; `type`: `string` \| `Wildcard` ; `typeNames`: ``"Wildcard"`` \| ``"LANGTAG"``  } ; `LiteralStem`: { `kind`: ``"interface"`` ; `properties`: { `stem`: ``"STRING"``  } ; `type`: `LiteralStem`  } ; `LiteralStemRange`: { `kind`: ``"interface"`` ; `properties`: { `exclusions`: ``"LiteralStemRangeExclusions"`` ; `stem`: ``"LiteralStemRangeStem"``  } ; `type`: `LiteralStemRange`  } ; `LiteralStemRangeExclusions`: { `kind`: ``"union"`` ; `type`: `string` \| `LiteralStem` ; `typeNames`: ``"LiteralStem"`` \| ``"STRING"``  } ; `LiteralStemRangeStem`: { `kind`: ``"union"`` ; `type`: `string` \| `Wildcard` ; `typeNames`: ``"Wildcard"`` \| ``"STRING"``  } ; `NodeConstraint`: { `kind`: ``"interface"`` ; `properties`: { `datatype`: ``"IRIREF"`` ; `flags`: ``"STRING"`` ; `fractiondigits`: ``"INTEGER"`` ; `id`: ``"shapeExprRef"`` ; `length`: ``"INTEGER"`` ; `maxexclusive`: ``"numericLiteral"`` ; `maxinclusive`: ``"numericLiteral"`` ; `maxlength`: ``"INTEGER"`` ; `minexclusive`: ``"numericLiteral"`` ; `mininclusive`: ``"numericLiteral"`` ; `minlength`: ``"INTEGER"`` ; `pattern`: ``"STRING"`` ; `totaldigits`: ``"INTEGER"`` ; `values`: ``"valueSetValue"``  } ; `type`: `NodeConstraint`  } ; `ObjectLiteral`: { `kind`: ``"interface"`` ; `properties`: { `language`: ``"STRING"`` ; `type`: ``"STRING"`` ; `value`: ``"STRING"``  } ; `type`: `ObjectLiteral`  } ; `OneOf`: { `kind`: ``"interface"`` ; `properties`: { `annotations`: ``"Annotation"`` ; `expressions`: ``"tripleExpr"`` ; `id`: ``"shapeExprRef"`` ; `max`: ``"INTEGER"`` ; `min`: ``"INTEGER"`` ; `semActs`: ``"SemAct"``  } ; `type`: `OneOf`  } ; `STRING`: { `kind`: ``"primitive"`` ; `type`: `string`  } ; `Schema`: { `kind`: ``"interface"`` ; `properties`: { `imports`: ``"IRIREF"`` ; `shapes`: ``"shapeExpr"`` ; `start`: ``"shapeExpr"`` ; `startActs`: ``"SemAct"``  } ; `type`: `Schema`  } ; `SemAct`: { `kind`: ``"interface"`` ; `properties`: { `code`: ``"STRING"`` ; `name`: ``"IRIREF"``  } ; `type`: `SemAct`  } ; `Shape`: { `kind`: ``"interface"`` ; `properties`: { `annotations`: ``"Annotation"`` ; `closed`: ``"BOOL"`` ; `expression`: ``"tripleExpr"`` ; `extra`: ``"IRIREF"`` ; `id`: ``"shapeExprRef"`` ; `semActs`: ``"SemAct"``  } ; `type`: `Shape`  } ; `ShapeAnd`: { `kind`: ``"interface"`` ; `properties`: { `id`: ``"shapeExprRef"`` ; `shapeExprs`: ``"shapeExpr"``  } ; `type`: `ShapeAnd`  } ; `ShapeExternal`: { `kind`: ``"interface"`` ; `properties`: { `id`: ``"shapeExprRef"``  } ; `type`: `ShapeExternal`  } ; `ShapeNot`: { `kind`: ``"interface"`` ; `properties`: { `id`: ``"shapeExprRef"`` ; `shapeExpr`: ``"shapeExpr"``  } ; `type`: `ShapeNot`  } ; `ShapeOr`: { `kind`: ``"interface"`` ; `properties`: { `id`: ``"shapeExprRef"`` ; `shapeExprs`: ``"shapeExpr"``  } ; `type`: `ShapeOr`  } ; `TripleConstraint`: { `kind`: ``"interface"`` ; `properties`: { `annotations`: ``"Annotation"`` ; `id`: ``"shapeExprRef"`` ; `inverse`: ``"BOOL"`` ; `max`: ``"INTEGER"`` ; `min`: ``"INTEGER"`` ; `predicate`: ``"IRIREF"`` ; `semActs`: ``"SemAct"`` ; `valueExpr`: ``"shapeExpr"``  } ; `type`: `TripleConstraint`  } ; `Wildcard`: { `kind`: ``"interface"`` ; `properties`: `Record`<`string`, `never`\> ; `type`: `Wildcard`  } ; `numericLiteral`: { `kind`: ``"primitive"`` ; `type`: `number`  } ; `objectValue`: { `kind`: ``"union"`` ; `type`: `objectValue` ; `typeNames`: ``"ObjectLiteral"`` \| ``"IRIREF"``  } ; `shapeExpr`: { `kind`: ``"union"`` ; `type`: `shapeExpr` ; `typeNames`: ``"ShapeOr"`` \| ``"ShapeAnd"`` \| ``"ShapeNot"`` \| ``"ShapeExternal"`` \| ``"shapeExprRef"`` \| ``"NodeConstraint"`` \| ``"Shape"``  } ; `shapeExprRef`: { `kind`: ``"primitive"`` ; `type`: `string`  } ; `tripleExpr`: { `kind`: ``"union"`` ; `type`: `tripleExpr` ; `typeNames`: ``"EachOf"`` \| ``"OneOf"`` \| ``"TripleConstraint"`` \| ``"tripleExprRef"``  } ; `tripleExprRef`: { `kind`: ``"primitive"`` ; `type`: `string`  } ; `valueSetValue`: { `kind`: ``"union"`` ; `type`: `valueSetValue` ; `typeNames`: ``"objectValue"`` \| ``"IriStem"`` \| ``"IriStemRange"`` \| ``"LiteralStem"`` \| ``"LiteralStemRange"`` \| ``"Language"`` \| ``"LanguageStem"`` \| ``"LanguageStemRange"``  }  }\>
+
+#### Defined in
+
+ShexJTraverser.ts:5

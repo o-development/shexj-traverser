@@ -33,7 +33,7 @@ import {
   IRI,
   objectValue,
 } from "shexj";
-import { ValidateTraverserTypes } from "../typeTraverser";
+import { ValidateTraverserTypes } from "type-traverser";
 
 export type ShexJTraverserTypes = ValidateTraverserTypes<{
   Schema: {

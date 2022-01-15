@@ -1,6 +1,6 @@
 import { shapeExpr, valueSetValue } from "shexj";
 import { ShexJTraverserTypes } from ".";
-import { TraverserDefinition } from "../typeTraverser";
+import { TraverserDefinition } from "type-traverser";
 
 export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> =
   {

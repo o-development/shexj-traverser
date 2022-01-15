@@ -9,423 +9,870 @@ Traverse a ShexJ schema with custom functionality.
 npm i shexj-traverser
 ```
 
-## API
-See the [full API docs](docs/modules.md).
+## Tutorial
+This library uses `type-traverser`. To learn more about how type traverser can be used, go to the [Type Traverser Tutorial](https://github.com/o-development/type-traverser/blob/master/README.md#using-a-traverser).
 
 ## Usage
-```typescript
-// Imports
-import { Schema } from "shexj";
-import { traverseShex } from "shexj-traverser";
+There are two ways you can use the ShexJ-Traverser:
+ - A `visitor`
+ - A `transformer`
 
-// Define a ShexJ Schema
-const schema: Schema = {
-  "type" : "Schema",
-  "@context" : "http://www.w3.org/ns/shex.jsonld",
-  "shapes" : [
+### Visitor
+This visitor shows all the possible visitor functions you can use. Note that you do not need to define every visitor function, only the ones you care about.
+
+Run `npm run start` to see this code in action.
+
+```typescript
+const shexJVisitor = shexJTraverser.createVisitor<undefined>({
+  Schema: {
+    visitor: async (_item, _context) => {
+      console.log("Schema");
+    },
+    properties: {
+      startActs: async (_item, _context) => {
+        console.log("Schema.startActs");
+      },
+      start: async (_item, _context) => {
+        console.log("Schema.start");
+      },
+      imports: async (_item, _context) => {
+        console.log("Schema.imports");
+      },
+      shapes: async (_item, _context) => {
+        console.log("Schema.shape");
+      },
+    },
+  },
+  shapeExpr: async (_item, _context) => {
+    console.log("shapeExpr");
+  },
+  ShapeOr: {
+    visitor: async (_item, _context) => {
+      console.log("ShapeOr");
+    },
+    properties: {
+      id: async (_item, _context) => {
+        console.log("ShapeOr.id");
+      },
+      shapeExprs: async (_item, _context) => {
+        console.log("ShapeOr.shapeExprs");
+      },
+    },
+  },
+  ShapeAnd: {
+    visitor: async (_item, _context) => {
+      console.log("ShapeAnd");
+    },
+    properties: {
+      id: async (_item, _context) => {
+        console.log("ShapeAnd.id");
+      },
+      shapeExprs: async (_item, _context) => {
+        console.log("ShapeAnd.shapeExprs");
+      },
+    },
+  },
+  ShapeNot: {
+    visitor: async (_item, _context) => {
+      console.log("ShapeNot");
+    },
+    properties: {
+      id: async (_item, _context) => {
+        console.log("ShapeNot.id");
+      },
+      shapeExpr: async (_item, _context) => {
+        console.log("ShapeNot.shapeExpr");
+      },
+    },
+  },
+  ShapeExternal: {
+    visitor: async (_item, _context) => {
+      console.log("ShapeExternal");
+    },
+    properties: {
+      id: async (_item, _context) => {
+        console.log("ShapeExternal.id");
+      },
+    },
+  },
+  shapeExprRef: async (_item, _context) => {
+    console.log("shapeExprRef");
+  },
+  NodeConstraint: {
+    visitor: async (_item, _context) => {
+      console.log("NodeConstraint");
+    },
+    properties: {
+      id: async (_item, _context) => {
+        console.log("NodeConstraint.id");
+      },
+      datatype: async (_item, _context) => {
+        console.log("NodeConstraint.datatype");
+      },
+      values: async (_item, _context) => {
+        console.log("NodeConstraint.values");
+      },
+      length: async (_item, _context) => {
+        console.log("NodeConstraint.length");
+      },
+      minlength: async (_item, _context) => {
+        console.log("NodeConstraint.minlength");
+      },
+      maxlength: async (_item, _context) => {
+        console.log("NodeConstraint.maxlength");
+      },
+      pattern: async (_item, _context) => {
+        console.log("NodeConstraint.pattern");
+      },
+      flags: async (_item, _context) => {
+        console.log("NodeConstraint.flags");
+      },
+      mininclusive: async (_item, _context) => {
+        console.log("NodeConstraint.mininclusive");
+      },
+      minexclusive: async (_item, _context) => {
+        console.log("NodeConstraint.minexclusive");
+      },
+      maxinclusive: async (_item, _context) => {
+        console.log("NodeConstraint.maxinclusive");
+      },
+      maxexclusive: async (_item, _context) => {
+        console.log("NodeConstraint.maxexclusive");
+      },
+      totaldigits: async (_item, _context) => {
+        console.log("NodeConstraint.totaldigits");
+      },
+      fractiondigits: async (_item, _context) => {
+        console.log("NodeConstraints.fractiondigits");
+      },
+    },
+  },
+  numericLiteral: async (_item, _context) => {
+    console.log("numericLiteral");
+  },
+  valueSetValue: async (_item, _context) => {
+    console.log("valueSetValue");
+  },
+  objectValue: async (_item, _context) => {
+    console.log("objectValue");
+  },
+  ObjectLiteral: {
+    visitor: async (_item, _context) => {
+      console.log("ObjectLiteral");
+    },
+    properties: {
+      value: async (_item, _context) => {
+        console.log("ObjectLiteral.value");
+      },
+      language: async (_item, _context) => {
+        console.log("ObjectLiteral.language");
+      },
+      type: async (_item, _context) => {
+        console.log("ObjectLiteral.type");
+      },
+    },
+  },
+  IriStem: {
+    visitor: async (_item, _context) => {
+      console.log("IriStem");
+    },
+    properties: {
+      stem: async (_item, _context) => {
+        console.log("IriStem.stem");
+      },
+    },
+  },
+  IriStemRange: {
+    visitor: async (_item, _context) => {
+      console.log("IriStemRange");
+    },
+    properties: {
+      stem: async (_item, _context) => {
+        console.log("IriStemRange.stem");
+      },
+      exclusions: async (_item, _context) => {
+        console.log("IriStemRange.exclusions");
+      },
+    },
+  },
+  IriStemRangeStem: async (_item, _context) => {
+    console.log("IriStemRangeStem");
+  },
+  IriStemRangeExclusions: async (_item, _context) => {
+    console.log("IriStemRangeExclusions");
+  },
+  LiteralStem: {
+    visitor: async (_item, _context) => {
+      console.log("LiteralStem");
+    },
+    properties: {
+      stem: async (_item, _context) => {
+        console.log("LiteralStem.stem");
+      },
+    },
+  },
+  LiteralStemRange: {
+    visitor: async (_item, _context) => {
+      console.log("LiteralStemRange");
+    },
+    properties: {
+      stem: async (_item, _context) => {
+        console.log("LiteralStemRange.stem");
+      },
+      exclusions: async (_item, _context) => {
+        console.log("LiteralStemRange.exclusions");
+      },
+    },
+  },
+  LiteralStemRangeStem: async (_item, _context) => {
+    console.log("LiteralStemRangeStem");
+  },
+  LiteralStemRangeExclusions: async (_item, _context) => {
+    console.log("LiteralStemRangeExclusions");
+  },
+  Language: {
+    visitor: async (_item, _context) => {
+      console.log("Language");
+    },
+    properties: {
+      languageTag: async (_item, _context) => {
+        console.log("Language.languageTag");
+      },
+    },
+  },
+  LanguageStem: {
+    visitor: async (_item, _context) => {
+      console.log("LanguageStem");
+    },
+    properties: {
+      stem: async (_item, _context) => {
+        console.log("LanguageStem.stem");
+      },
+    },
+  },
+  LanguageStemRange: {
+    visitor: async (_item, _context) => {
+      console.log("LanguageStemRange");
+    },
+    properties: {
+      stem: async (_item, _context) => {
+        console.log("LanguageStemRange.stem");
+      },
+      exclusions: async (_item, _context) => {
+        console.log("LanguageStemRange.exclusions");
+      },
+    },
+  },
+  LanguageStemRangeStem: async (_item, _context) => {
+    console.log("LanguageStemRangeStem");
+  },
+  LanguageStemRangeExclusions: async (_item, _context) => {
+    console.log("LanguageStemRangeExclusions");
+  },
+  Wildcard: {
+    visitor: async (_item, _context) => {
+      console.log("Wildcard");
+    },
+  },
+  Shape: {
+    visitor: async (_item, _context) => {
+      console.log("Shape");
+    },
+    properties: {
+      id: async (_item, _context) => {
+        console.log("Shape.id");
+      },
+      closed: async (_item, _context) => {
+        console.log("Shape.closed");
+      },
+      extra: async (_item, _context) => {
+        console.log("Shape.extra");
+      },
+      expression: async (_item, _context) => {
+        console.log("Shape.expression");
+      },
+      semActs: async (_item, _context) => {
+        console.log("Shape.semActs");
+      },
+      annotations: async (_item, _context) => {
+        console.log("Shape.annotations");
+      },
+    },
+  },
+  tripleExpr: async (_item, _context) => {
+    console.log("tripleExpr");
+  },
+  EachOf: {
+    visitor: async (_item, _context) => {
+      console.log("EachOf");
+    },
+    properties: {
+      expressions: async (_item, _context) => {
+        console.log("EachOf.expressions");
+      },
+      id: async (_item, _context) => {
+        console.log("EachOf.id");
+      },
+      min: async (_item, _context) => {
+        console.log("EachOf.min");
+      },
+      max: async (_item, _context) => {
+        console.log("EachOf.max");
+      },
+      semActs: async (_item, _context) => {
+        console.log("EachOf.semActs");
+      },
+      annotations: async (_item, _context) => {
+        console.log("EachOf.annotations");
+      },
+    },
+  },
+  OneOf: {
+    visitor: async (_item, _context) => {
+      console.log("OneOf");
+    },
+    properties: {
+      expressions: async (_item, _context) => {
+        console.log("OneOf.expressions");
+      },
+      id: async (_item, _context) => {
+        console.log("OneOf.id");
+      },
+      min: async (_item, _context) => {
+        console.log("OneOf.min");
+      },
+      max: async (_item, _context) => {
+        console.log("OneOf.max");
+      },
+      semActs: async (_item, _context) => {
+        console.log("OneOf.semActs");
+      },
+      annotations: async (_item, _context) => {
+        console.log("OneOf.annotations");
+      },
+    },
+  },
+  TripleConstraint: {
+    visitor: async (_item, _context) => {
+      console.log("TripleConstraint");
+    },
+    properties: {
+      inverse: async (_item, _context) => {
+        console.log("TripleConstraint.inverse");
+      },
+      predicate: async (_item, _context) => {
+        console.log("TripleConstraint.predicate");
+      },
+      valueExpr: async (_item, _context) => {
+        console.log("TripleConstraint.valueExpr");
+      },
+      id: async (_item, _context) => {
+        console.log("TripleConstraint.id");
+      },
+      min: async (_item, _context) => {
+        console.log("TripleConstraint.min");
+      },
+      max: async (_item, _context) => {
+        console.log("TripleConstraint.max");
+      },
+      semActs: async (_item, _context) => {
+        console.log("TripleConstraint.semActs");
+      },
+      annotations: async (_item, _context) => {
+        console.log("TripleConstraint.annotations");
+      },
+    },
+  },
+  tripleExprRef: async (_item, _context) => {
+    console.log("tripleExprRef");
+  },
+  SemAct: {
+    visitor: async (_item, _context) => {
+      console.log("SemAct");
+    },
+    properties: {
+      name: async (_item, _context) => {
+        console.log("SemAct.name");
+      },
+      code: async (_item, _context) => {
+        console.log("SemAct.code");
+      },
+    },
+  },
+  Annotation: {
+    visitor: async (_item, _context) => {
+      console.log("Annotation");
+    },
+    properties: {
+      predicate: async (_item, _context) => {
+        console.log("Annotation.predicate");
+      },
+      object: async (_item, _context) => {
+        console.log("Annotation.object");
+      },
+    },
+  },
+  IRIREF: async (_item, _context) => {
+    console.log("IRIREF");
+  },
+  STRING: async (_item, _context) => {
+    console.log("STRING");
+  },
+  LANGTAG: async (_item, _context) => {
+    console.log("LANGTAG");
+  },
+  INTEGER: async (_item, _context) => {
+    console.log("INTEGER");
+  },
+  BOOL: async (_item, _context) => {
+    console.log("BOOL");
+  },
+  IRI: async (_item, _context) => {
+    console.log("IRI");
+  },
+});
+
+/**
+ * Sample Data
+ */
+const simpleSchema: Schema = {
+  type: "Schema",
+  shapes: [
     {
-      "type" : "Shape",
-      "id" : "file:/app/PatientShape",
-      "expression" : {
-        "type" : "EachOf",
-        "expressions" : [
+      type: "Shape",
+      id: "http://shex.io/webapps/shex.js/doc/EmployeeShape",
+      expression: {
+        type: "EachOf",
+        expressions: [
           {
-            "predicate" : "http://hl7.org/fhir/name",
-            "valueExpr" : {
-              "type" : "NodeConstraint",
-              "datatype" : "http://www.w3.org/2001/XMLSchema#string"
+            type: "TripleConstraint",
+            predicate: "http://xmlns.com/foaf/0.1/givenName",
+            valueExpr: {
+              type: "NodeConstraint",
+              datatype: "http://www.w3.org/2001/XMLSchema#string",
             },
-            "min" : 0,
-            "max" : -1,
-            "type" : "TripleConstraint"
+            min: 1,
+            max: -1,
           },
           {
-            "predicate" : "http://hl7.org/fhir/birthdate",
-            "valueExpr" : {
-              "type" : "NodeConstraint",
-              "datatype" : "http://www.w3.org/2001/XMLSchema#date"
+            type: "TripleConstraint",
+            predicate: "http://xmlns.com/foaf/0.1/familyName",
+            valueExpr: {
+              type: "NodeConstraint",
+              datatype: "http://www.w3.org/2001/XMLSchema#string",
             },
-            "min" : 0,
-            "max" : 1,
-            "type" : "TripleConstraint"
-          }
-        ]
-      }
-    }
-  ]
+          },
+          {
+            type: "TripleConstraint",
+            predicate: "http://xmlns.com/foaf/0.1/phone",
+            valueExpr: {
+              type: "NodeConstraint",
+              nodeKind: "iri",
+            },
+            min: 0,
+            max: -1,
+          },
+          {
+            type: "TripleConstraint",
+            predicate: "http://xmlns.com/foaf/0.1/mbox",
+            valueExpr: {
+              type: "NodeConstraint",
+              nodeKind: "iri",
+            },
+          },
+        ],
+      },
+    },
+  ],
+  "@context": "http://www.w3.org/ns/shex.jsonld",
 };
 
-/**
- * You can define methods called "transformers" that will trigger at
- * certain points while traversing the ShexJ Schema.
- *
- * In this example, we coulnt the number of tripleConstraints the
- * Schema has by including a transformer that increments the number
- * every time a TripleConstraint is encountered.
- */
-async function countTripleConstraints() {
-  let numberOfTripleConstraints = 0;
-  await traverseShex(schema, {
-    async TripleConstraint(tripleConstraint) {
-      numberOfTripleConstraints++;
-      return tripleConstraint;
-    },
-  });
-  // Prints 2
-  console.log(numberOfTripleConstraints);
-}
-countTripleConstraints();
+await shexJVisitor.visit(simpleSchema, "Schema", undefined);
+// Logs:
+// Schema
+// Schema.startActs
+// Schema.start
+// Schema.imports
+// Schema.shape
+// shapeExpr
+// Shape
+// Shape.id
+// shapeExprRef
+// Shape.closed
+// Shape.extra
+// Shape.expression
+// tripleExpr
+// EachOf
+// EachOf.expressions
+// tripleExpr
+// TripleConstraint
+// TripleConstraint.inverse
+// TripleConstraint.predicate
+// IRIREF
+// TripleConstraint.valueExpr
+// shapeExpr
+// NodeConstraint
+// NodeConstraint.id
+// NodeConstraint.datatype
+// IRIREF
+// NodeConstraint.values
+// NodeConstraint.length
+// NodeConstraint.minlength
+// NodeConstraint.maxlength
+// NodeConstraint.pattern
+// NodeConstraint.flags
+// NodeConstraint.mininclusive
+// NodeConstraint.minexclusive
+// NodeConstraint.maxinclusive
+// NodeConstraint.maxexclusive
+// NodeConstraint.totaldigits
+// NodeConstraints.fractiondigits
+// TripleConstraint.id
+// TripleConstraint.min
+// INTEGER
+// TripleConstraint.max
+// INTEGER
+// TripleConstraint.semActs
+// TripleConstraint.annotations
+// tripleExpr
+// TripleConstraint
+// TripleConstraint.inverse
+// TripleConstraint.predicate
+// IRIREF
+// TripleConstraint.valueExpr
+// shapeExpr
+// NodeConstraint
+// NodeConstraint.id
+// NodeConstraint.datatype
+// NodeConstraint.values
+// NodeConstraint.length
+// NodeConstraint.minlength
+// NodeConstraint.maxlength
+// NodeConstraint.pattern
+// NodeConstraint.flags
+// NodeConstraint.mininclusive
+// NodeConstraint.minexclusive
+// NodeConstraint.maxinclusive
+// NodeConstraint.maxexclusive
+// NodeConstraint.totaldigits
+// NodeConstraints.fractiondigits
+// TripleConstraint.id
+// TripleConstraint.min
+// TripleConstraint.max
+// TripleConstraint.semActs
+// TripleConstraint.annotations
+// tripleExpr
+// TripleConstraint
+// TripleConstraint.inverse
+// TripleConstraint.predicate
+// IRIREF
+// TripleConstraint.valueExpr
+// shapeExpr
+// NodeConstraint
+// NodeConstraint.id
+// NodeConstraint.datatype
+// NodeConstraint.values
+// NodeConstraint.length
+// NodeConstraint.minlength
+// NodeConstraint.maxlength
+// NodeConstraint.pattern
+// NodeConstraint.flags
+// NodeConstraint.mininclusive
+// NodeConstraint.minexclusive
+// NodeConstraint.maxinclusive
+// NodeConstraint.maxexclusive
+// NodeConstraint.totaldigits
+// NodeConstraints.fractiondigits
+// TripleConstraint.id
+// TripleConstraint.min
+// INTEGER
+// TripleConstraint.max
+// TripleConstraint.semActs
+// TripleConstraint.annotations
+// tripleExpr
+// TripleConstraint
+// TripleConstraint.inverse
+// TripleConstraint.predicate
+// IRIREF
+// TripleConstraint.valueExpr
+// shapeExpr
+// NodeConstraint
+// NodeConstraint.id
+// NodeConstraint.datatype
+// NodeConstraint.values
+// NodeConstraint.length
+// NodeConstraint.minlength
+// NodeConstraint.maxlength
+// NodeConstraint.pattern
+// NodeConstraint.flags
+// NodeConstraint.mininclusive
+// NodeConstraint.minexclusive
+// NodeConstraint.maxinclusive
+// NodeConstraint.maxexclusive
+// NodeConstraint.totaldigits
+// NodeConstraints.fractiondigits
+// TripleConstraint.id
+// TripleConstraint.min
+// TripleConstraint.max
+// TripleConstraint.semActs
+// TripleConstraint.annotations
+// EachOf.id
+// EachOf.min
+// EachOf.max
+// EachOf.semActs
+// EachOf.annotations
+// Shape.semActs
+// Shape.annotations
+```
 
-/**
- * You can also build a new datastructure as you traverse the
- * ShexJ schema. This is achieved by returning a new value in the
- * transformer. By default, the return value for a transformer is
- * the same as the input value (for example, a TripleConstraint
- * transformer will return a TripleConstraint), but this can be
- * modified by changing the generics on the function.
- * 
- * In this example, we create a long string that represents the given
- * ShexJ Schema by changing all the return values to strings.
- */
-async function shexJtoUselessString() {
-  const result = await traverseShex<
-    // Base Return value generics
-    string, // Schema return type
-    string, // ShapeOr return type
-    string, // ShapeAnd return type
-    string, // ShapeNot return type
-    string, // ShapeExternal return type
-    string, // NodeConstraint return type
-    string, // ObjectLiteral return type
-    string, // IriStem retrun type
-    string, // IriStemRange return type
-    string, // LiteralStem return type
-    string, // LiteralStemRange return type
-    string, // Language return type
-    string, // LanguageStem return type
-    string, // LanguageStemRange return type
-    string, // Wildcard return type
-    string, // Shape return type
-    string, // EachOf return type
-    string, // OneOf return type
-    string, // TripleConstraint return type
-    string, // SemAct return type
-    string, // Annotation return type
-    // Return types for constructed types
-    string, // shapeExpr return type
-    string, // valueSetValue return type
-    string, // tripleExpr return type
-    // Return specific field values
-    string, // Schema_startActs return type
-    string, // Schema_start return type
-    string, // Schema_shapes return type
-    string, // ShapeOr_shapeExprs return type
-    string, // ShapeAnd_shapeExprs return type
-    string, // ShapeNot_shapeExpr return type
-    string, // NodeConstraint_values return type
-    string, // IriStemRange_exclusions return type
-    string, // LiteralStemRange_exclusions return type
-    string, // LanguageStemRange_exclusions return type
-    string, // Shape_expression return type
-    string, // Shape_semActs return type
-    string, // Shape_Annotations return type
-    string, // EachOf_expressions return type
-    string, // EachOf_semActs return type
-    string, // EachOf_Annotations return type
-    string, // OneOf_expressions return type
-    string, // OneOf_semActs return type
-    string, // OneOf_Annotations return type
-    string, // TripleConstraint_valueExpr return type
-    string, // TripleConstraint_semActs return type
-    string  // TripleConstraint_Annotations return type
-  >(schema, {
-    Schema: async (schema, transformedChildren): Promise<string> => {
-      return `Schema(${transformedChildren.startActs},${transformedChildren.startActs},${transformedChildren.shapes})`;
+### Transformer
+This transformer shows all the possible return types. Note that you do not need to define every return type yourself. This library will automatically deduce return types.
+
+```typescript
+const shexJTransformer = shexJTraverser.createTransformer<
+  {
+    Schema: {
+      return: string;
+      properties: {
+        startActs: string;
+        start: string;
+        imports: string;
+        shapes: string;
+      };
+    };
+    shapeExpr: {
+      return: string;
+    };
+    ShapeOr: {
+      return: string;
+      properties: {
+        id: string;
+        shapeExprs: string;
+      };
+    };
+    ShapeAnd: {
+      return: string;
+      properties: {
+        id: string;
+        shapeExprs: string;
+      };
+    };
+    ShapeNot: {
+      return: string;
+      properties: {
+        id: string;
+        shapeExpr: string;
+      };
+    };
+    ShapeExternal: {
+      return: string;
+      properties: {
+        id: string;
+      };
+    };
+    shapeExprRef: {
+      return: string;
+    };
+    NodeConstraint: {
+      return: string;
+      properties: {
+        id: string;
+        datatype: string;
+        values: string;
+        length: string;
+        minlength: string;
+        maxlength: string;
+        pattern: string;
+        flags: string;
+        mininclusive: string;
+        minexclusive: string;
+        maxinclusive: string;
+        maxexclusive: string;
+        totaldigits: string;
+        fractiondigits: string;
+      };
+    };
+    numericLiteral: {
+      return: string;
+    };
+    valueSetValue: {
+      return: string;
+    };
+    objectValue: {
+      return: string;
+    };
+    ObjectLiteral: {
+      return: string;
+      properties: {
+        value: string;
+        language: string;
+        type: string;
+      };
+    };
+    IriStem: {
+      return: string;
+      properties: {
+        stem: string;
+      };
+    };
+    IriStemRange: {
+      return: string;
+      properties: {
+        stem: string;
+        exclusions: string;
+      };
+    };
+    IriStemRangeStem: {
+      return: string;
+    };
+    IriStemRangeExclusions: {
+      return: string;
+    };
+    LiteralStem: {
+      return: string;
+      properties: {
+        stem: string;
+      };
+    };
+    LiteralStemRange: {
+      return: string;
+      properties: {
+        stem: string;
+        exclusions: string;
+      };
+    };
+    LiteralStemRangeStem: {
+      return: string;
+    };
+    LiteralStemRangeExclusions: {
+      return: string;
+    };
+    Language: {
+      return: string;
+      properties: {
+        languageTag: string;
+      };
+    };
+    LanguageStem: {
+      return: string;
+      properties: {
+        stem: string;
+      };
+    };
+    LanguageStemRangeStem: {
+      return: string;
+    };
+    LanguageStemRangeExclusions: {
+      return: string;
+    };
+    Wildcard: {
+      return: string;
+    };
+    Shape: {
+      return: string;
+      properties: {
+        id: string;
+        closed: string;
+        extra: string;
+        expression: string;
+        semActs: string;
+        annotations: string;
+      };
+    };
+    tripleExpr: {
+      return: string;
+    };
+    EachOf: {
+      return: string;
+      properties: {
+        expressions: string;
+        id: string;
+        min: string;
+        max: string;
+        semActs: string;
+        annotations: string;
+      };
+    };
+    OneOf: {
+      return: string;
+      properties: {
+        expressions: string;
+        id: string;
+        min: string;
+        max: string;
+        semActs: string;
+        annotations: string;
+      };
+    };
+    TripleConstraint: {
+      return: string;
+      properties: {
+        inverse: string;
+        predicate: string;
+        valueExpr: string;
+        id: string;
+        min: string;
+        max: string;
+        semActs: string;
+        annotations: string;
+      };
+    };
+    tripleExprRef: {
+      return: string;
+    };
+    SemAct: {
+      return: string;
+      properties: {
+        name: string;
+        code: string;
+      };
+    };
+    Annotation: {
+      return: string;
+      properties: {
+        predicate: string;
+        object: string;
+      };
+    };
+    IRIREF: {
+      return: string;
+    };
+    STRING: {
+      return: string;
+    };
+    LANGTAG: {
+      return: string;
+    };
+    INTEGER: {
+      return: string;
+    };
+    BOOL: {
+      return: string;
+    };
+    IRI: {
+      return: string;
+    };
+  },
+  undefined
+>({
+  Schema: {
+    transformer: async (
+      item,
+      getTransformedChildren,
+      _setReturnPointer,
+      _context
+    ) => {
+      const children: {
+        startActs: string;
+        start: string;
+        imports: string;
+        shapes: string;
+      } = await getTransformedChildren();
+      return `Transformer(startActs:${children.startActs},start:${children.start},imports:${children.imports},shapes:${children.shapes})`;
     },
-    ShapeOr: async (
-      shapeOr,
-      transformedChildren,
-      parentStack
-    ): Promise<string> => {
-      return `ShapeOr(${transformedChildren.shapeExprs})`;
-    },
-    ShapeAnd: async (
-      shapeAnd,
-      transformedChildren,
-      parentStack
-    ): Promise<string> => {
-      return `ShapeAnd(${transformedChildren.shapeExprs})`;
-    },
-    ShapeNot: async (
-      shapeNot,
-      transformedChildren,
-      parentStack
-    ): Promise<string> => {
-      return `ShapeNot(${transformedChildren.shapeExpr})`;
-    },
-    ShapeExternal: async (shapeExternal, parentStack): Promise<string> => {
-      return `ShapeExternal`;
-    },
-    NodeConstraint: async (
-      nodeConstraint,
-      transformedChildren,
-      parentStack
-    ): Promise<string> => {
-      return `NodeConstraint(${transformedChildren.values})`;
-    },
-    ObjectLiteral: async (objectLiteral, parentStack): Promise<string> => {
-      return `ObjectLiteral`;
-    },
-    IriStem: async (iriStem, parentStack): Promise<string> => {
-      return `IriStem`;
-    },
-    IriStemRange: async (
-      iriStemRange,
-      transformedChildren,
-      parentStack
-    ): Promise<string> => {
-      return `IriStemRange(${transformedChildren.exclusions})`;
-    },
-    LiteralStem: async (literalStem, parentStack): Promise<string> => {
-      return `LiteralStem`;
-    },
-    LiteralStemRange: async (
-      literalStemRange,
-      transformedChildren,
-      parentStack
-    ): Promise<string> => {
-      return `LiteralStemRange(${transformedChildren.exclusions})`;
-    },
-    Language: async (language, parentStack): Promise<string> => {
-      return `Language`;
-    },
-    LanguageStem: async (languageStem, parentStack): Promise<string> => {
-      return `LanguageStem`;
-    },
-    LanguageStemRange: async (
-      languageStemRange,
-      transformedChildren,
-      parentStack
-    ): Promise<string> => {
-      return `LanguageStemRange(${transformedChildren.exclusions})`;
-    },
-    Wildcard: async (wildcard, parentStack): Promise<string> => {
-      return `Wildcard`;
-    },
-    Shape: async (
-      shape,
-      transformedChildren,
-      parentStack
-    ): Promise<string> => {
-      return `Shape(${transformedChildren.expression},${transformedChildren.semActs},${transformedChildren.annotations})`;
-    },
-    EachOf: async (
-      eachOf,
-      transformedChildren,
-      parentStack
-    ): Promise<string> => {
-      return `EachOf(${transformedChildren.expressions},${transformedChildren.semActs},${transformedChildren.annotations})`;
-    },
-    OneOf: async (
-      eachOf,
-      transformedChildren,
-      parentStack
-    ): Promise<string> => {
-      return `OneOf(${transformedChildren.expressions},${transformedChildren.semActs},${transformedChildren.annotations})`;
-    },
-    TripleConstraint: async (
-      tripleConstraint,
-      transformedChildren,
-      parentStack
-    ): Promise<string> => {
-      return `TripleConstraint(${transformedChildren.valueExpr},${transformedChildren.semActs},${transformedChildren.annotations})`;
-    },
-    SemAct: async (wildcard, parentStack): Promise<string> => {
-      return `SemAct`;
-    },
-    Annotation: async (wildcard, parentStack): Promise<string> => {
-      return `Annotation`;
-    },
-    shapeExpr: async (
-      shapeExpr,
-      transformedSelf,
-      parentStack
-    ): Promise<string> => {
-      return `shapeExpr(${transformedSelf})`;
-    },
-    valueSetValue: async (
-      valueSetValue,
-      transformedSelf,
-      parentStack
-    ): Promise<string> => {
-      return `valueSetValue(${transformedSelf})`;
-    },
-    tripleExpr: async (
-      tripleExpr,
-      transformedSelf,
-      parentStack
-    ): Promise<string> => {
-      return `tripleExpr(${transformedSelf})`;
-    },
-    Schema_startActs: async (
-      semActs,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `Schema_startActs(${transformed})`;
-    },
-    Schema_start: async (
-      shapeExpr,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `Schema_start(${transformed})`;
-    },
-    Schema_shapes: async (
-      shapes,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `Schema_shapes(${transformed})`;
-    },
-    ShapeOr_shapeExprs: async (
-      shapeExprs,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `ShapeOr_shapeExprs(${transformed})`;
-    },
-    ShapeAnd_shapeExprs: async (
-      shapeExprs,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `ShapeAnd_shapeExprs(${transformed})`;
-    },
-    ShapeNot_shapeExpr: async (
-      shapeExpr,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `ShapeNot_shapeExpr(${transformed})`;
-    },
-    NodeConstraint_values: async (
-      values,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `NodeConstraint_values(${transformed})`;
-    },
-    IriStemRange_exclusions: async (
-      exclusions,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `IriStemRange_exclusions(${transformed})`;
-    },
-    LiteralStemRange_exclusions: async (
-      exclusions,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `LiteralStemRange_exclusions(${transformed})`;
-    },
-    LanguageStemRange_exclusions: async (
-      exclusions,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `LanguageStemRange_exclusions(${transformed})`;
-    },
-    Shape_expression: async (
-      expression,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `Shape_expression(${transformed})`;
-    },
-    Shape_semActs: async (
-      semActs,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `Shape_semActs(${transformed})`;
-    },
-    Shape_Annotations: async (
-      annotations,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `Shape_Annotations(${transformed})`;
-    },
-    EachOf_expressions: async (
-      expressions,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `EachOf_expressions(${transformed})`;
-    },
-    EachOf_semActs: async (
-      semActs,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `EachOf_semActs(${transformed})`;
-    },
-    EachOf_Annotations: async (
-      annotations,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `EachOf_Annotations(${transformed})`;
-    },
-    OneOf_expressions: async (
-      expressions,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `OneOf_expressions(${transformed})`;
-    },
-    OneOf_semActs: async (
-      semActs,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `OneOf_semActs(${transformed})`;
-    },
-    OneOf_Annotations: async (
-      annotations,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `OneOf_Annotations(${transformed})`;
-    },
-    TripleConstraint_valueExpr: async (
-      valueExpr,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `TripleConstraint_valueExpr(${transformed})`;
-    },
-    TripleConstraint_semActs: async (
-      semActs,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `TripleConstraint_valueExpr(${transformed})`;
-    },
-    TripleConstraint_Annotations: async (
-      annotations,
-      transformed,
-      parentStack
-    ): Promise<string> => {
-      return `TripleConstraint_Annotations(${transformed})`;
-    },
-  });
-  // Prints: Schema(undefined,undefined,Schema_shapes(shapeExpr(Shape(Shape_expression(tripleExpr(EachOf(EachOf_expressions(tripleExpr(TripleConstraint(TripleConstraint_valueExpr(shapeExpr(NodeConstraint(undefined))),undefined,undefined)),tripleExpr(TripleConstraint(TripleConstraint_valueExpr(shapeExpr(NodeConstraint(undefined))),undefined,undefined))),undefined,undefined))),undefined,undefined))))
-  console.log(result);
-}
-shexJtoUselessString();
+  },
+  // ...
+});
 ```
 
 ## Liscense
