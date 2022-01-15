@@ -1,13 +1,14 @@
 {
   "name": "shexj-traverser",
-  "version": "0.3.0",
-  "description": "",
+  "version": "1.0.0",
+  "description": "A type-traverser for ShexJ",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test": "jest --coverage",
     "docs": "typedoc",
-    "prepublishOnly": "npm run test && npm run build && npm run docs"
+    "prepublishOnly": "npm run test && npm run build && npm run docs",
+    "start": "ts-node ./example/example.ts"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,6 @@
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.4.5",
     "prettier": "^2.5.1",
-    "shex-test": "^2.1.0",
     "ts-jest": "^27.1.2",
     "ts-node": "^10.4.0",
     "typedoc": "^0.22.10",
@@ -38,5 +38,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "type-traverser": "^0.0.1"
+  }
 }

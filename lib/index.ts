@@ -1,2 +1,5 @@
-export { default as Transformers } from "./Transformers";
-export { default as traverseShex } from "./traverseShex";
+import { ShexJTraverser } from "./ShexJTraverser";
+
+export * from "./ShexJTraverserDefinition";
+export * from "./ShexJTraverserTypes";
+export default ShexJTraverser;
