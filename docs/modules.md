@@ -21,7 +21,7 @@
 
 #### Defined in
 
-ShexJTraverserTypes.ts:38
+[ShexJTraverserTypes.ts:38](https://github.com/o-development/shexj-traverser/blob/7b1ff5e/lib/ShexJTraverserTypes.ts#L38)
 
 ## Variables
 
@@ -31,7 +31,7 @@ ShexJTraverserTypes.ts:38
 
 #### Defined in
 
-ShexJTraverserDefinition.ts:5
+[ShexJTraverserDefinition.ts:5](https://github.com/o-development/shexj-traverser/blob/7b1ff5e/lib/ShexJTraverserDefinition.ts#L5)
 
 ___
 
@@ -41,4 +41,4 @@ ___
 
 #### Defined in
 
-ShexJTraverser.ts:5
+[ShexJTraverser.ts:5](https://github.com/o-development/shexj-traverser/blob/7b1ff5e/lib/ShexJTraverser.ts#L5)
