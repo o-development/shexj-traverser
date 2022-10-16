@@ -1,6 +1,6 @@
-import { shapeExpr, valueSetValue } from "shexj";
 import { ShexJTraverserTypes } from ".";
 import { TraverserDefinition } from "type-traverser";
+import { shapeExpr, valueSetValue } from "shexj";
 
 export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> =
   {
@@ -8,54 +8,62 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
       kind: "interface",
       properties: {
         startActs: "SemAct",
-        start: "shapeExpr",
+        start: "shapeExprOrRef",
         imports: "IRIREF",
-        shapes: "shapeExpr",
+        shapes: "ShapeDecl",
+      },
+    },
+    ShapeDecl: {
+      kind: "interface",
+      properties: {
+        id: "shapeDeclLabel",
+        abstract: "BOOL",
+        restricts: "shapeExprOrRef",
+        shapeExpr: "shapeExpr",
       },
     },
     shapeExpr: {
       kind: "union",
-      selector: (item: shapeExpr) => {
-        if (typeof item === "string") {
-          return "shapeExprRef";
-        }
-        return item.type;
-      },
+      selector: (item: shapeExpr) => item.type,
+    },
+    shapeExprOrRef: {
+      kind: "union",
+      selector: (item) =>
+        typeof item === "string" ? "shapeDeclRef" : "shapeExpr",
     },
     ShapeOr: {
       kind: "interface",
       properties: {
-        id: "shapeExprRef",
-        shapeExprs: "shapeExpr",
+        shapeExprs: "shapeExprOrRef",
       },
     },
     ShapeAnd: {
       kind: "interface",
       properties: {
-        id: "shapeExprRef",
-        shapeExprs: "shapeExpr",
+        shapeExprs: "shapeExprOrRef",
       },
     },
     ShapeNot: {
       kind: "interface",
       properties: {
-        id: "shapeExprRef",
-        shapeExpr: "shapeExpr",
+        shapeExpr: "shapeExprOrRef",
       },
     },
     ShapeExternal: {
       kind: "interface",
-      properties: {
-        id: "shapeExprRef",
-      },
+      properties: {},
     },
-    shapeExprRef: {
-      kind: "primitive",
+    shapeDeclRef: {
+      kind: "union",
+      selector: () => "shapeDeclLabel",
+    },
+    shapeDeclLabel: {
+      kind: "union",
+      selector: () => "IRIREF",
     },
     NodeConstraint: {
       kind: "interface",
       properties: {
-        id: "shapeExprRef",
         datatype: "IRIREF",
         values: "valueSetValue",
         length: "INTEGER",
@@ -65,50 +73,35 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
         flags: "STRING",
         mininclusive: "numericLiteral",
         minexclusive: "numericLiteral",
-        maxinclusive: "numericLiteral",
-        maxexclusive: "numericLiteral",
         totaldigits: "INTEGER",
         fractiondigits: "INTEGER",
+        semActs: "SemAct",
+        annotations: "Annotation",
       },
     },
     numericLiteral: {
-      kind: "primitive",
+      kind: "union",
+      selector: () => "DOUBLE",
     },
     valueSetValue: {
       kind: "union",
       selector: (item: valueSetValue) => {
-        if (typeof item === "string") {
-          return "objectValue";
-        } else if (
-          item.type &&
-          [
-            "IriStem",
-            "IriStemRange",
-            "LiteralStem",
-            "LiteralStemRange",
-            "Language",
-            "LanguageStem",
-            "LanguageStemRange",
-          ].includes(item.type)
-        ) {
-          return item.type as
-            | "IriStem"
-            | "IriStemRange"
-            | "LiteralStem"
-            | "LiteralStemRange"
-            | "Language"
-            | "LanguageStem"
-            | "LanguageStemRange";
-        } else {
+        if (typeof item === "string" || !item.type) {
           return "objectValue";
         }
+        return item.type as
+          | "IriStem"
+          | "IriStemRange"
+          | "LiteralStemRange"
+          | "Language"
+          | "LanguageStem"
+          | "LanguageStemRange";
       },
     },
     objectValue: {
       kind: "union",
-      selector: (item) => {
-        return typeof item === "string" ? "IRIREF" : "ObjectLiteral";
-      },
+      selector: (item) =>
+        typeof item === "string" ? "IRIREF" : "ObjectLiteral",
     },
     ObjectLiteral: {
       kind: "interface",
@@ -127,21 +120,13 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
     IriStemRange: {
       kind: "interface",
       properties: {
-        stem: "IriStemRangeStem",
+        stem: "IRIREF",
         exclusions: "IriStemRangeExclusions",
-      },
-    },
-    IriStemRangeStem: {
-      kind: "union",
-      selector: (item) => {
-        return typeof item === "string" ? "IRIREF" : "Wildcard";
       },
     },
     IriStemRangeExclusions: {
       kind: "union",
-      selector: (item) => {
-        return typeof item === "string" ? "IRIREF" : "IriStem";
-      },
+      selector: (item) => (typeof item === "string" ? "IRIREF" : "IriStem"),
     },
     LiteralStem: {
       kind: "interface",
@@ -158,15 +143,11 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
     },
     LiteralStemRangeStem: {
       kind: "union",
-      selector: (item) => {
-        return typeof item === "string" ? "STRING" : "Wildcard";
-      },
+      selector: (item) => (typeof item === "string" ? "STRING" : "Wildcard"),
     },
     LiteralStemRangeExclusions: {
       kind: "union",
-      selector: (item) => {
-        return typeof item === "string" ? "STRING" : "LiteralStem";
-      },
+      selector: (item) => (typeof item === "string" ? "STRING" : "LiteralStem"),
     },
     Language: {
       kind: "interface",
@@ -189,15 +170,12 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
     },
     LanguageStemRangeStem: {
       kind: "union",
-      selector: (item) => {
-        return typeof item === "string" ? "LANGTAG" : "Wildcard";
-      },
+      selector: (item) => (typeof item === "string" ? "LANGTAG" : "Wildcard"),
     },
     LanguageStemRangeExclusions: {
       kind: "union",
-      selector: (item) => {
-        return typeof item === "string" ? "LANGTAG" : "LanguageStem";
-      },
+      selector: (item) =>
+        typeof item === "string" ? "LANGTAG" : "LanguageStem",
     },
     Wildcard: {
       kind: "interface",
@@ -206,30 +184,30 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
     Shape: {
       kind: "interface",
       properties: {
-        id: "shapeExprRef",
         closed: "BOOL",
         extra: "IRIREF",
-        expression: "tripleExpr",
+        extends: "shapeExprOrRef",
+        expression: "tripleExprOrRef",
         semActs: "SemAct",
         annotations: "Annotation",
       },
     },
     tripleExpr: {
       kind: "union",
-      selector: (item) => {
-        if (typeof item === "string") {
-          return "tripleExprRef";
-        }
-        return item.type;
-      },
+      selector: (item) => item.type,
+    },
+    tripleExprOrRef: {
+      kind: "union",
+      selector: (item) =>
+        typeof item === "string" ? "tripleExprRef" : "tripleExpr",
     },
     EachOf: {
       kind: "interface",
       properties: {
-        expressions: "tripleExpr",
-        id: "shapeExprRef",
+        id: "tripleExprLabel",
         min: "INTEGER",
         max: "INTEGER",
+        expressions: "tripleExprOrRef",
         semActs: "SemAct",
         annotations: "Annotation",
       },
@@ -237,10 +215,10 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
     OneOf: {
       kind: "interface",
       properties: {
-        expressions: "tripleExpr",
-        id: "shapeExprRef",
+        id: "tripleExprLabel",
         min: "INTEGER",
         max: "INTEGER",
+        expressions: "tripleExprOrRef",
         semActs: "SemAct",
         annotations: "Annotation",
       },
@@ -248,18 +226,23 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
     TripleConstraint: {
       kind: "interface",
       properties: {
-        inverse: "BOOL",
-        predicate: "IRIREF",
-        valueExpr: "shapeExpr",
-        id: "shapeExprRef",
+        id: "tripleExprLabel",
         min: "INTEGER",
         max: "INTEGER",
+        inverse: "BOOL",
+        predicate: "IRIREF",
+        valueExpr: "shapeExprOrRef",
         semActs: "SemAct",
         annotations: "Annotation",
       },
     },
     tripleExprRef: {
-      kind: "primitive",
+      kind: "union",
+      selector: () => "tripleExprLabel",
+    },
+    tripleExprLabel: {
+      kind: "union",
+      selector: () => "IRIREF",
     },
     SemAct: {
       kind: "interface",
@@ -278,13 +261,22 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
     IRIREF: {
       kind: "primitive",
     },
-    STRING: {
-      kind: "primitive",
-    },
-    LANGTAG: {
+    BNODE: {
       kind: "primitive",
     },
     INTEGER: {
+      kind: "primitive",
+    },
+    STRING: {
+      kind: "primitive",
+    },
+    DECIMAL: {
+      kind: "primitive",
+    },
+    DOUBLE: {
+      kind: "primitive",
+    },
+    LANGTAG: {
       kind: "primitive",
     },
     BOOL: {
