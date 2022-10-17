@@ -86,16 +86,31 @@ export const ShexJTraverserDefinition: TraverserDefinition<ShexJTraverserTypes> 
     valueSetValue: {
       kind: "union",
       selector: (item: valueSetValue) => {
-        if (typeof item === "string" || !item.type) {
+        if (typeof item === "string") {
+          return "objectValue";
+        } else if (
+          item.type &&
+          [
+            "IriStem",
+            "IriStemRange",
+            "LiteralStem",
+            "LiteralStemRange",
+            "Language",
+            "LanguageStem",
+            "LanguageStemRange",
+          ].includes(item.type)
+        ) {
+          return item.type as
+            | "IriStem"
+            | "IriStemRange"
+            | "LiteralStem"
+            | "LiteralStemRange"
+            | "Language"
+            | "LanguageStem"
+            | "LanguageStemRange";
+        } else {
           return "objectValue";
         }
-        return item.type as
-          | "IriStem"
-          | "IriStemRange"
-          | "LiteralStemRange"
-          | "Language"
-          | "LanguageStem"
-          | "LanguageStemRange";
       },
     },
     objectValue: {

@@ -148,6 +148,7 @@ export type ShexJTraverserTypes = ValidateTraverserTypes<{
       | "objectValue"
       | "IriStem"
       | "IriStemRange"
+      | "LiteralStem"
       | "LiteralStemRange"
       | "Language"
       | "LanguageStem"
